@@ -1,0 +1,105 @@
+﻿<xstyle:XBaseForm
+    xmlns:xstyle="clr-namespace:RJ.XStyle;assembly=RJ.XStyle"
+    x:Class="XProjectWPF.ManageForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:XProjectWPF"
+        mc:Ignorable="d"
+        Title="" Height="720" Width="1024" WindowStartupLocation="CenterScreen" MaximizeBox="False" ResizeMode="NoResize"  Loaded="XBaseForm_Loaded">
+    <Grid>
+        <Menu x:Name="menu" Height="30" Width="1016" DockPanel.Dock="Top" VerticalContentAlignment="Top" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#FFDDEAFA"  Grid.ColumnSpan="2">
+            <MenuItem Margin="3,0,0,0">
+                <MenuItem.Header>
+                    <TextBlock TextAlignment="Left" Margin="-5,0,0,0"  VerticalAlignment="Center" Text="查询单据"/>
+                </MenuItem.Header>
+                <MenuItem.Icon>
+                    <Image Source="/XProjectWPF;component/Resources/gntb_20.png" Width="16" Height="16" Margin="0,0,0,0"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Name="t_btn_New" Margin="3,0,0,0" Click="t_btn_New_Click">
+                <MenuItem.Header>
+                    <TextBlock TextAlignment="Left" Margin="-5,0,0,0"  VerticalAlignment="Center" Text="新建报价单据"/>
+                </MenuItem.Header>
+                <MenuItem.Icon>
+                    <Image Source="/XProjectWPF;component/Resources/New.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Name="t_btn_Open" Margin="3,0,0,0" Click="t_btn_Open_Click">
+                <MenuItem.Header>
+                    <TextBlock TextAlignment="Left" Margin="-5,0,0,0"  VerticalAlignment="Center" Text="打开单据"/>
+                </MenuItem.Header>
+                <MenuItem.Icon>
+                    <Image Source="/XProjectWPF;component/Resources/Open.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem Margin="3,0,0,0">
+                <MenuItem.Header>
+                    <TextBlock TextAlignment="Left" Margin="-5,0,0,0"  VerticalAlignment="Center" Text="删除单据"/>
+                </MenuItem.Header>
+                <MenuItem.Icon>
+                    <Image Source="/XProjectWPF;component/Resources/Delete.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+            </MenuItem>
+
+            <MenuItem Margin="3,0,0,0">
+                <MenuItem.Header>
+                    <TextBlock TextAlignment="Left" Margin="-5,0,0,0"  VerticalAlignment="Center" Text="导出单据"/>
+                </MenuItem.Header>
+                <MenuItem.Icon>
+                    <Image Source="/XProjectWPF;component/Resources/ColumnStyle_Excel.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Margin="3,0,0,0" Name="t_tsm_Close" Click="t_tsm_Close_Click">
+                <MenuItem.Header>
+                    <TextBlock TextAlignment="Left" Margin="-5,0,0,0"  VerticalAlignment="Center" Text="关闭"/>
+                </MenuItem.Header>
+                <MenuItem.Icon>
+                    <Image Source="/XProjectWPF;component/Resources/Quit.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <!--<MenuItem Header="查询" TextBlock.TextAlignment="Center">
+                    <MenuItem Header="_New..."  IsCheckable="True">
+                    </MenuItem>
+                    <MenuItem Header="_Open..." InputGestureText="ctrl+o" />
+                    <Separator />
+                    <MenuItem Header="Sen_d To">
+                        <MenuItem Header="Mail Recipient" />
+                        <MenuItem Header="My Documents" />
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Edit">
+                    <MenuItem.Icon>
+                        <Image Source="/XProjectWPF;component/Resources/Copy.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_View">
+                </MenuItem>-->
+        </Menu>
+        <TreeView x:Name="t_tvw_Module" HorizontalAlignment="Left" Margin="10,67,0,169" Width="250"/>
+        <Label Content="单据类型" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.125,0.4" Height="25"/>
+        <GroupBox Header="单据日期范围" HorizontalAlignment="Left" Height="154" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="250">
+            <Grid>
+                <RadioButton x:Name="t_rdo_Today" Content="当天单证" HorizontalAlignment="Left" Margin="5,9,0,0" VerticalAlignment="Top" />
+                <RadioButton x:Name="t_rdo_Week" Content="当周单证" HorizontalAlignment="Left" Margin="72,9,0,0" VerticalAlignment="Top" />
+                <RadioButton x:Name="t_rdo_Month" Content="当月单证" HorizontalAlignment="Left" Margin="139,9,0,0" VerticalAlignment="Top" />
+                <RadioButton x:Name="t_rdo_All" Content="所有单证" HorizontalAlignment="Left" Margin="5,39,0,0" VerticalAlignment="Top" IsChecked="True"/>
+                <RadioButton x:Name="t_rdo_Custom" Content="自定义范围" HorizontalAlignment="Left" Margin="72,40,0,0" VerticalAlignment="Top"/>
+                <DatePicker x:Name="t_dtp_StartDate" IsEnabled="False" HorizontalAlignment="Left" Margin="5,70,0,0" VerticalAlignment="Top" Width="142" />
+                <Label Content="至" Margin="147,71,69,0" VerticalAlignment="Top" RenderTransformOrigin="2.318,-0.24"/>
+                <DatePicker x:Name="t_dtp_EndDate" IsEnabled="False" HorizontalAlignment="Left" Margin="5,101,0,0" VerticalAlignment="Top" Width="142"/>
+            </Grid>
+        </GroupBox>
+        <xstyle:XDataGrid x:Name="t_pgg_Bill" HorizontalAlignment="Stretch" Margin="275,67,10,12" VerticalAlignment="Stretch" RowHeight="24" 
+                  IsReadOnly="True" ColumnHeaderHeight="32" AutoGenerateColumns="False" Grid.ColumnSpan="2" MouseDoubleClick="t_pgg_Bill_MouseDoubleClick">
+            <DataGrid.ContextMenu>
+                <ContextMenu x:Name="SettingMenu" Placement="MousePoint" Width="150" StaysOpen="False">
+                    <MenuItem x:Name="t_tsb_User" Header="右键按钮1"/>
+                    <MenuItem x:Name="t_tsb_Setting" Header="右键按钮2" IsChecked="True"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </xstyle:XDataGrid>
+    </Grid>
+</xstyle:XBaseForm>
