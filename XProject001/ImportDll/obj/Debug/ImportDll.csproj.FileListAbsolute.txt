@@ -3,3 +3,9 @@ C:\Users\40326\Documents\Visual Studio 2017\XProject001\ImportDll\bin\Debug\Impo
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ImportDll\obj\Debug\ImportDll.csproj.CoreCompileInputs.cache
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ImportDll\obj\Debug\ImportDll.dll
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ImportDll\obj\Debug\ImportDll.pdb
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\ImportDll\bin\Debug\ImportDll.dll
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\ImportDll\bin\Debug\ImportDll.pdb
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\ImportDll\obj\Debug\ImportDll.csprojResolveAssemblyReference.cache
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\ImportDll\obj\Debug\ImportDll.csproj.CoreCompileInputs.cache
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\ImportDll\obj\Debug\ImportDll.dll
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\ImportDll\obj\Debug\ImportDll.pdb

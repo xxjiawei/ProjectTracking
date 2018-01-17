@@ -8,8 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/closefloder.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/info.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/openfloder.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("model/mquotation.context.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("model/mquotation.tt")]
 
 

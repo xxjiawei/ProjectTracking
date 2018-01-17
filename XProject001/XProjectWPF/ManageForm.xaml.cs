@@ -270,7 +270,7 @@ namespace XProjectWPF
             if (myText.Text == "项目单[2]" || myText.Text == "项目单跟踪[2]")
             {
                 FrmProject myForm = new FrmProject();
-                MQuotation quotationModel = new MQuotation();
+                MQuotation22 quotationModel = new MQuotation22();
                 quotationModel.QuotationNo = "BJ20180112001";
                 quotationModel.QuotationDate = DateTime.Parse("2018-1-1");
                 quotationModel.FollowMan = "何显俊";
@@ -288,7 +288,7 @@ namespace XProjectWPF
             if (myText.Text == "报价单[3]" || myText.Text == "报价单跟踪[3]")
             {
                 FrmQuotation myForm = new FrmQuotation();
-                MQuotation quotationModel = new MQuotation();
+                MQuotation22 quotationModel = new MQuotation22();
                 quotationModel.QuotationNo = "BJ20180112001";
                 quotationModel.QuotationDate = DateTime.Parse("2018-1-1");
                 quotationModel.FollowMan = "何显俊";
@@ -323,7 +323,7 @@ namespace XProjectWPF
                     if (myText.Text == "项目单[2]" || myText.Text == "项目单跟踪[2]")
                     {
                         FrmProject myForm = new FrmProject();
-                        MQuotation quotationModel = new MQuotation();
+                        MQuotation22 quotationModel = new MQuotation22();
                         quotationModel.QuotationNo = "BJ20180112001";
                         quotationModel.QuotationDate = DateTime.Parse("2018-1-1");
                         quotationModel.FollowMan = "何显俊";
@@ -342,7 +342,7 @@ namespace XProjectWPF
                     if (myText.Text == "报价单[3]" || myText.Text == "报价单跟踪[3]")
                     {
                         FrmQuotation myForm = new FrmQuotation();
-                        MQuotation quotationModel = new MQuotation();
+                        MQuotation22 quotationModel = new MQuotation22();
                         quotationModel.QuotationNo = "BJ20180112001";
                         quotationModel.QuotationDate = DateTime.Parse("2018-1-1");
                         quotationModel.FollowMan = "何显俊";

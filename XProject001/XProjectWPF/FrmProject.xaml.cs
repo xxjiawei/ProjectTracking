@@ -30,7 +30,7 @@ namespace XProjectWPF
 
         public bool IsNew { get; set; }
 
-        public MQuotation QuotationModel { get; set; }
+        public MQuotation22 QuotationModel { get; set; }
 
 
         private DataGridStyleConfig m_GirdStyleConfig;

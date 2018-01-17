@@ -52,31 +52,38 @@
                 <xstyle:XLabel Content="报价单号" HorizontalAlignment="Left" Margin="18,19,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.771,1.118"/>
                 <xstyle:XTextBox x:Name="t_txt_QuotationNo" IsReadOnly="True" Text="新单" HorizontalAlignment="Left" Height="23" Margin="71,14,0,0" VerticalAlignment="Top" Width="148"/>
                 <xstyle:XLabel Content="报价日期" HorizontalAlignment="Left" Margin="251,19,0,0" VerticalAlignment="Top"/>
-                <xstyle:XDatePicker x:Name="t_txt_QuotationDate" HorizontalAlignment="Left" Margin="304,14,0,0" VerticalAlignment="Top" Width="148"/>
+                <xstyle:XDatePicker x:Name="t_dtp_QuotationDate" HorizontalAlignment="Left" Margin="304,14,0,0" VerticalAlignment="Top" Width="148"/>
                 <xstyle:XLabel Content="业务跟进人" HorizontalAlignment="Left" Margin="477,19,0,0" VerticalAlignment="Top"/>
                 <xstyle:XTextBox Name="t_txt_FollowMan" HorizontalAlignment="Left" Margin="542,14,0,0" VerticalAlignment="Top" Width="148" RenderTransformOrigin="0.925,-1.609"/>
-                <xstyle:XLabel  Content="测试项目" HorizontalAlignment="Left" Margin="18,48,0,0" VerticalAlignment="Top"/>
-                <xstyle:XTextBox  Name="t_txt_ProjectName" HorizontalAlignment="Left" Height="23" Margin="71,43,0,0" VerticalAlignment="Top" Width="619" />
+                <xstyle:XLabel  Content="申请项目" HorizontalAlignment="Left" Margin="251,47,0,0" VerticalAlignment="Top"/>
+                <xstyle:XTextBox  Name="t_txt_ProjectName" HorizontalAlignment="Left" Height="23" Margin="304,43,0,0" VerticalAlignment="Top" Width="386" />
                 <xstyle:XLabel  Content="当前报价" HorizontalAlignment="Left" Margin="18,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                <xstyle:XTextBox Name="t_txt_Price" HorizontalAlignment="Left" Height="23" Margin="71,72,0,0" VerticalAlignment="Top" Width="124"  RenderTransformOrigin="0.492,0.826"/>
+                <xstyle:XTextBox Name="t_txt_Price" HorizontalAlignment="Left" Height="23" Margin="71,70,0,0" VerticalAlignment="Top" Width="124"  RenderTransformOrigin="0.492,0.826"/>
                 <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="200,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                <xstyle:XCheckBox Content="含税" HorizontalAlignment="Left" Margin="251,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312"/>
+                <xstyle:XCheckBox Content="含税" Name="t_chk_IsTax" HorizontalAlignment="Left" Margin="251,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312"/>
+                <xstyle:XLabel Content="产品/型号" HorizontalAlignment="Left" Margin="13,47,0,0" VerticalAlignment="Top"/>
+                <xstyle:XTextBox x:Name="t_txt_ProductModel" HorizontalAlignment="Left" Margin="71,42,0,0" VerticalAlignment="Top" Width="148" RenderTransformOrigin="0.925,-1.609"/>
+                <xstyle:XRadioButton Content="安全" Name="t_rad_Safe" IsChecked="True" HorizontalAlignment="Left" Margin="304,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.458,0.938"/>
+                <xstyle:XRadioButton Content="化学" Name="t_rad_Chemistry" HorizontalAlignment="Left" Margin="349,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.458,0.938"/>
             </Grid>
         </xstyle:XGroupBox>
-        <xstyle:XGroupBox Header="客户信息" HorizontalAlignment="Left" Height="109" Margin="10,170,0,0" VerticalAlignment="Top" Width="696" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
+        <xstyle:XGroupBox Header="客户信息" HorizontalAlignment="Left" Height="146" Margin="10,170,0,0" VerticalAlignment="Top" Width="696" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
             <Grid>
                 <xstyle:XLabel Content="公司名称" HorizontalAlignment="Left" Margin="18,19,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.771,1.118"/>
-                <xstyle:XTextBox  Name="t_txt_CompanyName" HorizontalAlignment="Left" Height="23" Margin="71,14,0,0" VerticalAlignment="Top" Width="148"/>
-                <xstyle:XLabel Content="公司地址" HorizontalAlignment="Left" Margin="251,19,0,0" VerticalAlignment="Top"/>
-                <xstyle:XTextBox Name="t_txt_CompanyAddress" HorizontalAlignment="Left" Height="23" Margin="304,14,0,0" VerticalAlignment="Top" Width="386"/>
-                <xstyle:XLabel  Content="联系人" HorizontalAlignment="Left" Margin="30,48,0,0" VerticalAlignment="Top"/>
-                <xstyle:XTextBox  Name="t_txt_ContactMan" HorizontalAlignment="Left" Height="23" Margin="71,43,0,0" VerticalAlignment="Top" Width="148" />
-                <xstyle:XLabel  Content="联系电话" HorizontalAlignment="Left" Margin="251,48,0,0" VerticalAlignment="Top"/>
-                <xstyle:XTextBox  Name="t_txt_Tel" HorizontalAlignment="Left" Height="23" Margin="304,43,0,0" VerticalAlignment="Top" Width="148" />
-                <xstyle:XLabel  Content="电子邮箱" HorizontalAlignment="Left" Margin="489,48,0,0" VerticalAlignment="Top"/>
-                <xstyle:XTextBox Name="t_txt_Email"  HorizontalAlignment="Left" Height="23" Margin="542,43,0,0" VerticalAlignment="Top" Width="148" />
-                <xstyle:XLabel  Content="备注信息" HorizontalAlignment="Left" Margin="18,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                <xstyle:XTextBox HorizontalAlignment="Left" Height="23" Margin="71,72,0,0" VerticalAlignment="Top" Width="619"  RenderTransformOrigin="0.492,0.826"/>
+                <xstyle:XTextBox  Name="t_txt_CompanyName" Text="" HorizontalAlignment="Left" Height="23" Margin="71,14,0,0" VerticalAlignment="Top" Width="148
+                                  "/>
+                <xstyle:XLabel Content="公司地址" HorizontalAlignment="Left" Margin="250,19,0,0" VerticalAlignment="Top"/>
+                <xstyle:XTextBox Name="t_txt_CompanyAddress" Text="" HorizontalAlignment="Left" Height="23" Margin="303,14,0,0" VerticalAlignment="Top" Width="386"/>
+                <xstyle:XLabel  Content="联系人" HorizontalAlignment="Left" Margin="30,47,0,0" VerticalAlignment="Top"/>
+                <xstyle:XTextBox  Name="t_txt_ContactMan" HorizontalAlignment="Left" Height="23" Margin="71,42,0,0" VerticalAlignment="Top" Width="148" />
+                <xstyle:XLabel  Content="联系电话" HorizontalAlignment="Left" Margin="251,47,0,0" VerticalAlignment="Top"/>
+                <xstyle:XTextBox  Name="t_txt_Tel" HorizontalAlignment="Left" Height="23" Margin="304,42,0,0" VerticalAlignment="Top" Width="148" />
+                <xstyle:XLabel  Content="电子邮箱" HorizontalAlignment="Left" Margin="488,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.333,0.471"/>
+                <xstyle:XTextBox Name="t_txt_Email"  HorizontalAlignment="Left" Height="23" Margin="541,42,0,0" VerticalAlignment="Top" Width="148" />
+                <xstyle:XLabel  Content="备注信息" HorizontalAlignment="Left" Margin="251,74,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
+                <xstyle:XTextBox Name="t_txt_Remark" HorizontalAlignment="Left" Height="23" Margin="304,70,0,0" VerticalAlignment="Top" Width="385"  RenderTransformOrigin="0.492,0.826"/>
+                <xstyle:XLabel  Content="传真" HorizontalAlignment="Left" Margin="42,74,0,0" VerticalAlignment="Top"/>
+                <xstyle:XTextBox x:Name="t_txt_Fax"  HorizontalAlignment="Left" Height="23" Margin="71,70,0,0" VerticalAlignment="Top" Width="148" />
             </Grid>
         </xstyle:XGroupBox>
     </Grid>

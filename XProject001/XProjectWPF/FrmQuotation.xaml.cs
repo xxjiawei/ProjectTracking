@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using XProjectWPF.Method;
 using XProjectWPF.Model;
 
 namespace XProjectWPF
@@ -26,22 +27,67 @@ namespace XProjectWPF
             InitializeComponent();
         }
 
-        public MQuotation QuotationModel { get; set; }
+        public MQuotation22 QuotationModel { get; set; }
 
+        /// <summary>
+        /// 数据库操作类
+        /// </summary>
+        private ProjectTrackingEntities  m_Entities = new ProjectTrackingEntities();
+
+
+        private SerialNumberMethod m_SerialNumberMethod = new SerialNumberMethod();
+
+        /// <summary>
+        /// 保存按钮事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
         private void t_tsb_Save_Click(object sender, RoutedEventArgs e)
         {
-            t_txt_QuotationNo.Text = "BJ20180112004";
+            //生成流水号
+            string maxNo = m_SerialNumberMethod.GetMaxQNumber();
+
+            if (maxNo != null)
+            {
+
+            }
+            return;
+
+            PT_B_Quotation myModel = new PT_B_Quotation()
+            {
+                Quotation_No = "Q1801002",
+                Quotation_Date = t_dtp_QuotationDate.Value,
+                Follow_Man = t_txt_FollowMan.Text,
+                Product_Model = t_txt_ProductModel.Text,
+                Project_Name = t_txt_ProjectName.Text,
+                Price = double.Parse(t_txt_Price.Text),
+                Is_Tax = t_chk_IsTax.IsChecked == true ? "1" : "0",
+                Quotation_Type = t_rad_Safe.IsChecked == true ? "安全" : "化学",
+                Company_Name = t_txt_CompanyName.Text,
+                Company_Address = t_txt_CompanyAddress.Text,
+                Contact_Man = t_txt_ContactMan.Text,
+                Tel = t_txt_Tel.Text,
+                Email = t_txt_Email.Text,
+                Fax = t_txt_Fax.Text,
+                Remark = t_txt_Remark.Text,
+                Bill_Status = "1",
+                Oper_Time = DateTime.Today
+            };
+            m_Entities.PT_B_Quotation.Add(myModel);
+            m_Entities.SaveChanges();
 
             XMessageBox.Enter("保存成功", this);
         }
 
         private void XBaseForm_Loaded(object sender, RoutedEventArgs e)
         {
-            t_txt_QuotationDate.Value = DateTime.Today;
+            t_dtp_QuotationDate.Value = DateTime.Today;
+
+          
 
             if (QuotationModel == null) return;
             t_txt_QuotationNo.Text = QuotationModel.QuotationNo;
-            t_txt_QuotationDate.Value = QuotationModel.QuotationDate;
+            t_dtp_QuotationDate.Value = QuotationModel.QuotationDate;
             t_txt_FollowMan.Text = QuotationModel.FollowMan;
             t_txt_ProjectName.Text = QuotationModel.ProjectName;
             t_txt_Price.Text = QuotationModel.Price;
@@ -59,9 +105,9 @@ namespace XProjectWPF
                 XMessageBox.Enter("当前单据尚未保存，请保存后再操作！",this);
                 return;
             }
-            MQuotation quotationModel = new MQuotation();
+            MQuotation22 quotationModel = new MQuotation22();
             quotationModel.QuotationNo = t_txt_QuotationNo.Text;
-            quotationModel.QuotationDate = t_txt_QuotationDate.Value;
+            quotationModel.QuotationDate = t_dtp_QuotationDate.Value;
             quotationModel.FollowMan = t_txt_FollowMan.Text;
             quotationModel.ProjectName = t_txt_ProjectName.Text;
             quotationModel.Price = t_txt_Price.Text;
