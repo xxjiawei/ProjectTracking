@@ -14,25 +14,25 @@ namespace XProjectWPF.Method
     {
         public ProjectTrackingEntities m_Entities = new ProjectTrackingEntities();
 
-
+        /// <summary>
+        /// 获取新流水号值
+        /// </summary>
+        /// <returns></returns>
         public string GetMaxQNumber()
         {
+            string maxQNumber = string.Empty;
             string startNum = "Q" + DateTime.Today.ToString("yyMM");
-
-
             var temp = from p in m_Entities.PT_B_Quotation
+                       orderby p.Quotation_No descending
                        where p.Quotation_No.StartsWith(startNum)
                        select p;
-
             foreach (PT_B_Quotation model in temp)
             {
-                if (model == null)
-                {
-
-                }
+                string num = model.Quotation_No.Substring(model.Quotation_No.Length - 3);
+                maxQNumber = (int.Parse(num) + 1).ToString().PadLeft(3, '0');
+                break;
             }
-
-            return null;
+            return startNum + maxQNumber;
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using RJ.XStyle;
 using RJ.XStyle.GridEx;
+using RJ.XStyle.Model;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -126,6 +127,8 @@ namespace XProjectWPF
         /// </summary>
         private void BindTreeNode()
         {
+            //计算单证对应数量
+            CalculateBillCount();
             TreeViewItem myNode = CreateTreeNode("报价单", "/Resources/CloseFloder.png");
             TreeViewItem mySubNode = CreateTreeNode("报价单跟踪", "/Resources/Info.png");
             myNode.Items.Add(mySubNode);
@@ -143,6 +146,33 @@ namespace XProjectWPF
             myNode.Items.Add(mySubNode);
             t_tvw_Module.Items.Add(myNode);
             SetNodeExpandedState(t_tvw_Module, true);
+          
+        }
+        private ProjectTrackingEntities m_Entities = new ProjectTrackingEntities();
+        private void CalculateBillCount()
+        {
+            var q = m_Entities.PT_B_Quotation.Count(p => (new string[] { "1", "R", "A" }).Contains(p.Bill_Status));
+
+            if (q == 1)
+            {
+
+            }
+
+
+            var temp = from p in m_Entities.PT_B_Quotation
+                       group p by p.Bill_Status;
+
+            foreach (var group in temp)
+            {
+
+            }
+
+
+            //foreach (PT_B_Quotation myModel in temp)
+            //{
+
+
+                //}
         }
         /// <summary>
         /// 加载表格
@@ -202,12 +232,7 @@ namespace XProjectWPF
             myText.Margin = new Thickness(5, 0, 0, 0);
             myText.Text = text + "[0]";
             myText.Tag = text + "[{0}]";
-
-            if( text == "项目单" || text == "项目单跟踪")
-                myText.Text = text + "[2]";
-
-            if(text == "报价单跟踪" || text == "报价单")
-                myText.Text = text + "[3]";
+      
             myPanel.Children.Add(myImage);
             myPanel.Children.Add(myText);
 

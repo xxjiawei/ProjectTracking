@@ -78,7 +78,7 @@
                 <MenuItem Header="_View">
                 </MenuItem>-->
         </Menu>
-        <TreeView x:Name="t_tvw_Module" HorizontalAlignment="Left" Margin="10,67,0,169" Width="250"/>
+        <TreeView x:Name="t_tvw_Module" HorizontalAlignment="Left" Margin="10,67,0,169" Width="250" />
         <Label Content="单据类型" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.125,0.4" Height="25"/>
         <GroupBox Header="单据日期范围" HorizontalAlignment="Left" Height="154" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="250">
             <Grid>

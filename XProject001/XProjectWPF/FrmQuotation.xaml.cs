@@ -44,23 +44,15 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_tsb_Save_Click(object sender, RoutedEventArgs e)
         {
-            //生成流水号
-            string maxNo = m_SerialNumberMethod.GetMaxQNumber();
-
-            if (maxNo != null)
-            {
-
-            }
-            return;
-
+            string newQuotationNo = m_SerialNumberMethod.GetMaxQNumber();
             PT_B_Quotation myModel = new PT_B_Quotation()
             {
-                Quotation_No = "Q1801002",
+                Quotation_No = newQuotationNo,    
                 Quotation_Date = t_dtp_QuotationDate.Value,
                 Follow_Man = t_txt_FollowMan.Text,
                 Product_Model = t_txt_ProductModel.Text,
                 Project_Name = t_txt_ProjectName.Text,
-                Price = double.Parse(t_txt_Price.Text),
+                Price = string.IsNullOrEmpty(t_txt_Price.Text) ? 0: double.Parse(t_txt_Price.Text),
                 Is_Tax = t_chk_IsTax.IsChecked == true ? "1" : "0",
                 Quotation_Type = t_rad_Safe.IsChecked == true ? "安全" : "化学",
                 Company_Name = t_txt_CompanyName.Text,
@@ -75,14 +67,15 @@ namespace XProjectWPF
             };
             m_Entities.PT_B_Quotation.Add(myModel);
             m_Entities.SaveChanges();
-
+            t_txt_QuotationNo.Text = newQuotationNo;
+            t_tslStateText.Visibility = Visibility.Hidden;
             XMessageBox.Enter("保存成功", this);
         }
 
         private void XBaseForm_Loaded(object sender, RoutedEventArgs e)
         {
+            t_tslStateText.Text = "新建";
             t_dtp_QuotationDate.Value = DateTime.Today;
-
           
 
             if (QuotationModel == null) return;
@@ -127,6 +120,18 @@ namespace XProjectWPF
         private void t_tsb_Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        /// <summary>
+        /// 新建按钮事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
+        private void t_tsb_New_Click(object sender, RoutedEventArgs e)
+        {
+
+
+
         }
     }
 }
