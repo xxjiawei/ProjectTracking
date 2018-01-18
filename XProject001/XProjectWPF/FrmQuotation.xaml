@@ -15,7 +15,7 @@
                     <TextBlock Margin="3,1,0,0" Text="新建"/>
                 </StackPanel>
             </Button>
-            <Button Name="t_tsb_Copy" Margin="10,0,0,0">
+            <Button Name="t_tsb_Copy" Margin="10,0,0,0" Click="t_tsb_Copy_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/Copy.png" Width="16" Height="16"/>
                     <TextBlock Margin="3,1,0,0" Text="复制"/>
@@ -27,12 +27,12 @@
                     <TextBlock Margin="3,1,0,0" Text="保存"/>
                 </StackPanel>
             </Button>
-            <Button Name="t_tsb_Delete" Margin="10,0,0,0">
+            <!--<Button Name="t_tsb_Delete" Margin="10,0,0,0">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/Delete.png" Width="16" Height="16"/>
                     <TextBlock Margin="3,1,0,0" Text="删除"/>
                 </StackPanel>
-            </Button>
+            </Button>-->
             <Button Name="t_tsb_CreateProject" Margin="10,0,0,0" Click="t_tsb_CreateProject_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/icon_04.png" Width="16" Height="16"/>
@@ -45,10 +45,10 @@
                     <TextBlock Margin="3,1,0,0" Text="关闭"/>
                 </StackPanel>
             </Button>
-            <TextBlock x:Name="t_tslStateText" VerticalAlignment="Center" Margin="270,0,0,0" RenderTransformOrigin="1.104,0.667"><Run Text="状态"/></TextBlock>
+            <TextBlock x:Name="t_tslStateText" VerticalAlignment="Center" Margin="330,0,0,0" RenderTransformOrigin="1.104,0.667" Foreground="#FF0712F7" ><Run Text="状态"/></TextBlock>
         </ToolBar>
-        <xstyle:XGroupBox Header="报价信息" HorizontalAlignment="Left" Height="109" Margin="10,56,0,0" VerticalAlignment="Top" Width="696" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
-            <Grid>
+        <xstyle:XGroupBox Header="报价信息"  HorizontalAlignment="Left" Height="109" Margin="10,56,0,0" VerticalAlignment="Top" Width="696" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
+            <Grid Name="t_grd_Quotation">
                 <xstyle:XLabel Content="报价单号" HorizontalAlignment="Left" Margin="18,19,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.771,1.118"/>
                 <xstyle:XTextBox x:Name="t_txt_QuotationNo" IsReadOnly="True" Text="新单" HorizontalAlignment="Left" Height="23" Margin="71,14,0,0" VerticalAlignment="Top" Width="148"/>
                 <xstyle:XLabel Content="报价日期" HorizontalAlignment="Left" Margin="251,19,0,0" VerticalAlignment="Top"/>
@@ -67,8 +67,8 @@
                 <xstyle:XRadioButton Content="化学" Name="t_rad_Chemistry" HorizontalAlignment="Left" Margin="349,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.458,0.938"/>
             </Grid>
         </xstyle:XGroupBox>
-        <xstyle:XGroupBox Header="客户信息" HorizontalAlignment="Left" Height="146" Margin="10,170,0,0" VerticalAlignment="Top" Width="696" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
-            <Grid>
+        <xstyle:XGroupBox Header="客户信息"  HorizontalAlignment="Left" Height="146" Margin="10,170,0,0" VerticalAlignment="Top" Width="696" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
+            <Grid Name="t_grd_Company">
                 <xstyle:XLabel Content="公司名称" HorizontalAlignment="Left" Margin="18,19,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.771,1.118"/>
                 <xstyle:XTextBox  Name="t_txt_CompanyName" Text="" HorizontalAlignment="Left" Height="23" Margin="71,14,0,0" VerticalAlignment="Top" Width="148
                                   "/>

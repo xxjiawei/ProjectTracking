@@ -1,4 +1,5 @@
 ﻿using RJ.XStyle;
+using RJ.XStyle.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,16 +26,31 @@ namespace XProjectWPF
         public FrmQuotation()
         {
             InitializeComponent();
+            RegisterEvent();
         }
 
         public MQuotation22 QuotationModel { get; set; }
+        /// <summary>
+        /// 标识是否已修改
+        /// </summary>
+        private bool m_IsModify = false;
+        /// <summary>
+        /// 标识是否已加载完成
+        /// </summary>
+        private bool m_IsLoad = true;
+
+        /// <summary>
+        /// 获取或设置报价单对象
+        /// </summary>
+        public PT_B_Quotation PTBQuotation { get; set; }
 
         /// <summary>
         /// 数据库操作类
         /// </summary>
         private ProjectTrackingEntities  m_Entities = new ProjectTrackingEntities();
-
-
+        /// <summary>
+        /// 流水号生成规则类
+        /// </summary>
         private SerialNumberMethod m_SerialNumberMethod = new SerialNumberMethod();
 
         /// <summary>
@@ -70,26 +86,63 @@ namespace XProjectWPF
             t_txt_QuotationNo.Text = newQuotationNo;
             t_tslStateText.Visibility = Visibility.Hidden;
             XMessageBox.Enter("保存成功", this);
+            m_IsModify = false;
         }
 
+        /// <summary>
+        /// 窗体加载事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
         private void XBaseForm_Loaded(object sender, RoutedEventArgs e)
         {
-            t_tslStateText.Text = "新建";
-            t_dtp_QuotationDate.Value = DateTime.Today;
-          
-
-            if (QuotationModel == null) return;
-            t_txt_QuotationNo.Text = QuotationModel.QuotationNo;
-            t_dtp_QuotationDate.Value = QuotationModel.QuotationDate;
-            t_txt_FollowMan.Text = QuotationModel.FollowMan;
-            t_txt_ProjectName.Text = QuotationModel.ProjectName;
-            t_txt_Price.Text = QuotationModel.Price;
-            t_txt_CompanyName.Text = QuotationModel.CompanyName;
-            t_txt_CompanyAddress.Text = QuotationModel.CompanyAddress;
-            t_txt_Tel.Text = QuotationModel.Tel;
-            t_txt_Email.Text = QuotationModel.Email;
-            t_txt_ContactMan.Text = QuotationModel.ContactMan;
+            if (PTBQuotation == null)
+                CreateNewQuotationModel();
+            LoadControlsValue();
         }
+
+        /// <summary>
+        /// 设置新报价单对象
+        /// </summary>
+        private void CreateNewQuotationModel()
+        {
+            PTBQuotation = new PT_B_Quotation();
+            PTBQuotation.Quotation_No = "新单";
+            PTBQuotation.Quotation_Date = DateTime.Today;
+        }
+        /// <summary>
+        /// 加载报价单对象值
+        /// </summary>
+        private void LoadControlsValue()
+        {
+            t_txt_QuotationNo.Text = PTBQuotation.Quotation_No;
+            t_dtp_QuotationDate.Value = PTBQuotation.Quotation_Date;
+            t_txt_FollowMan.Text = PTBQuotation.Follow_Man;
+            t_txt_ProductModel.Text = PTBQuotation.Product_Model;
+            t_txt_ProjectName.Text = PTBQuotation.Project_Name;
+            t_txt_Price.Text = PTBQuotation.Price.ToString();
+            t_chk_IsTax.IsChecked = PTBQuotation.Is_Tax == "1" ? true : false;
+            t_rad_Safe.IsChecked = PTBQuotation.Quotation_Type != "化学" ? true : false;
+            t_rad_Chemistry.IsChecked = PTBQuotation.Quotation_Type == "化学" ? true : false;
+            t_txt_CompanyName.Text = PTBQuotation.Company_Name;
+            t_txt_CompanyAddress.Text = PTBQuotation.Company_Address;
+            t_txt_Tel.Text = PTBQuotation.Tel;
+            t_txt_Email.Text = PTBQuotation.Email;
+            t_txt_ContactMan.Text = PTBQuotation.Contact_Man;
+            t_txt_Fax.Text = PTBQuotation.Fax;
+            t_txt_Remark.Text = PTBQuotation.Remark;
+            if (PTBQuotation.Bill_Status == "R")
+                t_tslStateText.Text = "回收站";
+            else if (PTBQuotation.Bill_Status == "A")
+                t_tslStateText.Text = "归档";
+            else if (PTBQuotation.Bill_Status == "1")
+                t_tslStateText.Visibility = Visibility.Hidden;
+            else
+                t_tslStateText.Text = "新建";
+            m_IsLoad = false;
+        }
+
+
 
         private void t_tsb_CreateProject_Click(object sender, RoutedEventArgs e)
         {
@@ -116,7 +169,11 @@ namespace XProjectWPF
             myForm.ShowDialog();
             this.Close();
         }
-
+        /// <summary>
+        /// 关闭窗口事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
         private void t_tsb_Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -129,9 +186,115 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_tsb_New_Click(object sender, RoutedEventArgs e)
         {
+            if (m_IsModify)
+            {
+                MessageResult myResult = XMessageBox.Ask("当前单据尚未保存，是否继续？", 370);
+                if (myResult == MessageResult.Yes)
+                {
+                    //设置新报检单对象
+                    CreateNewQuotationModel();
+                    //对窗体进行赋值
+                    LoadControlsValue();
+                }
+            }
+            else
+            {
+                //设置新报检单对象
+                CreateNewQuotationModel();
+                //对窗体进行赋值
+                LoadControlsValue();
+            }
+        }
+        /// <summary>
+        /// 事件注册
+        /// </summary>
+        private void RegisterEvent()
+        {
+            RegisterEvent(t_grd_Quotation.Children);
+            RegisterEvent(t_grd_Company.Children);
+        }
 
+        /// <summary>
+        /// 遍历界面中的所有控件
+        /// </summary>
+        /// <param name="uiControls"></param>
+        private void RegisterEvent(UIElementCollection uiControls)
+        {
+            foreach (UIElement element in uiControls)
+            {
+                if (element is XTextBox)
+                {
+                    (element as XTextBox).TextChanged += myTextChanged;
+                }
+                else if (element is XDatePicker)
+                {
+                    (element as XDatePicker).ValueChanged += myValueChanged;
+                }
+                else if (element is XCheckBox)
+                {
+                    (element as XCheckBox).Checked += myChecked;
+                }
+                else if (element is Grid)
+                {
+                    this.RegisterEvent((element as Grid).Children);
+                }
+                else if (element is StackPanel)
+                {
+                    this.RegisterEvent((element as StackPanel).Children);
+                }
+            }
+        }
 
+        private void myChecked(object sender, RoutedEventArgs e)
+        {
+            if (!m_IsLoad)
+                m_IsModify = true;
+        }
 
+        private void myValueChanged(object sender, RoutedEventArgs e)
+        {
+            if (!m_IsLoad)
+                m_IsModify = true;
+        }
+
+        private void myTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!m_IsLoad)
+                m_IsModify = true;
+        }
+
+        /// <summary>
+        /// 复制按钮事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
+        private void t_tsb_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            if (m_IsModify)
+            {
+                XMessageBox.Warning("当前单据尚未保存，请保存后再操作！", this);
+                return;
+            }
+            PT_B_Quotation copyModel = new PT_B_Quotation();
+            copyModel.Quotation_No = "新单";
+            copyModel.Quotation_Date = PTBQuotation.Quotation_Date;
+            copyModel.Follow_Man = PTBQuotation.Follow_Man;
+            copyModel.Product_Model = PTBQuotation.Product_Model;
+            copyModel.Project_Name = PTBQuotation.Project_Name;
+            copyModel.Price = PTBQuotation.Price;
+            copyModel.Is_Tax = PTBQuotation.Is_Tax;
+            copyModel.Quotation_Type = PTBQuotation.Quotation_Type;
+            copyModel.Company_Name = PTBQuotation.Company_Name;
+            copyModel.Company_Address = PTBQuotation.Company_Address;
+            copyModel.Contact_Man = PTBQuotation.Contact_Man;
+            copyModel.Tel = PTBQuotation.Tel;
+            copyModel.Email = PTBQuotation.Email;
+            copyModel.Fax = PTBQuotation.Fax;
+            copyModel.Remark = PTBQuotation.Remark;
+            copyModel.Oper_Time = DateTime.Now;
+
+            PTBQuotation = copyModel;
+            LoadControlsValue();
         }
     }
 }
