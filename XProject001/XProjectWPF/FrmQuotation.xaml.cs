@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,6 +28,7 @@ namespace XProjectWPF
         {
             InitializeComponent();
             RegisterEvent();
+
         }
 
         public MQuotation22 QuotationModel { get; set; }
@@ -39,6 +41,10 @@ namespace XProjectWPF
         /// </summary>
         private bool m_IsLoad = true;
 
+        /// <summary>
+        /// 对象锁
+        /// </summary>
+        private Object thisLock = new Object();
         /// <summary>
         /// 获取或设置报价单对象
         /// </summary>
@@ -60,31 +66,21 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_tsb_Save_Click(object sender, RoutedEventArgs e)
         {
-            string newQuotationNo = m_SerialNumberMethod.GetMaxQNumber();
-            PT_B_Quotation myModel = new PT_B_Quotation()
+            lock (thisLock)
             {
-                Quotation_No = newQuotationNo,    
-                Quotation_Date = t_dtp_QuotationDate.Value,
-                Follow_Man = t_txt_FollowMan.Text,
-                Product_Model = t_txt_ProductModel.Text,
-                Project_Name = t_txt_ProjectName.Text,
-                Price = string.IsNullOrEmpty(t_txt_Price.Text) ? 0: double.Parse(t_txt_Price.Text),
-                Is_Tax = t_chk_IsTax.IsChecked == true ? "1" : "0",
-                Quotation_Type = t_rad_Safe.IsChecked == true ? "安全" : "化学",
-                Company_Name = t_txt_CompanyName.Text,
-                Company_Address = t_txt_CompanyAddress.Text,
-                Contact_Man = t_txt_ContactMan.Text,
-                Tel = t_txt_Tel.Text,
-                Email = t_txt_Email.Text,
-                Fax = t_txt_Fax.Text,
-                Remark = t_txt_Remark.Text,
-                Bill_Status = "1",
-                Oper_Time = DateTime.Today
-            };
-            m_Entities.PT_B_Quotation.Add(myModel);
-            m_Entities.SaveChanges();
-            t_txt_QuotationNo.Text = newQuotationNo;
-            t_tslStateText.Visibility = Visibility.Hidden;
+                if (string.IsNullOrEmpty(PTBQuotation.Bill_Status))
+                {
+                    string newQuotationNo = m_SerialNumberMethod.GetMaxQNumber();
+                    SaveModel(newQuotationNo);
+                    m_Entities.PT_B_Quotation.Add(PTBQuotation);
+                    t_txt_QuotationNo.Text = newQuotationNo;
+                    t_tslStateText.Text = "已入库";
+                }
+                else
+                    SaveModel(t_txt_QuotationNo.Text);
+                m_Entities.SaveChanges();
+
+            }
             XMessageBox.Enter("保存成功", this);
             m_IsModify = false;
         }
@@ -99,8 +95,23 @@ namespace XProjectWPF
             if (PTBQuotation == null)
                 CreateNewQuotationModel();
             LoadControlsValue();
-        }
 
+            Thread myThread = new Thread(SetMenuEnabel);
+            myThread.IsBackground = true;
+            myThread.Start();
+        }
+        /// <summary>
+        /// 设置菜单栏是否可用，解决双击表格过快直接点到按钮触发按钮事件问题
+        /// </summary>
+        private void SetMenuEnabel()
+        {
+            Thread.Sleep(500);
+            Dispatcher.BeginInvoke(new Action(delegate
+            {
+                t_meu_Menu.IsEnabled = true;
+            }));
+          
+        }
         /// <summary>
         /// 设置新报价单对象
         /// </summary>
@@ -136,13 +147,33 @@ namespace XProjectWPF
             else if (PTBQuotation.Bill_Status == "A")
                 t_tslStateText.Text = "归档";
             else if (PTBQuotation.Bill_Status == "1")
-                t_tslStateText.Visibility = Visibility.Hidden;
+                t_tslStateText.Text = "已入库";
             else
                 t_tslStateText.Text = "新建";
             m_IsLoad = false;
         }
 
+        private void SaveModel(string newQuotationNo)
+        {
+            PTBQuotation.Quotation_No = newQuotationNo;
+            PTBQuotation.Quotation_Date = t_dtp_QuotationDate.Value;
+            PTBQuotation.Follow_Man = t_txt_FollowMan.Text;
+            PTBQuotation.Product_Model = t_txt_ProductModel.Text;
+            PTBQuotation.Project_Name = t_txt_ProjectName.Text;
+            PTBQuotation.Price = string.IsNullOrEmpty(t_txt_Price.Text) ? 0 : double.Parse(t_txt_Price.Text);
+            PTBQuotation.Is_Tax = t_chk_IsTax.IsChecked == true ? "1" : "0";
+            PTBQuotation.Quotation_Type = t_rad_Safe.IsChecked == true ? "安全" : "化学";
+            PTBQuotation.Company_Name = t_txt_CompanyName.Text;
+            PTBQuotation.Company_Address = t_txt_CompanyAddress.Text;
+            PTBQuotation.Contact_Man = t_txt_ContactMan.Text;
+            PTBQuotation.Tel = t_txt_Tel.Text;
+            PTBQuotation.Email = t_txt_Email.Text;
+            PTBQuotation.Fax = t_txt_Fax.Text;
+            PTBQuotation.Remark = t_txt_Remark.Text;
+            PTBQuotation.Bill_Status = "1";
+            PTBQuotation.Oper_Time = DateTime.Now;
 
+        }
 
         private void t_tsb_CreateProject_Click(object sender, RoutedEventArgs e)
         {

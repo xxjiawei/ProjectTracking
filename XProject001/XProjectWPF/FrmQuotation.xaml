@@ -8,45 +8,50 @@
         mc:Ignorable="d"
         Title="报价单" Height="354" Width="724" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" MaximizeBox="False" Loaded="XBaseForm_Loaded">
     <Grid Margin="0,0,0,-1">
-        <ToolBar ToolBarTray.IsLocked="True" ToolBar.OverflowMode="AsNeeded" Width="720" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" Background="#FFDCEBFA" BorderBrush="#FFD0D0EA" BorderThickness="1" Margin="0,0,10,0" Grid.ColumnSpan="3">
-            <Button Name="t_tsb_New" Margin="10,0,0,0" Click="t_tsb_New_Click">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/New.png" Width="16" Height="16"/>
-                    <TextBlock Margin="3,1,0,0" Text="新建"/>
-                </StackPanel>
-            </Button>
-            <Button Name="t_tsb_Copy" Margin="10,0,0,0" Click="t_tsb_Copy_Click">
-                <StackPanel Orientation="Horizontal">
+        <Menu Name="t_meu_Menu" IsEnabled="False" DockPanel.Dock="Top" VerticalContentAlignment="Top" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#FFDDEAFA"  Width="722" Height="30" BorderBrush="#FFD0D0EA" BorderThickness="1" Margin="-1,-1,0,0">
+            <MenuItem Margin="5,0,0,0" Name="t_tsb_New" Click="t_tsb_New_Click">
+                <MenuItem.Header>
+                    <TextBlock TextAlignment="Left" Margin="-3,1,0,0"  VerticalAlignment="Center" Text="新建"/>
+                </MenuItem.Header>
+                <MenuItem.Icon>
+                    <Image Source="/Resources/New.png" Width="16" Height="16" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Margin="5,0,0,0" Name="t_tsb_Copy" Click="t_tsb_Copy_Click">
+                <MenuItem.Header>
+                    <TextBlock TextAlignment="Left" Margin="-3,1,0,0"  VerticalAlignment="Center" Text="复制"/>
+                </MenuItem.Header>
+                <MenuItem.Icon>
                     <Image Source="/Resources/Copy.png" Width="16" Height="16"/>
-                    <TextBlock Margin="3,1,0,0" Text="复制"/>
-                </StackPanel>
-            </Button>
-            <Button Name="t_tsb_Save" Margin="10,0,0,0" Click="t_tsb_Save_Click">
-                <StackPanel Orientation="Horizontal">
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Margin="5,0,0,0" Name="t_tsb_Save" Click="t_tsb_Save_Click">
+                <MenuItem.Header>
+                    <TextBlock TextAlignment="Left" Margin="-3,1,0,0"  VerticalAlignment="Center" Text="保存"/>
+                </MenuItem.Header>
+                <MenuItem.Icon>
                     <Image Source="/Resources/SaveMore.png" Width="16" Height="16"/>
-                    <TextBlock Margin="3,1,0,0" Text="保存"/>
-                </StackPanel>
-            </Button>
-            <!--<Button Name="t_tsb_Delete" Margin="10,0,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/Resources/Delete.png" Width="16" Height="16"/>
-                    <TextBlock Margin="3,1,0,0" Text="删除"/>
-                </StackPanel>
-            </Button>-->
-            <Button Name="t_tsb_CreateProject" Margin="10,0,0,0" Click="t_tsb_CreateProject_Click">
-                <StackPanel Orientation="Horizontal">
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Margin="5,0,0,0" Name="t_tsb_CreateProject" Click="t_tsb_CreateProject_Click">
+                <MenuItem.Header>
+                    <TextBlock TextAlignment="Left" Margin="-3,1,0,0"  VerticalAlignment="Center" Text="生成项目单"/>
+                </MenuItem.Header>
+                <MenuItem.Icon>
                     <Image Source="/Resources/icon_04.png" Width="16" Height="16"/>
-                    <TextBlock Margin="3,1,0,0" Text="生成项目单"/>
-                </StackPanel>
-            </Button>
-            <Button Name="t_tsb_Close" Margin="10,0,0,0" Click="t_tsb_Close_Click">
-                <StackPanel Orientation="Horizontal">
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Margin="5,0,0,0" Name="t_tsb_Close" Click="t_tsb_Close_Click">
+                <MenuItem.Header>
+                    <TextBlock TextAlignment="Left" Margin="-3,1,0,0"  VerticalAlignment="Center" Text="关闭"/>
+                </MenuItem.Header>
+                <MenuItem.Icon>
                     <Image Source="/Resources/Quit.png" Width="16" Height="16"/>
-                    <TextBlock Margin="3,1,0,0" Text="关闭"/>
-                </StackPanel>
-            </Button>
-            <TextBlock x:Name="t_tslStateText" VerticalAlignment="Center" Margin="330,0,0,0" RenderTransformOrigin="1.104,0.667" Foreground="#FF0712F7" ><Run Text="状态"/></TextBlock>
-        </ToolBar>
+                </MenuItem.Icon>
+            </MenuItem>
+        </Menu>
+        <TextBlock x:Name="t_tslStateText" VerticalAlignment="Center" Margin="0,6,17,304" RenderTransformOrigin="0.772,0.247" Foreground="#FF0712F7" HorizontalAlignment="Right" Width="37" ><Run Text="状态"/></TextBlock>
+
         <xstyle:XGroupBox Header="报价信息"  HorizontalAlignment="Left" Height="109" Margin="10,56,0,0" VerticalAlignment="Top" Width="696" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
             <Grid Name="t_grd_Quotation">
                 <xstyle:XLabel Content="报价单号" HorizontalAlignment="Left" Margin="18,19,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.771,1.118"/>

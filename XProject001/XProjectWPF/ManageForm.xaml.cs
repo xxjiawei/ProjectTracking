@@ -98,7 +98,7 @@ namespace XProjectWPF
             CalculateBillCount();
             TreeViewItem myNode = CreateTreeNode("报价单", "/Resources/CloseFloder.png", TreeNodeDictionary["Q"]);
             myNode.Tag = "Q";
-            TreeViewItem mySubNode = CreateTreeNode("报价单跟踪", "/Resources/Info.png", TreeNodeDictionary["1"]);
+            TreeViewItem mySubNode = CreateTreeNode("已入库", "/Resources/Info.png", TreeNodeDictionary["1"]);
             mySubNode.Tag = "1";
             myNode.Items.Add(mySubNode);
             mySubNode = CreateTreeNode("回收站", "/Resources/Info.png", TreeNodeDictionary["R"]);
@@ -109,7 +109,7 @@ namespace XProjectWPF
             myNode.Items.Add(mySubNode);
             t_tvw_Module.Items.Add(myNode);
             myNode = CreateTreeNode("项目单", "/Resources/CloseFloder.png", 0);
-            mySubNode = CreateTreeNode("项目单跟踪", "/Resources/Info.png", 0);
+            mySubNode = CreateTreeNode("已入库", "/Resources/Info.png", 0);
             myNode.Items.Add(mySubNode);
             mySubNode = CreateTreeNode("回收站", "/Resources/Info.png", 0);
             myNode.Items.Add(mySubNode);
@@ -251,6 +251,8 @@ namespace XProjectWPF
         {
             FrmQuotation myForm = new FrmQuotation();
             myForm.ShowDialog();
+
+            BindTreeNode();
         }
 
         /// <summary>
@@ -273,6 +275,8 @@ namespace XProjectWPF
             FrmQuotation myForm = new FrmQuotation();
             myForm.PTBQuotation = myModel;
             myForm.ShowDialog();
+
+            BindTreeNode();
         }
 
         private void t_tsm_Close_Click(object sender, RoutedEventArgs e)
@@ -337,6 +341,7 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_btn_Delete_Click(object sender, RoutedEventArgs e)
         {
+            TreeViewItem myItem = t_tvw_Module.SelectedItem as TreeViewItem;
             PT_B_Quotation myModel = (PT_B_Quotation)t_pgg_Bill.SelectedItem;
             if (myModel.Bill_Status != "R")
             {
@@ -359,6 +364,8 @@ namespace XProjectWPF
                     BindTreeNode();
                 }
             }
+            t_tvw_Module.Focus();
+            myItem.IsSelected = true;
         }
     }
 }
