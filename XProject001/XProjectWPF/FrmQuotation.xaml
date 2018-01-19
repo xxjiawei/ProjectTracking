@@ -6,7 +6,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="报价单" Height="354" Width="724" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" MaximizeBox="False" Loaded="XBaseForm_Loaded">
+        Title="报价单" Height="453" Width="724" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" MaximizeBox="False" Loaded="XBaseForm_Loaded">
     <Grid Margin="0,0,0,-1">
         <Menu Name="t_meu_Menu" IsEnabled="False" DockPanel.Dock="Top" VerticalContentAlignment="Top" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#FFDDEAFA"  Width="722" Height="30" BorderBrush="#FFD0D0EA" BorderThickness="1" Margin="-1,-1,0,0">
             <MenuItem Margin="5,0,0,0" Name="t_tsb_New" Click="t_tsb_New_Click">
@@ -50,7 +50,7 @@
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>
-        <TextBlock x:Name="t_tslStateText" VerticalAlignment="Center" Margin="0,6,17,304" RenderTransformOrigin="0.772,0.247" Foreground="#FF0712F7" HorizontalAlignment="Right" Width="37" ><Run Text="状态"/></TextBlock>
+        <TextBlock x:Name="t_tslStateText" VerticalAlignment="Center" Margin="0,6,17,404" RenderTransformOrigin="0.703,-0.867" Foreground="#FF0712F7" HorizontalAlignment="Right" Width="37" ><Run Text="状态"/></TextBlock>
 
         <xstyle:XGroupBox Header="报价信息"  HorizontalAlignment="Left" Height="109" Margin="10,56,0,0" VerticalAlignment="Top" Width="696" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
             <Grid Name="t_grd_Quotation">
@@ -70,10 +70,12 @@
                 <xstyle:XTextBox x:Name="t_txt_ProductModel" HorizontalAlignment="Left" Margin="71,42,0,0" VerticalAlignment="Top" Width="148" RenderTransformOrigin="0.925,-1.609"/>
                 <xstyle:XRadioButton Content="安全" Name="t_rad_Safe" IsChecked="True" HorizontalAlignment="Left" Margin="304,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.458,0.938"/>
                 <xstyle:XRadioButton Content="化学" Name="t_rad_Chemistry" HorizontalAlignment="Left" Margin="349,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.458,0.938"/>
+                <xstyle:XLabel Content="认证周期" HorizontalAlignment="Left" Margin="489,75,0,0" VerticalAlignment="Top"/>
+                <xstyle:XTextBox x:Name="t_txt_CycleTime" HorizontalAlignment="Left" Margin="542,71,0,0" VerticalAlignment="Top" Width="148" RenderTransformOrigin="0.925,-1.609"/>
             </Grid>
         </xstyle:XGroupBox>
-        <xstyle:XGroupBox Header="客户信息"  HorizontalAlignment="Left" Height="146" Margin="10,170,0,0" VerticalAlignment="Top" Width="696" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
-            <Grid Name="t_grd_Company">
+        <xstyle:XGroupBox Header="客户信息"  HorizontalAlignment="Left" Height="105" Margin="10,165,0,0" VerticalAlignment="Top" Width="696" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
+            <Grid Name="t_grd_Company" Margin="0,0,0,10">
                 <xstyle:XLabel Content="公司名称" HorizontalAlignment="Left" Margin="18,19,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.771,1.118"/>
                 <xstyle:XTextBox  Name="t_txt_CompanyName" Text="" HorizontalAlignment="Left" Height="23" Margin="71,14,0,0" VerticalAlignment="Top" Width="148
                                   "/>
@@ -90,6 +92,10 @@
                 <xstyle:XLabel  Content="传真" HorizontalAlignment="Left" Margin="42,74,0,0" VerticalAlignment="Top"/>
                 <xstyle:XTextBox x:Name="t_txt_Fax"  HorizontalAlignment="Left" Height="23" Margin="71,70,0,0" VerticalAlignment="Top" Width="148" />
             </Grid>
+        </xstyle:XGroupBox>
+        <xstyle:XGroupBox Header="已有项目信息"  HorizontalAlignment="Left" Height="139" Margin="10,276,0,0" VerticalAlignment="Top" Width="698" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
+            <xstyle:XDataGrid Height="129" Margin="10,10,8,0" VerticalAlignment="Top"/>
+
         </xstyle:XGroupBox>
     </Grid>
 </xstyle:XBaseForm>

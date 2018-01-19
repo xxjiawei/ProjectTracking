@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProjectTrackingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ProjectTrackingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="PT_B_Quotation">
           <Key>
             <PropertyRef Name="Quotation_No" />
@@ -17,6 +17,7 @@
           <Property Name="Price" Type="float" />
           <Property Name="Is_Tax" Type="varchar" MaxLength="4" />
           <Property Name="Quotation_Type" Type="varchar" MaxLength="10" />
+          <Property Name="Cycle_Time" Type="varchar" MaxLength="50" />
           <Property Name="Company_Name" Type="varchar" MaxLength="150" />
           <Property Name="Company_Address" Type="varchar" MaxLength="400" />
           <Property Name="Contact_Man" Type="varchar" MaxLength="50" />
@@ -30,8 +31,7 @@
         <EntityContainer Name="ProjectTrackingModelStoreContainer">
           <EntitySet Name="PT_B_Quotation" EntityType="Self.PT_B_Quotation" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectTrackingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -56,6 +56,7 @@
           <Property Name="Remark" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
           <Property Name="Bill_Status" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Name="Oper_Time" Type="DateTime" Precision="3" />
+          <Property Name="Cycle_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="ProjectTrackingEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="PT_B_Quotation" EntityType="Self.PT_B_Quotation" />
@@ -69,6 +70,7 @@
           <EntitySetMapping Name="PT_B_Quotation">
             <EntityTypeMapping TypeName="ProjectTrackingModel.PT_B_Quotation">
               <MappingFragment StoreEntitySet="PT_B_Quotation">
+                <ScalarProperty Name="Cycle_Time" ColumnName="Cycle_Time" />
                 <ScalarProperty Name="Quotation_No" ColumnName="Quotation_No" />
                 <ScalarProperty Name="Quotation_Date" ColumnName="Quotation_Date" />
                 <ScalarProperty Name="Follow_Man" ColumnName="Follow_Man" />

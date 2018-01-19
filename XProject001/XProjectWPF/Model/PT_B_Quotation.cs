@@ -31,5 +31,6 @@ namespace XProjectWPF.Model
         public string Remark { get; set; }
         public string Bill_Status { get; set; }
         public Nullable<System.DateTime> Oper_Time { get; set; }
+        public string Cycle_Time { get; set; }
     }
 }

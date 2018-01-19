@@ -50,38 +50,6 @@ C:\Users\40326\Documents\Visual Studio 2017\XProject001\XProject001\XProjectWPF\
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.CoreCompileInputs.cache
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\XProject001\XProjectWPF\obj\Debug\XProjectWPF.exe
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\XProject001\XProjectWPF\obj\Debug\XProjectWPF.pdb
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\XProjectWPF.exe.config
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\XProjectWPF.exe
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\XProjectWPF.pdb
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\RJ.Common.dll
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\RJ.XStyle.dll
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csprojResolveAssemblyReference.cache
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\FrmQuotation.baml
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\FrmProject.g.cs
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\FrmQuotation.g.cs
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\MainWindow.g.cs
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\ManageForm.g.cs
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\Window1.g.cs
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\App.g.cs
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF_MarkupCompile.cache
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF_MarkupCompile.lref
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\App.baml
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\FrmProject.baml
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\MainWindow.baml
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\ManageForm.baml
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\Window1.baml
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.g.resources
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.Properties.Resources.resources
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.GenerateResource.Cache
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.CoreCompileInputs.cache
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.exe
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.pdb
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\EntityFramework.dll
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\EntityFramework.SqlServer.dll
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\EntityFramework.xml
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\zh-Hans\EntityFramework.resources.dll
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF_Content.g.cs
 D:\Project\XProject001\XProjectWPF\bin\Debug\XProjectWPF.exe.config
 D:\Project\XProject001\XProjectWPF\bin\Debug\XProjectWPF.exe
 D:\Project\XProject001\XProjectWPF\bin\Debug\XProjectWPF.pdb
@@ -115,3 +83,35 @@ D:\Project\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.GenerateResource
 D:\Project\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.CoreCompileInputs.cache
 D:\Project\XProject001\XProjectWPF\obj\Debug\XProjectWPF.exe
 D:\Project\XProject001\XProjectWPF\obj\Debug\XProjectWPF.pdb
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csprojResolveAssemblyReference.cache
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\FrmQuotation.baml
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\FrmProject.g.cs
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\FrmQuotation.g.cs
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\MainWindow.g.cs
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\ManageForm.g.cs
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\Window1.g.cs
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\App.g.cs
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF_Content.g.cs
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF_MarkupCompile.cache
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF_MarkupCompile.lref
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\XProjectWPF.exe.config
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\XProjectWPF.exe
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\XProjectWPF.pdb
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\EntityFramework.dll
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\RJ.Common.dll
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\RJ.XStyle.dll
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\EntityFramework.xml
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\zh-Hans\EntityFramework.resources.dll
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\App.baml
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\FrmProject.baml
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\MainWindow.baml
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\ManageForm.baml
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\Window1.baml
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.g.resources
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.Properties.Resources.resources
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.GenerateResource.Cache
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.CoreCompileInputs.cache
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.exe
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.pdb

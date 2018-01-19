@@ -29,7 +29,6 @@ namespace XProjectWPF
             InitializeComponent();
         }
 
-
         private DataGridStyleConfig m_GirdStyleConfig;
 
         public DataGridStyleConfig GirdStyleConfig
@@ -93,31 +92,63 @@ namespace XProjectWPF
         /// </summary>
         private void BindTreeNode()
         {
-            t_tvw_Module.Items.Clear();
-            //计算单证对应数量
             CalculateBillCount();
-            TreeViewItem myNode = CreateTreeNode("报价单", "/Resources/CloseFloder.png", TreeNodeDictionary["Q"]);
-            myNode.Tag = "Q";
-            TreeViewItem mySubNode = CreateTreeNode("已入库", "/Resources/Info.png", TreeNodeDictionary["1"]);
-            mySubNode.Tag = "1";
-            myNode.Items.Add(mySubNode);
-            mySubNode = CreateTreeNode("回收站", "/Resources/Info.png", TreeNodeDictionary["R"]);
-            mySubNode.Tag = "R";
-            myNode.Items.Add(mySubNode);
-            mySubNode = CreateTreeNode("归档", "/Resources/Info.png", TreeNodeDictionary["A"]);
-            mySubNode.Tag = "A";
-            myNode.Items.Add(mySubNode);
-            t_tvw_Module.Items.Add(myNode);
-            myNode = CreateTreeNode("项目单", "/Resources/CloseFloder.png", 0);
-            mySubNode = CreateTreeNode("已入库", "/Resources/Info.png", 0);
-            myNode.Items.Add(mySubNode);
-            mySubNode = CreateTreeNode("回收站", "/Resources/Info.png", 0);
-            myNode.Items.Add(mySubNode);
-            mySubNode = CreateTreeNode("归档", "/Resources/Info.png", 0);
-            myNode.Items.Add(mySubNode);
-            t_tvw_Module.Items.Add(myNode);
+
+            List<XTreeNode> myCollect = new List<XTreeNode>();
+            XTreeNode myModel = new XTreeNode();
+            myModel.Text = "报价单" + "[" + TreeNodeDictionary["Q"] + "]"; 
+            myModel.NormalImage = "/Resources/CloseFloder.png";
+            myModel.ExpandedImage = "/Resources/OpenFloder.png";
+            myModel.Tag = "Q";
+            myModel.Nodes = new List<XTreeNode>();
+            myCollect.Add(myModel);
+
+            XTreeNode mySub = new XTreeNode();
+            mySub.Text = "已入库" + "[" + TreeNodeDictionary["1"] + "]"; 
+            mySub.NormalImage = "/Resources/Info.png";
+            mySub.ExpandedImage = "/Resources/Info.png";
+            mySub.Tag = "1";
+            myModel.Nodes.Add(mySub);
+            XTreeNode mySub2 = new XTreeNode();
+            mySub2.Text = "回收站" + "[" + TreeNodeDictionary["R"] + "]";
+            mySub2.NormalImage = "/Resources/Info.png";
+            mySub2.ExpandedImage = "/Resources/Info.png";
+            mySub2.Tag = "R";
+            myModel.Nodes.Add(mySub2);
+            XTreeNode mySub3 = new XTreeNode();
+            mySub3.Text = "归档" + "[" + TreeNodeDictionary["A"] + "]";
+            mySub3.NormalImage = "/Resources/Info.png";
+            mySub3.ExpandedImage = "/Resources/Info.png";
+            mySub3.Tag = "A";
+            myModel.Nodes.Add(mySub3);
+
+            t_tvw_Module.BindTreeView(myCollect);
             SetNodeExpandedState(t_tvw_Module, true);
 
+            //t_tvw_Module.Items.Clear();
+            ////计算单证对应数量
+            //CalculateBillCount();
+            //TreeViewItem myNode = CreateTreeNode("报价单", "/Resources/CloseFloder.png", TreeNodeDictionary["Q"]);
+            //myNode.Tag = "Q";
+            //TreeViewItem mySubNode = CreateTreeNode("已入库", "/Resources/Info.png", TreeNodeDictionary["1"]);
+            //mySubNode.Tag = "1";
+            //myNode.Items.Add(mySubNode);
+            //mySubNode = CreateTreeNode("回收站", "/Resources/Info.png", TreeNodeDictionary["R"]);
+            //mySubNode.Tag = "R";
+            //myNode.Items.Add(mySubNode);
+            //mySubNode = CreateTreeNode("归档", "/Resources/Info.png", TreeNodeDictionary["A"]);
+            //mySubNode.Tag = "A";
+            //myNode.Items.Add(mySubNode);
+            //t_tvw_Module.Items.Add(myNode);
+            //myNode = CreateTreeNode("项目单", "/Resources/CloseFloder.png", 0);
+            //mySubNode = CreateTreeNode("已入库", "/Resources/Info.png", 0);
+            //myNode.Items.Add(mySubNode);
+            //mySubNode = CreateTreeNode("回收站", "/Resources/Info.png", 0);
+            //myNode.Items.Add(mySubNode);
+            //mySubNode = CreateTreeNode("归档", "/Resources/Info.png", 0);
+            //myNode.Items.Add(mySubNode);
+            //t_tvw_Module.Items.Add(myNode);
+            //SetNodeExpandedState(t_tvw_Module, true);
         }
 
         private ProjectTrackingEntities m_Entities = new ProjectTrackingEntities();
@@ -252,7 +283,7 @@ namespace XProjectWPF
             FrmQuotation myForm = new FrmQuotation();
             myForm.ShowDialog();
 
-            BindTreeNode();
+            RefreshTreeNode();
         }
 
         /// <summary>
@@ -275,8 +306,7 @@ namespace XProjectWPF
             FrmQuotation myForm = new FrmQuotation();
             myForm.PTBQuotation = myModel;
             myForm.ShowDialog();
-
-            BindTreeNode();
+            RefreshTreeNode();
         }
 
         private void t_tsm_Close_Click(object sender, RoutedEventArgs e)
@@ -297,14 +327,14 @@ namespace XProjectWPF
         /// </summary>
         private void LoadBusinessData()
         {
-            TreeViewItem myItem = t_tvw_Module.SelectedItem as TreeViewItem;
+            XTreeNode myItem = t_tvw_Module.SelectedItem as XTreeNode;
             if (myItem == null) return;
 
             string billStatus = myItem.Tag.ToString();
 
-            if (myItem.Items.Count == 0)
+            if (myItem.Nodes.Count == 0)
             {
-                TreeViewItem myParent = myItem.Parent as TreeViewItem;
+                XTreeNode myParent = myItem.Parent as XTreeNode;
                 string parentStatus = myParent.Tag.ToString();
                 if (parentStatus == "Q")
                 {
@@ -341,7 +371,6 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_btn_Delete_Click(object sender, RoutedEventArgs e)
         {
-            TreeViewItem myItem = t_tvw_Module.SelectedItem as TreeViewItem;
             PT_B_Quotation myModel = (PT_B_Quotation)t_pgg_Bill.SelectedItem;
             if (myModel.Bill_Status != "R")
             {
@@ -351,7 +380,7 @@ namespace XProjectWPF
                 {
                     myModel.Bill_Status = "R";
                     m_Entities.SaveChanges();
-                    BindTreeNode();
+                    RefreshTreeNode();
                 }
             }
             else
@@ -361,11 +390,35 @@ namespace XProjectWPF
                 {
                     m_Entities.PT_B_Quotation.Remove(myModel);
                     m_Entities.SaveChanges();
-                    BindTreeNode();
+                    RefreshTreeNode();
                 }
             }
-            t_tvw_Module.Focus();
-            myItem.IsSelected = true;
+        }
+
+        /// <summary>
+        /// 设置选中树节点
+        /// </summary>
+        /// <param name="myNodes">树节点集合</param>
+        /// <param name="tag">Tag值</param>
+        private void SetSelected(List<XTreeNode>  myNodes,string tag)
+        {
+            foreach (XTreeNode myNode in myNodes)
+            {
+                if (myNode.Tag.ToString() == tag)
+                    myNode.IsSelected = true;
+                if (myNode.Nodes.Count != 0)
+                    SetSelected(myNode.Nodes, tag);
+            }
+        }
+        /// <summary>
+        /// 刷新树节点并重设选中节点
+        /// </summary>
+        private void RefreshTreeNode()
+        {
+            XTreeNode myItem = t_tvw_Module.SelectedItem as XTreeNode;
+            string myTag = myItem.Tag.ToString();
+            BindTreeNode();
+            SetSelected(t_tvw_Module.Nodes, myTag);
         }
     }
 }

@@ -78,7 +78,7 @@
                 <MenuItem Header="_View">
                 </MenuItem>-->
         </Menu>
-        <TreeView x:Name="t_tvw_Module" HorizontalAlignment="Left" Margin="10,67,0,169" Width="250"  SelectedItemChanged="t_tvw_Module_SelectedItemChanged"/>
+         <xstyle:XTreeView x:Name="t_tvw_Module" HorizontalAlignment="Left" Margin="10,67,0,169" Width="250"  SelectedItemChanged="t_tvw_Module_SelectedItemChanged" BorderBrush="LightGray"/>
         <Label Content="单据类型" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.125,0.4" Height="25"/>
         <GroupBox Header="单据日期范围" HorizontalAlignment="Left" Height="154" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="250">
             <Grid>
@@ -93,7 +93,7 @@
             </Grid>
         </GroupBox>
         <xstyle:XDataGrid x:Name="t_pgg_Bill" HorizontalAlignment="Stretch" Margin="275,67,10,12" VerticalAlignment="Stretch" RowHeight="24" 
-                  IsReadOnly="True" ColumnHeaderHeight="32" AutoGenerateColumns="False" Grid.ColumnSpan="2" MouseDoubleClick="t_pgg_Bill_MouseDoubleClick">
+                  IsReadOnly="True" ColumnHeaderHeight="32" AutoGenerateColumns="False" Grid.ColumnSpan="2" MouseDoubleClick="t_pgg_Bill_MouseDoubleClick" DisplayRowNum="True">
             <DataGrid.ContextMenu>
                 <ContextMenu x:Name="SettingMenu" Placement="MousePoint" Width="150" StaysOpen="False">
                     <MenuItem x:Name="t_tsb_User" Header="右键按钮1"/>

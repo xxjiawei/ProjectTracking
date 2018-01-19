@@ -70,9 +70,8 @@ namespace XProjectWPF
             t_txt_Tel.Text = QuotationModel.Tel;
             t_txt_Price.Text = QuotationModel.Price;
             t_dtp_QuotationDate.Value = QuotationModel.QuotationDate;
-            t_txt_ReceivableCAccount.Text = QuotationModel.Price;
-            t_txt_EnReceivableCAccount.Text = QuotationModel.Price;
-            t_txt_Payee.Text = t_txt_FollowMan.Text;
+  
+  
 
             //表格赋值
             DataTable myTable = new DataTable();
@@ -90,16 +89,7 @@ namespace XProjectWPF
                 myTable.Rows.Add("5000", "2018-1-1", "何显俊", "是", "5000", "I01608658", "2018-1-1", "客户预付5000元，约定1月中旬支付剩余钱款。");
                 myTable.Rows.Add("45000", "2018-1-12", "何显俊", "是", "35000", "I01608622", "2018-1-12", "");
 
-                t_txt_PayeeMoney.Text = "5000";
-                t_dtp_PayeeDate.Value = DateTime.Parse("2018-1-1");
-                t_txt_Payee.Text = "何显俊";
-                t_chk_Inv.IsChecked = true;
-                t_txt_PayeeInvPrice.Text = "5000";
-                yskh.Text = "40000";
-                t_txt_EnReceivableCAccount.Text = "10000";
-                t_txt_PayeeInvNo.Text = "I01608658";
-                t_dtp_PayeeInvDate.Value = DateTime.Parse("2018-1-1");
-                t_txt_PayeeRemark.Text = "客户预付5000元，约定1月中旬支付剩余钱款。";
+            
             }
 
             GirdStyleConfig.ItemsSource = myTable.DefaultView;

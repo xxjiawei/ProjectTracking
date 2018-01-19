@@ -110,11 +110,10 @@ namespace XProjectWPF
             {
                 t_meu_Menu.IsEnabled = true;
             }));
-          
         }
         /// <summary>
         /// 设置新报价单对象
-        /// </summary>
+        /// </summary> 
         private void CreateNewQuotationModel()
         {
             PTBQuotation = new PT_B_Quotation();
@@ -135,6 +134,7 @@ namespace XProjectWPF
             t_chk_IsTax.IsChecked = PTBQuotation.Is_Tax == "1" ? true : false;
             t_rad_Safe.IsChecked = PTBQuotation.Quotation_Type != "化学" ? true : false;
             t_rad_Chemistry.IsChecked = PTBQuotation.Quotation_Type == "化学" ? true : false;
+            t_txt_CycleTime.Text = PTBQuotation.Cycle_Time;
             t_txt_CompanyName.Text = PTBQuotation.Company_Name;
             t_txt_CompanyAddress.Text = PTBQuotation.Company_Address;
             t_txt_Tel.Text = PTBQuotation.Tel;
@@ -163,6 +163,7 @@ namespace XProjectWPF
             PTBQuotation.Price = string.IsNullOrEmpty(t_txt_Price.Text) ? 0 : double.Parse(t_txt_Price.Text);
             PTBQuotation.Is_Tax = t_chk_IsTax.IsChecked == true ? "1" : "0";
             PTBQuotation.Quotation_Type = t_rad_Safe.IsChecked == true ? "安全" : "化学";
+            PTBQuotation.Cycle_Time = t_txt_CycleTime.Text;
             PTBQuotation.Company_Name = t_txt_CompanyName.Text;
             PTBQuotation.Company_Address = t_txt_CompanyAddress.Text;
             PTBQuotation.Contact_Man = t_txt_ContactMan.Text;
@@ -315,6 +316,7 @@ namespace XProjectWPF
             copyModel.Price = PTBQuotation.Price;
             copyModel.Is_Tax = PTBQuotation.Is_Tax;
             copyModel.Quotation_Type = PTBQuotation.Quotation_Type;
+            copyModel.Cycle_Time = PTBQuotation.Cycle_Time;
             copyModel.Company_Name = PTBQuotation.Company_Name;
             copyModel.Company_Address = PTBQuotation.Company_Address;
             copyModel.Contact_Man = PTBQuotation.Contact_Man;
