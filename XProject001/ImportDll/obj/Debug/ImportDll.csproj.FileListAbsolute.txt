@@ -8,3 +8,8 @@ C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XPro
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\ImportDll\obj\Debug\ImportDll.csproj.CoreCompileInputs.cache
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\ImportDll\obj\Debug\ImportDll.dll
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\ImportDll\obj\Debug\ImportDll.pdb
+D:\Project\XProject001\ImportDll\bin\Debug\ImportDll.dll
+D:\Project\XProject001\ImportDll\bin\Debug\ImportDll.pdb
+D:\Project\XProject001\ImportDll\obj\Debug\ImportDll.csproj.CoreCompileInputs.cache
+D:\Project\XProject001\ImportDll\obj\Debug\ImportDll.dll
+D:\Project\XProject001\ImportDll\obj\Debug\ImportDll.pdb

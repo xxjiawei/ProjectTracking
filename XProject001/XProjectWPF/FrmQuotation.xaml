@@ -6,7 +6,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="报价单" Height="453" Width="724" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" MaximizeBox="False" Loaded="XBaseForm_Loaded">
+        Title="报价单" Height="453" Width="724" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" MaximizeBox="False" Loaded="XBaseForm_Loaded" Closing="XBaseForm_Closing">
     <Grid Margin="0,0,0,-1">
         <Menu Name="t_meu_Menu" IsEnabled="False" DockPanel.Dock="Top" VerticalContentAlignment="Top" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#FFDDEAFA"  Width="722" Height="30" BorderBrush="#FFD0D0EA" BorderThickness="1" Margin="-1,-1,0,0">
             <MenuItem Margin="5,0,0,0" Name="t_tsb_New" Click="t_tsb_New_Click">
@@ -52,7 +52,7 @@
         </Menu>
         <TextBlock x:Name="t_tslStateText" VerticalAlignment="Center" Margin="0,6,17,404" RenderTransformOrigin="0.703,-0.867" Foreground="#FF0712F7" HorizontalAlignment="Right" Width="37" ><Run Text="状态"/></TextBlock>
 
-        <xstyle:XGroupBox Header="报价信息"  HorizontalAlignment="Left" Height="109" Margin="10,56,0,0" VerticalAlignment="Top" Width="696" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
+        <xstyle:XGroupBox Header="报价信息"  HorizontalAlignment="Left" Height="109" Margin="10,51,0,0" VerticalAlignment="Top" Width="696" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
             <Grid Name="t_grd_Quotation">
                 <xstyle:XLabel Content="报价单号" HorizontalAlignment="Left" Margin="18,19,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.771,1.118"/>
                 <xstyle:XTextBox x:Name="t_txt_QuotationNo" IsReadOnly="True" Text="新单" HorizontalAlignment="Left" Height="23" Margin="71,14,0,0" VerticalAlignment="Top" Width="148"/>
@@ -63,11 +63,11 @@
                 <xstyle:XLabel  Content="申请项目" HorizontalAlignment="Left" Margin="251,47,0,0" VerticalAlignment="Top"/>
                 <xstyle:XTextBox  Name="t_txt_ProjectName" HorizontalAlignment="Left" Height="23" Margin="304,43,0,0" VerticalAlignment="Top" Width="386" />
                 <xstyle:XLabel  Content="当前报价" HorizontalAlignment="Left" Margin="18,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                <xstyle:XTextBox Name="t_txt_Price" HorizontalAlignment="Left" Height="23" Margin="71,70,0,0" VerticalAlignment="Top" Width="124"  RenderTransformOrigin="0.492,0.826"/>
+                <xstyle:XTextBox Name="t_txt_Price" HorizontalAlignment="Left" Height="23" Margin="71,70,0,0" VerticalAlignment="Top" Width="124"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
                 <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="200,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                 <xstyle:XCheckBox Content="含税" Name="t_chk_IsTax" HorizontalAlignment="Left" Margin="251,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312"/>
                 <xstyle:XLabel Content="产品/型号" HorizontalAlignment="Left" Margin="13,47,0,0" VerticalAlignment="Top"/>
-                <xstyle:XTextBox x:Name="t_txt_ProductModel" HorizontalAlignment="Left" Margin="71,42,0,0" VerticalAlignment="Top" Width="148" RenderTransformOrigin="0.925,-1.609"/>
+                <xstyle:XTextBox x:Name="t_txt_ProductModel"  HorizontalAlignment="Left" Margin="71,42,0,0" VerticalAlignment="Top" Width="148" RenderTransformOrigin="0.925,-1.609"/>
                 <xstyle:XRadioButton Content="安全" Name="t_rad_Safe" IsChecked="True" HorizontalAlignment="Left" Margin="304,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.458,0.938"/>
                 <xstyle:XRadioButton Content="化学" Name="t_rad_Chemistry" HorizontalAlignment="Left" Margin="349,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.458,0.938"/>
                 <xstyle:XLabel Content="认证周期" HorizontalAlignment="Left" Margin="489,75,0,0" VerticalAlignment="Top"/>
@@ -94,8 +94,15 @@
             </Grid>
         </xstyle:XGroupBox>
         <xstyle:XGroupBox Header="已有项目信息"  HorizontalAlignment="Left" Height="139" Margin="10,276,0,0" VerticalAlignment="Top" Width="698" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8" Foreground="#FF2562A4">
-            <xstyle:XDataGrid Height="129" Margin="10,10,8,0" VerticalAlignment="Top"/>
-
+            <xstyle:XDataGrid Name="t_dge_Project" IsReadOnly="True" Height="129" Margin="10,10,8,0" VerticalAlignment="Top" MouseDoubleClick ="t_dge_Project_MouseDoubleClick" DisplayRowNum="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="120" Header="项目单号" Binding="{Binding Project_No}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="200" Header="申请项目" Binding="{Binding Project_Name}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="80" Header="报价日期" Binding="{Binding Quotation_Date,StringFormat='{}{0:yyyy-MM-dd}'}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="80" Header="当前报价" Binding="{Binding Price}"></DataGridTextColumn>
+                    <DataGridTextColumn Width="80" Header="业务跟进人" Binding="{Binding Follow_Man}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </xstyle:XDataGrid>
         </xstyle:XGroupBox>
     </Grid>
 </xstyle:XBaseForm>

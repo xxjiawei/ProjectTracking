@@ -32,6 +32,34 @@ namespace XProjectWPF.Method
                 maxQNumber = (int.Parse(num) + 1).ToString().PadLeft(3, '0');
                 break;
             }
+            if (string.IsNullOrEmpty(maxQNumber))
+                maxQNumber = "001";
+
+            return startNum + maxQNumber;
+        }
+
+        /// <summary>
+        /// 获取项目单流水号值
+        /// </summary>
+        /// <param name="type">前缀</param>
+        /// <returns>返回获取到的流水号值</returns>
+        public string GetMaxPNumber(string type)
+        {
+            string maxQNumber = string.Empty;
+            string startNum = type + DateTime.Today.ToString("yyMM");
+            var temp = from p in m_Entities.PT_B_Project
+                       orderby p.Project_No descending
+                       where p.Project_No.StartsWith(startNum)
+                       select p;
+            foreach (PT_B_Project model in temp)
+            {
+                string num = model.Project_No.Substring(model.Project_No.Length - 3);
+                maxQNumber = (int.Parse(num) + 1).ToString().PadLeft(3, '0');
+                break;
+            }
+            if (string.IsNullOrEmpty(maxQNumber))
+                maxQNumber = "001";
+
             return startNum + maxQNumber;
         }
 

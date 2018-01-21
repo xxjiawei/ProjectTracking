@@ -1,0 +1,456 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProjectTrackingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PT_B_Project">
+          <Key>
+            <PropertyRef Name="Project_No" />
+          </Key>
+          <Property Name="Project_No" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Quotation_No" Type="varchar" MaxLength="20" />
+          <Property Name="Follow_Man" Type="varchar" MaxLength="50" />
+          <Property Name="Project_Type" Type="varchar" MaxLength="4" />
+          <Property Name="Company_Name" Type="varchar" MaxLength="150" />
+          <Property Name="Contact_Man" Type="varchar" MaxLength="50" />
+          <Property Name="Tel" Type="varchar" MaxLength="50" />
+          <Property Name="Company_Address" Type="varchar" MaxLength="400" />
+          <Property Name="Fax" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Project_Name" Type="varchar" MaxLength="500" />
+          <Property Name="Product_Model" Type="varchar" MaxLength="100" />
+          <Property Name="Cycle_Time" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="varchar" MaxLength="50" />
+          <Property Name="Is_Tax" Type="varchar" MaxLength="4" />
+          <Property Name="Quotation_Date" Type="datetime" />
+          <Property Name="Account_Receivable" Type="varchar" MaxLength="50" />
+          <Property Name="Payment_Receivable" Type="varchar" MaxLength="50" />
+          <Property Name="Un_Account_Receivable" Type="varchar" MaxLength="50" />
+          <Property Name="Agency_Account_Payable" Type="varchar" MaxLength="50" />
+          <Property Name="Agency_Accounts_Prepaid" Type="varchar" MaxLength="50" />
+          <Property Name="Un_Agency_Account_Payable" Type="varchar" MaxLength="50" />
+          <Property Name="Lab_Account_Payable" Type="varchar" MaxLength="50" />
+          <Property Name="Lab_Accounts_Prepaid" Type="varchar" MaxLength="50" />
+          <Property Name="Un_Lab_Account_Payable" Type="varchar" MaxLength="50" />
+          <Property Name="Other_Account" Type="varchar" MaxLength="50" />
+          <Property Name="Other_Pad_Account" Type="varchar" MaxLength="50" />
+          <Property Name="Un_Other_Account" Type="varchar" MaxLength="50" />
+          <Property Name="Profits" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Now_Profits" Type="varchar" MaxLength="50" />
+          <Property Name="Pads_Money" Type="varchar" MaxLength="50" />
+          <Property Name="Is_Pads" Type="varchar" MaxLength="4" />
+          <Property Name="Is_All_Customer" Type="varchar" MaxLength="4" />
+          <Property Name="Is_All_Agency" Type="varchar" MaxLength="4" />
+          <Property Name="Is_All_Lab" Type="varchar" MaxLength="4" />
+          <Property Name="Is_All_Other" Type="varchar" MaxLength="4" />
+          <Property Name="Remark" Type="varchar" MaxLength="400" />
+          <Property Name="Oper_Time" Type="datetime" />
+          <Property Name="Bill_Status" Type="varchar" MaxLength="2" />
+        </EntityType>
+        <EntityType Name="PT_B_Project_Agency">
+          <Key>
+            <PropertyRef Name="Agency_Pays_Id" />
+          </Key>
+          <Property Name="Agency_Pays_Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Project_No" Type="varchar" MaxLength="20" />
+          <Property Name="Seq_No" Type="int" />
+          <Property Name="Agency_Money" Type="varchar" MaxLength="50" />
+          <Property Name="Agency" Type="varchar" MaxLength="50" />
+          <Property Name="Agency_Remark" Type="varchar" MaxLength="500" />
+          <Property Name="Agency_Date" Type="datetime" />
+          <Property Name="Is_Agency_Inv" Type="varchar" MaxLength="4" />
+          <Property Name="Agency_Inv_Price" Type="varchar" MaxLength="50" />
+          <Property Name="Agency_Inv_No" Type="varchar" MaxLength="50" />
+          <Property Name="Agency_Inv_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PT_B_Project_Customer">
+          <Key>
+            <PropertyRef Name="Customer_Pays_Id" />
+          </Key>
+          <Property Name="Customer_Pays_Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Project_No" Type="varchar" MaxLength="20" />
+          <Property Name="Seq_No" Type="int" />
+          <Property Name="Customer_Money" Type="varchar" MaxLength="50" />
+          <Property Name="Customer" Type="varchar" MaxLength="50" />
+          <Property Name="Customer_Remark" Type="varchar" MaxLength="500" />
+          <Property Name="Customer_Date" Type="datetime" />
+          <Property Name="Is_Customer_Inv" Type="varchar" MaxLength="4" />
+          <Property Name="Customer_Inv_Price" Type="varchar" MaxLength="50" />
+          <Property Name="Customer_Inv_No" Type="varchar" MaxLength="50" />
+          <Property Name="Customer_Inv_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PT_B_Project_Lab">
+          <Key>
+            <PropertyRef Name="Lab_Pays_Id" />
+          </Key>
+          <Property Name="Lab_Pays_Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Project_No" Type="varchar" MaxLength="20" />
+          <Property Name="Seq_No" Type="int" />
+          <Property Name="Lab_Money" Type="varchar" MaxLength="50" />
+          <Property Name="Lab" Type="varchar" MaxLength="50" />
+          <Property Name="Lab_Remark" Type="varchar" MaxLength="500" />
+          <Property Name="Lab_Date" Type="datetime" />
+          <Property Name="Is_Lab_Inv" Type="varchar" MaxLength="4" />
+          <Property Name="Lab_Inv_Price" Type="varchar" MaxLength="50" />
+          <Property Name="Lab_Inv_No" Type="varchar" MaxLength="50" />
+          <Property Name="Lab_Inv_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PT_B_Project_Other">
+          <Key>
+            <PropertyRef Name="Other_Pays_Id" />
+          </Key>
+          <Property Name="Other_Pays_Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Project_No" Type="varchar" MaxLength="20" />
+          <Property Name="Seq_No" Type="int" />
+          <Property Name="Other_Money" Type="varchar" MaxLength="50" />
+          <Property Name="Other" Type="varchar" MaxLength="50" />
+          <Property Name="Other_Remark" Type="varchar" MaxLength="500" />
+          <Property Name="Other_Date" Type="datetime" />
+          <Property Name="Is_Other_Inv" Type="varchar" MaxLength="4" />
+          <Property Name="Other_Inv_Price" Type="varchar" MaxLength="50" />
+          <Property Name="Other_Inv_No" Type="varchar" MaxLength="50" />
+          <Property Name="Other_Inv_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PT_B_Quotation">
+          <Key>
+            <PropertyRef Name="Quotation_No" />
+          </Key>
+          <Property Name="Quotation_No" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Quotation_Date" Type="datetime" />
+          <Property Name="Follow_Man" Type="varchar" MaxLength="50" />
+          <Property Name="Product_Model" Type="varchar" MaxLength="100" />
+          <Property Name="Project_Name" Type="varchar" MaxLength="500" />
+          <Property Name="Price" Type="varchar" MaxLength="50" />
+          <Property Name="Is_Tax" Type="varchar" MaxLength="4" />
+          <Property Name="Quotation_Type" Type="varchar" MaxLength="10" />
+          <Property Name="Cycle_Time" Type="varchar" MaxLength="50" />
+          <Property Name="Company_Name" Type="varchar" MaxLength="150" />
+          <Property Name="Company_Address" Type="varchar" MaxLength="400" />
+          <Property Name="Contact_Man" Type="varchar" MaxLength="50" />
+          <Property Name="Tel" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Fax" Type="varchar" MaxLength="50" />
+          <Property Name="Remark" Type="varchar" MaxLength="400" />
+          <Property Name="Bill_Status" Type="varchar" MaxLength="2" />
+          <Property Name="Oper_Time" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="ProjectTrackingModelStoreContainer">
+          <EntitySet Name="PT_B_Project" EntityType="Self.PT_B_Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PT_B_Project_Agency" EntityType="Self.PT_B_Project_Agency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PT_B_Project_Customer" EntityType="Self.PT_B_Project_Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PT_B_Project_Lab" EntityType="Self.PT_B_Project_Lab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PT_B_Project_Other" EntityType="Self.PT_B_Project_Other" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PT_B_Quotation" EntityType="Self.PT_B_Quotation" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjectTrackingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="PT_B_Project">
+          <Key>
+            <PropertyRef Name="Project_No" />
+          </Key>
+          <Property Name="Project_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Quotation_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Follow_Man" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Project_Type" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Company_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Contact_Man" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Company_Address" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Project_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Product_Model" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Cycle_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Is_Tax" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Quotation_Date" Type="DateTime" Precision="3" />
+          <Property Name="Account_Receivable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Payment_Receivable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Un_Account_Receivable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_Account_Payable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_Accounts_Prepaid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Un_Agency_Account_Payable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lab_Account_Payable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lab_Accounts_Prepaid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Un_Lab_Account_Payable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Other_Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Profits" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pads_Money" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Is_Pads" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Is_All_Customer" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Is_All_Agency" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Is_All_Lab" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="Oper_Time" Type="DateTime" Precision="3" />
+          <Property Name="Bill_Status" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Other_Pad_Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Un_Other_Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Now_Profits" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Is_All_Other" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PT_B_Project_Agency">
+          <Key>
+            <PropertyRef Name="Agency_Pays_Id" />
+          </Key>
+          <Property Name="Agency_Pays_Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Project_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Seq_No" Type="Int32" />
+          <Property Name="Agency_Money" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Agency" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_Date" Type="DateTime" Precision="3" />
+          <Property Name="Is_Agency_Inv" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_Inv_Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_Inv_No" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Agency_Inv_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PT_B_Project_Customer">
+          <Key>
+            <PropertyRef Name="Customer_Pays_Id" />
+          </Key>
+          <Property Name="Customer_Pays_Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Project_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Seq_No" Type="Int32" />
+          <Property Name="Customer_Money" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Customer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_Date" Type="DateTime" Precision="3" />
+          <Property Name="Is_Customer_Inv" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_Inv_Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_Inv_No" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Customer_Inv_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PT_B_Project_Lab">
+          <Key>
+            <PropertyRef Name="Lab_Pays_Id" />
+          </Key>
+          <Property Name="Lab_Pays_Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Project_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Seq_No" Type="Int32" />
+          <Property Name="Lab_Money" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lab" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lab_Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Lab_Date" Type="DateTime" Precision="3" />
+          <Property Name="Is_Lab_Inv" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Lab_Inv_Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lab_Inv_No" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lab_Inv_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PT_B_Project_Other">
+          <Key>
+            <PropertyRef Name="Other_Pays_Id" />
+          </Key>
+          <Property Name="Other_Pays_Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Project_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Seq_No" Type="Int32" />
+          <Property Name="Other_Money" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Other" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Other_Remark" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Other_Date" Type="DateTime" Precision="3" />
+          <Property Name="Is_Other_Inv" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Other_Inv_Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Other_Inv_No" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Other_Inv_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PT_B_Quotation">
+          <Key>
+            <PropertyRef Name="Quotation_No" />
+          </Key>
+          <Property Name="Quotation_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Quotation_Date" Type="DateTime" Precision="3" />
+          <Property Name="Follow_Man" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Product_Model" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Project_Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Is_Tax" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Quotation_Type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Cycle_Time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Company_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Company_Address" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="Contact_Man" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Remark" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="Bill_Status" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Oper_Time" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="ProjectTrackingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PT_B_Project" EntityType="Self.PT_B_Project" />
+          <EntitySet Name="PT_B_Project_Agency" EntityType="Self.PT_B_Project_Agency" />
+          <EntitySet Name="PT_B_Project_Customer" EntityType="Self.PT_B_Project_Customer" />
+          <EntitySet Name="PT_B_Project_Lab" EntityType="Self.PT_B_Project_Lab" />
+          <EntitySet Name="PT_B_Project_Other" EntityType="Self.PT_B_Project_Other" />
+          <EntitySet Name="PT_B_Quotation" EntityType="Self.PT_B_Quotation" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjectTrackingModelStoreContainer" CdmEntityContainer="ProjectTrackingEntities">
+          <EntitySetMapping Name="PT_B_Project">
+            <EntityTypeMapping TypeName="ProjectTrackingModel.PT_B_Project">
+              <MappingFragment StoreEntitySet="PT_B_Project">
+                <ScalarProperty Name="Is_All_Other" ColumnName="Is_All_Other" />
+                <ScalarProperty Name="Now_Profits" ColumnName="Now_Profits" />
+                <ScalarProperty Name="Un_Other_Account" ColumnName="Un_Other_Account" />
+                <ScalarProperty Name="Other_Pad_Account" ColumnName="Other_Pad_Account" />
+                <ScalarProperty Name="Project_No" ColumnName="Project_No" />
+                <ScalarProperty Name="Quotation_No" ColumnName="Quotation_No" />
+                <ScalarProperty Name="Follow_Man" ColumnName="Follow_Man" />
+                <ScalarProperty Name="Project_Type" ColumnName="Project_Type" />
+                <ScalarProperty Name="Company_Name" ColumnName="Company_Name" />
+                <ScalarProperty Name="Contact_Man" ColumnName="Contact_Man" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="Company_Address" ColumnName="Company_Address" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
+                <ScalarProperty Name="Product_Model" ColumnName="Product_Model" />
+                <ScalarProperty Name="Cycle_Time" ColumnName="Cycle_Time" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Is_Tax" ColumnName="Is_Tax" />
+                <ScalarProperty Name="Quotation_Date" ColumnName="Quotation_Date" />
+                <ScalarProperty Name="Account_Receivable" ColumnName="Account_Receivable" />
+                <ScalarProperty Name="Payment_Receivable" ColumnName="Payment_Receivable" />
+                <ScalarProperty Name="Un_Account_Receivable" ColumnName="Un_Account_Receivable" />
+                <ScalarProperty Name="Agency_Account_Payable" ColumnName="Agency_Account_Payable" />
+                <ScalarProperty Name="Agency_Accounts_Prepaid" ColumnName="Agency_Accounts_Prepaid" />
+                <ScalarProperty Name="Un_Agency_Account_Payable" ColumnName="Un_Agency_Account_Payable" />
+                <ScalarProperty Name="Lab_Account_Payable" ColumnName="Lab_Account_Payable" />
+                <ScalarProperty Name="Lab_Accounts_Prepaid" ColumnName="Lab_Accounts_Prepaid" />
+                <ScalarProperty Name="Un_Lab_Account_Payable" ColumnName="Un_Lab_Account_Payable" />
+                <ScalarProperty Name="Other_Account" ColumnName="Other_Account" />
+                <ScalarProperty Name="Profits" ColumnName="Profits" />
+                <ScalarProperty Name="Pads_Money" ColumnName="Pads_Money" />
+                <ScalarProperty Name="Is_Pads" ColumnName="Is_Pads" />
+                <ScalarProperty Name="Is_All_Customer" ColumnName="Is_All_Customer" />
+                <ScalarProperty Name="Is_All_Agency" ColumnName="Is_All_Agency" />
+                <ScalarProperty Name="Is_All_Lab" ColumnName="Is_All_Lab" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Oper_Time" ColumnName="Oper_Time" />
+                <ScalarProperty Name="Bill_Status" ColumnName="Bill_Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PT_B_Project_Agency">
+            <EntityTypeMapping TypeName="ProjectTrackingModel.PT_B_Project_Agency">
+              <MappingFragment StoreEntitySet="PT_B_Project_Agency">
+                <ScalarProperty Name="Agency_Pays_Id" ColumnName="Agency_Pays_Id" />
+                <ScalarProperty Name="Project_No" ColumnName="Project_No" />
+                <ScalarProperty Name="Seq_No" ColumnName="Seq_No" />
+                <ScalarProperty Name="Agency_Money" ColumnName="Agency_Money" />
+                <ScalarProperty Name="Agency" ColumnName="Agency" />
+                <ScalarProperty Name="Agency_Remark" ColumnName="Agency_Remark" />
+                <ScalarProperty Name="Agency_Date" ColumnName="Agency_Date" />
+                <ScalarProperty Name="Is_Agency_Inv" ColumnName="Is_Agency_Inv" />
+                <ScalarProperty Name="Agency_Inv_Price" ColumnName="Agency_Inv_Price" />
+                <ScalarProperty Name="Agency_Inv_No" ColumnName="Agency_Inv_No" />
+                <ScalarProperty Name="Agency_Inv_Date" ColumnName="Agency_Inv_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PT_B_Project_Customer">
+            <EntityTypeMapping TypeName="ProjectTrackingModel.PT_B_Project_Customer">
+              <MappingFragment StoreEntitySet="PT_B_Project_Customer">
+                <ScalarProperty Name="Customer_Pays_Id" ColumnName="Customer_Pays_Id" />
+                <ScalarProperty Name="Project_No" ColumnName="Project_No" />
+                <ScalarProperty Name="Seq_No" ColumnName="Seq_No" />
+                <ScalarProperty Name="Customer_Money" ColumnName="Customer_Money" />
+                <ScalarProperty Name="Customer" ColumnName="Customer" />
+                <ScalarProperty Name="Customer_Remark" ColumnName="Customer_Remark" />
+                <ScalarProperty Name="Customer_Date" ColumnName="Customer_Date" />
+                <ScalarProperty Name="Is_Customer_Inv" ColumnName="Is_Customer_Inv" />
+                <ScalarProperty Name="Customer_Inv_Price" ColumnName="Customer_Inv_Price" />
+                <ScalarProperty Name="Customer_Inv_No" ColumnName="Customer_Inv_No" />
+                <ScalarProperty Name="Customer_Inv_Date" ColumnName="Customer_Inv_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PT_B_Project_Lab">
+            <EntityTypeMapping TypeName="ProjectTrackingModel.PT_B_Project_Lab">
+              <MappingFragment StoreEntitySet="PT_B_Project_Lab">
+                <ScalarProperty Name="Lab_Pays_Id" ColumnName="Lab_Pays_Id" />
+                <ScalarProperty Name="Project_No" ColumnName="Project_No" />
+                <ScalarProperty Name="Seq_No" ColumnName="Seq_No" />
+                <ScalarProperty Name="Lab_Money" ColumnName="Lab_Money" />
+                <ScalarProperty Name="Lab" ColumnName="Lab" />
+                <ScalarProperty Name="Lab_Remark" ColumnName="Lab_Remark" />
+                <ScalarProperty Name="Lab_Date" ColumnName="Lab_Date" />
+                <ScalarProperty Name="Is_Lab_Inv" ColumnName="Is_Lab_Inv" />
+                <ScalarProperty Name="Lab_Inv_Price" ColumnName="Lab_Inv_Price" />
+                <ScalarProperty Name="Lab_Inv_No" ColumnName="Lab_Inv_No" />
+                <ScalarProperty Name="Lab_Inv_Date" ColumnName="Lab_Inv_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PT_B_Project_Other">
+            <EntityTypeMapping TypeName="ProjectTrackingModel.PT_B_Project_Other">
+              <MappingFragment StoreEntitySet="PT_B_Project_Other">
+                <ScalarProperty Name="Other_Pays_Id" ColumnName="Other_Pays_Id" />
+                <ScalarProperty Name="Project_No" ColumnName="Project_No" />
+                <ScalarProperty Name="Seq_No" ColumnName="Seq_No" />
+                <ScalarProperty Name="Other_Money" ColumnName="Other_Money" />
+                <ScalarProperty Name="Other" ColumnName="Other" />
+                <ScalarProperty Name="Other_Remark" ColumnName="Other_Remark" />
+                <ScalarProperty Name="Other_Date" ColumnName="Other_Date" />
+                <ScalarProperty Name="Is_Other_Inv" ColumnName="Is_Other_Inv" />
+                <ScalarProperty Name="Other_Inv_Price" ColumnName="Other_Inv_Price" />
+                <ScalarProperty Name="Other_Inv_No" ColumnName="Other_Inv_No" />
+                <ScalarProperty Name="Other_Inv_Date" ColumnName="Other_Inv_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PT_B_Quotation">
+            <EntityTypeMapping TypeName="ProjectTrackingModel.PT_B_Quotation">
+              <MappingFragment StoreEntitySet="PT_B_Quotation">
+                <ScalarProperty Name="Quotation_No" ColumnName="Quotation_No" />
+                <ScalarProperty Name="Quotation_Date" ColumnName="Quotation_Date" />
+                <ScalarProperty Name="Follow_Man" ColumnName="Follow_Man" />
+                <ScalarProperty Name="Product_Model" ColumnName="Product_Model" />
+                <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Is_Tax" ColumnName="Is_Tax" />
+                <ScalarProperty Name="Quotation_Type" ColumnName="Quotation_Type" />
+                <ScalarProperty Name="Cycle_Time" ColumnName="Cycle_Time" />
+                <ScalarProperty Name="Company_Name" ColumnName="Company_Name" />
+                <ScalarProperty Name="Company_Address" ColumnName="Company_Address" />
+                <ScalarProperty Name="Contact_Man" ColumnName="Contact_Man" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Bill_Status" ColumnName="Bill_Status" />
+                <ScalarProperty Name="Oper_Time" ColumnName="Oper_Time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

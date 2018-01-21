@@ -1,4 +1,4 @@
-﻿// 为模型“C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\Model\MQuotation.edmx”启用了 T4 代码生成。
+﻿// 为模型“D:\Project\XProject001\XProjectWPF\Model\MPT.edmx”启用了 T4 代码生成。
 // 要启用旧代码生成功能，请将“代码生成策略”设计器属性的值
 // 更改为“旧的 ObjectContext”。当在设计器中打开该模型时，此属性会出现在
 // “属性”窗口中。

@@ -19,9 +19,10 @@ namespace XProjectWPF.Model
         public string Follow_Man { get; set; }
         public string Product_Model { get; set; }
         public string Project_Name { get; set; }
-        public Nullable<double> Price { get; set; }
+        public string Price { get; set; }
         public string Is_Tax { get; set; }
         public string Quotation_Type { get; set; }
+        public string Cycle_Time { get; set; }
         public string Company_Name { get; set; }
         public string Company_Address { get; set; }
         public string Contact_Man { get; set; }
@@ -31,6 +32,5 @@ namespace XProjectWPF.Model
         public string Remark { get; set; }
         public string Bill_Status { get; set; }
         public Nullable<System.DateTime> Oper_Time { get; set; }
-        public string Cycle_Time { get; set; }
     }
 }

@@ -25,6 +25,11 @@ namespace XProjectWPF.Model
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<PT_B_Project> PT_B_Project { get; set; }
+        public virtual DbSet<PT_B_Project_Agency> PT_B_Project_Agency { get; set; }
+        public virtual DbSet<PT_B_Project_Customer> PT_B_Project_Customer { get; set; }
+        public virtual DbSet<PT_B_Project_Lab> PT_B_Project_Lab { get; set; }
+        public virtual DbSet<PT_B_Project_Other> PT_B_Project_Other { get; set; }
         public virtual DbSet<PT_B_Quotation> PT_B_Quotation { get; set; }
     }
 }

@@ -28,10 +28,8 @@ namespace XProjectWPF
         {
             InitializeComponent();
             RegisterEvent();
-
         }
 
-        public MQuotation22 QuotationModel { get; set; }
         /// <summary>
         /// 标识是否已修改
         /// </summary>
@@ -40,7 +38,6 @@ namespace XProjectWPF
         /// 标识是否已加载完成
         /// </summary>
         private bool m_IsLoad = true;
-
         /// <summary>
         /// 对象锁
         /// </summary>
@@ -53,7 +50,7 @@ namespace XProjectWPF
         /// <summary>
         /// 数据库操作类
         /// </summary>
-        private ProjectTrackingEntities  m_Entities = new ProjectTrackingEntities();
+        private ProjectTrackingEntities m_Entities = new ProjectTrackingEntities();
         /// <summary>
         /// 流水号生成规则类
         /// </summary>
@@ -66,23 +63,29 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_tsb_Save_Click(object sender, RoutedEventArgs e)
         {
-            lock (thisLock)
-            {
-                if (string.IsNullOrEmpty(PTBQuotation.Bill_Status))
-                {
-                    string newQuotationNo = m_SerialNumberMethod.GetMaxQNumber();
-                    SaveModel(newQuotationNo);
-                    m_Entities.PT_B_Quotation.Add(PTBQuotation);
-                    t_txt_QuotationNo.Text = newQuotationNo;
-                    t_tslStateText.Text = "已入库";
-                }
-                else
-                    SaveModel(t_txt_QuotationNo.Text);
-                m_Entities.SaveChanges();
-
-            }
+            SaveMethod();
             XMessageBox.Enter("保存成功", this);
             m_IsModify = false;
+        }
+        /// <summary>
+        /// 保存方法
+        /// </summary>
+        private void SaveMethod()
+        {
+            if (string.IsNullOrEmpty(PTBQuotation.Bill_Status))
+            {
+                string newQuotationNo = m_SerialNumberMethod.GetMaxQNumber();
+                SaveModel(newQuotationNo);
+                m_Entities.PT_B_Quotation.Add(PTBQuotation);
+                t_txt_QuotationNo.Text = newQuotationNo;
+                t_tslStateText.Text = "已入库";
+            }
+            else
+            {
+                SaveModel(t_txt_QuotationNo.Text);
+                m_Entities.Entry(PTBQuotation).State = System.Data.Entity.EntityState.Modified;
+            }
+            m_Entities.SaveChanges();
         }
 
         /// <summary>
@@ -130,8 +133,8 @@ namespace XProjectWPF
             t_txt_FollowMan.Text = PTBQuotation.Follow_Man;
             t_txt_ProductModel.Text = PTBQuotation.Product_Model;
             t_txt_ProjectName.Text = PTBQuotation.Project_Name;
-            t_txt_Price.Text = PTBQuotation.Price.ToString();
-            t_chk_IsTax.IsChecked = PTBQuotation.Is_Tax == "1" ? true : false;
+            t_txt_Price.Text = PTBQuotation.Price;
+            t_chk_IsTax.IsChecked = PTBQuotation.Is_Tax == "是" ? true : false;
             t_rad_Safe.IsChecked = PTBQuotation.Quotation_Type != "化学" ? true : false;
             t_rad_Chemistry.IsChecked = PTBQuotation.Quotation_Type == "化学" ? true : false;
             t_txt_CycleTime.Text = PTBQuotation.Cycle_Time;
@@ -150,6 +153,20 @@ namespace XProjectWPF
                 t_tslStateText.Text = "已入库";
             else
                 t_tslStateText.Text = "新建";
+
+            //加载关联项目单表格
+            var customer = from p in m_Entities.PT_B_Project
+                           where p.Quotation_No == PTBQuotation.Quotation_No
+                           orderby p.Project_No
+                           select p;
+
+            t_dge_Project.ItemsSource = customer.ToList();
+            if (customer.ToList() != null && customer.ToList().Count > 0)
+            {
+                t_dge_Project.SelectedIndex = 0;
+                t_dge_Project.Focus();
+            }
+
             m_IsLoad = false;
         }
 
@@ -160,8 +177,8 @@ namespace XProjectWPF
             PTBQuotation.Follow_Man = t_txt_FollowMan.Text;
             PTBQuotation.Product_Model = t_txt_ProductModel.Text;
             PTBQuotation.Project_Name = t_txt_ProjectName.Text;
-            PTBQuotation.Price = string.IsNullOrEmpty(t_txt_Price.Text) ? 0 : double.Parse(t_txt_Price.Text);
-            PTBQuotation.Is_Tax = t_chk_IsTax.IsChecked == true ? "1" : "0";
+            PTBQuotation.Price = t_txt_Price.Text;
+            PTBQuotation.Is_Tax = t_chk_IsTax.IsChecked == true ? "是" : "否";
             PTBQuotation.Quotation_Type = t_rad_Safe.IsChecked == true ? "安全" : "化学";
             PTBQuotation.Cycle_Time = t_txt_CycleTime.Text;
             PTBQuotation.Company_Name = t_txt_CompanyName.Text;
@@ -173,32 +190,42 @@ namespace XProjectWPF
             PTBQuotation.Remark = t_txt_Remark.Text;
             PTBQuotation.Bill_Status = "1";
             PTBQuotation.Oper_Time = DateTime.Now;
-
         }
 
         private void t_tsb_CreateProject_Click(object sender, RoutedEventArgs e)
         {
-            if(t_txt_QuotationNo.Text == "新单")
+            if(m_IsModify || t_txt_QuotationNo.Text == "新单")
             {
                 XMessageBox.Enter("当前单据尚未保存，请保存后再操作！",this);
                 return;
             }
-            MQuotation22 quotationModel = new MQuotation22();
-            quotationModel.QuotationNo = t_txt_QuotationNo.Text;
-            quotationModel.QuotationDate = t_dtp_QuotationDate.Value;
-            quotationModel.FollowMan = t_txt_FollowMan.Text;
-            quotationModel.ProjectName = t_txt_ProjectName.Text;
-            quotationModel.Price = t_txt_Price.Text;
-            quotationModel.CompanyName = t_txt_CompanyName.Text;
-            quotationModel.CompanyAddress = t_txt_CompanyAddress.Text;
-            quotationModel.Tel = t_txt_Tel.Text;
-            quotationModel.Email = t_txt_Email.Text;
-            quotationModel.ContactMan = t_txt_ContactMan.Text;
-
+            m_IsModify = false;
             this.Visibility = Visibility.Hidden;
+
+            PT_B_Project myModel = new PT_B_Project();
+            myModel.Quotation_No = PTBQuotation.Quotation_No;
+            myModel.Quotation_Date = PTBQuotation.Quotation_Date;
+            myModel.Follow_Man = PTBQuotation.Follow_Man;
+            myModel.Product_Model = PTBQuotation.Product_Model;
+            myModel.Project_Name = PTBQuotation.Project_Name;
+            myModel.Price = PTBQuotation.Price;
+            myModel.Is_Tax = PTBQuotation.Is_Tax;
+            myModel.Project_Type = PTBQuotation.Quotation_Type;
+            myModel.Cycle_Time = PTBQuotation.Cycle_Time;
+            myModel.Company_Name = PTBQuotation.Company_Name;
+            myModel.Company_Address = PTBQuotation.Company_Address;
+            myModel.Contact_Man = PTBQuotation.Contact_Man;
+            myModel.Tel = PTBQuotation.Tel;
+            myModel.Email = PTBQuotation.Email;
+            myModel.Fax = PTBQuotation.Fax;
+            myModel.Remark = PTBQuotation.Remark;
+            myModel.Oper_Time = DateTime.Now;
+            myModel.Account_Receivable = PTBQuotation.Price;
+            myModel.Profits = PTBQuotation.Price;
             FrmProject myForm = new FrmProject();
-            myForm.QuotationModel = quotationModel;
+            myForm.PTBProject = myModel;
             myForm.ShowDialog();
+
             this.Close();
         }
         /// <summary>
@@ -328,6 +355,36 @@ namespace XProjectWPF
 
             PTBQuotation = copyModel;
             LoadControlsValue();
+        }
+        /// <summary>
+        /// 窗体关闭前事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
+        private void XBaseForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (m_IsModify)
+            {
+                MessageResult myResult = XMessageBox.Select("当前单据已修改，是否保存？", this);
+                if (myResult == MessageResult.Yes)
+                {
+                    SaveMethod();
+                }
+                else if(myResult == MessageResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private void t_dge_Project_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            this.Visibility = Visibility.Hidden;
+            PT_B_Project myModel = (PT_B_Project)t_dge_Project.SelectedItem;
+            FrmProject myForm = new FrmProject();
+            myForm.PTBProject = myModel;
+            myForm.ShowDialog();
+            this.Close();
         }
     }
 }

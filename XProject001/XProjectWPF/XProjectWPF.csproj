@@ -78,24 +78,39 @@
       <DependentUpon>FrmQuotation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Method\SerialNumberMethod.cs" />
-    <Compile Include="Model\MQuotation.Context.cs">
+    <Compile Include="Model\MPT.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MQuotation.Context.tt</DependentUpon>
+      <DependentUpon>MPT.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\MQuotation1.cs">
+    <Compile Include="Model\MPT.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>MQuotation.tt</DependentUpon>
+      <DependentUpon>MPT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MPT.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MPT.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\MQuotation22.cs" />
-    <Compile Include="Model\MQuotation.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MQuotation.edmx</DependentUpon>
+    <Compile Include="Model\PT_B_Project.cs">
+      <DependentUpon>MPT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PT_B_Project_Agency.cs">
+      <DependentUpon>MPT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PT_B_Project_Customer.cs">
+      <DependentUpon>MPT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PT_B_Project_Lab.cs">
+      <DependentUpon>MPT.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PT_B_Project_Other.cs">
+      <DependentUpon>MPT.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\PT_B_Quotation.cs">
-      <DependentUpon>MQuotation.tt</DependentUpon>
+      <DependentUpon>MPT.tt</DependentUpon>
     </Compile>
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
@@ -150,12 +165,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="Model\MQuotation.edmx">
+    <EntityDeploy Include="Model\MPT.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MQuotation.Designer.cs</LastGenOutput>
+      <LastGenOutput>MPT.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Model\MQuotation.edmx.diagram">
-      <DependentUpon>MQuotation.edmx</DependentUpon>
+    <None Include="Model\MPT.edmx.diagram">
+      <DependentUpon>MPT.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -165,7 +180,9 @@
     <Resource Include="Resources\SF2015.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="obj\gntb_20.png" />
@@ -314,19 +331,19 @@
     <Resource Include="Image2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Model\MQuotation.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MQuotation.Context.cs</LastGenOutput>
-      <DependentUpon>MQuotation.edmx</DependentUpon>
-    </Content>
-    <Content Include="Model\MQuotation.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>MQuotation.edmx</DependentUpon>
-      <LastGenOutput>MQuotation1.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Content Include="Model\MPT.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MPT.edmx</DependentUpon>
+      <LastGenOutput>MPT.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\MPT.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MPT.edmx</DependentUpon>
+      <LastGenOutput>MPT.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
