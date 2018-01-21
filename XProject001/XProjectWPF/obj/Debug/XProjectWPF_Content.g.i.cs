@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("database/%e6%95%b0%e6%8d%ae%e5%ba%93%e8%84%9a%e6%9c%ac.sql")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("model/mpt.context.tt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("model/mpt.tt")]
 

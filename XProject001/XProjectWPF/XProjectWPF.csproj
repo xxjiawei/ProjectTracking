@@ -321,9 +321,7 @@
     <Resource Include="Resources\Info.png" />
     <Resource Include="Resources\OpenFloder.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataBase\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Image1.png" />
   </ItemGroup>
@@ -334,6 +332,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="DataBase\待完成.txt" />
+    <Content Include="DataBase\数据库脚本.sql" />
     <Content Include="Model\MPT.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MPT.edmx</DependentUpon>
