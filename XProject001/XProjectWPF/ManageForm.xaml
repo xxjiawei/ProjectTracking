@@ -10,7 +10,7 @@
         Title="" Height="720" Width="1024" WindowStartupLocation="CenterScreen" MaximizeBox="False" ResizeMode="NoResize"  Loaded="XBaseForm_Loaded">
     <Grid>
         <Menu x:Name="menu" Height="30" Width="1016" DockPanel.Dock="Top" VerticalContentAlignment="Top" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#FFDDEAFA"  Grid.ColumnSpan="2">
-            <MenuItem Margin="3,0,0,0">
+            <MenuItem Margin="3,0,0,0" Name="t_tsb_Query" Click="t_tsb_Query_Click">
                 <MenuItem.Header>
                     <TextBlock TextAlignment="Left" Margin="-5,0,0,0"  VerticalAlignment="Center" Text="查询单据"/>
                 </MenuItem.Header>
@@ -69,22 +69,10 @@
                 <MenuItem Header="_View">
                 </MenuItem>-->
         </Menu>
-         <xstyle:XTreeView x:Name="t_tvw_Module" HorizontalAlignment="Left" Margin="10,67,0,169" Width="250"  SelectedItemChanged="t_tvw_Module_SelectedItemChanged" BorderBrush="LightGray"/>
+        <xstyle:XTreeView x:Name="t_tvw_Module" HorizontalAlignment="Left" Margin="10,67,0,169" Width="240"  SelectedItemChanged="t_tvw_Module_SelectedItemChanged" BorderBrush="LightGray"/>
         <Label Content="单据类型" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.125,0.4" Height="25"/>
-        <GroupBox Header="单据日期范围" HorizontalAlignment="Left" Height="154" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="250">
-            <Grid>
-                <RadioButton x:Name="t_rdo_Today" Content="当天单证" HorizontalAlignment="Left" Margin="5,9,0,0" VerticalAlignment="Top" />
-                <RadioButton x:Name="t_rdo_Week" Content="当周单证" HorizontalAlignment="Left" Margin="72,9,0,0" VerticalAlignment="Top" />
-                <RadioButton x:Name="t_rdo_Month" Content="当月单证" HorizontalAlignment="Left" Margin="139,9,0,0" VerticalAlignment="Top" />
-                <RadioButton x:Name="t_rdo_All" Content="所有单证" HorizontalAlignment="Left" Margin="5,39,0,0" VerticalAlignment="Top" IsChecked="True"/>
-                <RadioButton x:Name="t_rdo_Custom" Content="自定义范围" HorizontalAlignment="Left" Margin="72,40,0,0" VerticalAlignment="Top"/>
-                <DatePicker x:Name="t_dtp_StartDate" IsEnabled="False" HorizontalAlignment="Left" Margin="5,70,0,0" VerticalAlignment="Top" Width="142" />
-                <Label Content="至" Margin="147,71,69,0" VerticalAlignment="Top" RenderTransformOrigin="2.318,-0.24"/>
-                <DatePicker x:Name="t_dtp_EndDate" IsEnabled="False" HorizontalAlignment="Left" Margin="5,101,0,0" VerticalAlignment="Top" Width="142"/>
-            </Grid>
-        </GroupBox>
-        <xstyle:XDataGrid x:Name="t_pgg_Bill" HorizontalAlignment="Stretch" Margin="275,67,10,12" VerticalAlignment="Stretch" RowHeight="24" 
-                  IsReadOnly="True" ColumnHeaderHeight="32" AutoGenerateColumns="False" Grid.ColumnSpan="2" MouseDoubleClick="t_pgg_Bill_MouseDoubleClick" DisplayRowNum="True">
+        <xstyle:XDataGrid x:Name="t_pgg_Bill" HorizontalAlignment="Stretch" Margin="262,67,10,12" VerticalAlignment="Stretch" RowHeight="24" 
+                  IsReadOnly="True" ColumnHeaderHeight="32" AutoGenerateColumns="False" MouseDoubleClick="t_pgg_Bill_MouseDoubleClick" DisplayRowNum="True">
             <DataGrid.ContextMenu>
                 <ContextMenu x:Name="SettingMenu" Placement="MousePoint" Width="150" StaysOpen="False">
                     <MenuItem x:Name="t_tsb_User" Header="右键按钮1"/>
@@ -92,5 +80,17 @@
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </xstyle:XDataGrid>
+        <xstyle:XGroupBox Header="单据日期范围设置" HorizontalAlignment="Left" Height="134" Margin="10,545,0,0" VerticalAlignment="Top" Width="240" GroupBoxDrawType="TopLine"  Background="#F0F5FA">
+            <Grid>
+                <xstyle:XRadioButton x:Name="t_rdo_Today" Content="当天单证" HorizontalAlignment="Left" Margin="15,20,0,0" VerticalAlignment="Top" Checked="OnDateFilterCheckedChanged" Unchecked="OnDateFilterCheckedChanged" Tag="Today"/>
+                <xstyle:XRadioButton x:Name="t_rdo_Week" Content="当周单证" HorizontalAlignment="Left" Margin="140,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.224,1.929"  Checked="OnDateFilterCheckedChanged" Unchecked="OnDateFilterCheckedChanged" Tag="Week"/>
+                <xstyle:XRadioButton x:Name="t_rdo_Month" Content="当月单证" HorizontalAlignment="Left" Margin="15,48,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.925,1.214"  Checked="OnDateFilterCheckedChanged" Unchecked="OnDateFilterCheckedChanged" Tag="Month"/>
+                <xstyle:XRadioButton x:Name="t_rdo_All" Content="所有单证" HorizontalAlignment="Left" Margin="140,48,0,0" VerticalAlignment="Top" IsChecked="True" RenderTransformOrigin="0.507,-0.143"  Checked="OnDateFilterCheckedChanged" Unchecked="OnDateFilterCheckedChanged" Tag="All"/>
+                <xstyle:XRadioButton x:Name="t_rdo_Custom" Content="自定义范围" HorizontalAlignment="Left" Margin="15,76,0,0" VerticalAlignment="Top"  Checked="OnDateFilterCheckedChanged" Unchecked="OnDateFilterCheckedChanged" Tag="Custom"/>
+                <xstyle:XDatePicker x:Name="t_dtp_StartDate" IsEnabled="True" HorizontalAlignment="Left" Margin="140,105,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.578,0.708" />
+                <xstyle:XLabel Content="至" Margin="116,109,110,0" VerticalAlignment="Top" RenderTransformOrigin="2.318,-0.24"/>
+                <xstyle:XDatePicker x:Name="t_dtp_EndDate" IsEnabled="True" HorizontalAlignment="Left" Margin="15,105,0,0" VerticalAlignment="Top" Width="90"/>
+            </Grid>
+        </xstyle:XGroupBox>
     </Grid>
 </xstyle:XBaseForm>

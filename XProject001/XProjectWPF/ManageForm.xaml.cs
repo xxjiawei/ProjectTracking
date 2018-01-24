@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using RJ.Common.DBUtility;
 using RJ.XStyle;
 using RJ.XStyle.GridEx;
 using RJ.XStyle.Model;
@@ -641,6 +642,87 @@ namespace XProjectWPF
                     conn.Close();
                 }
             }
+        }
+
+
+        private void t_tsb_Query_Click(object sender, RoutedEventArgs e)
+        {
+            FrmQuery myForm = new FrmQuery();
+            myForm.ShowDialog();
+        }
+
+
+        /// <summary>
+        /// 获取当前参数格式化的查询语句
+        /// </summary>
+        /// <param name="dateField">日期数据库字段</param>
+        /// <returns>返回格式化的查询语句</returns>
+        private string GetFilterSql(string dateField, DateFilterTypes dateFilterType,DateTime startDate ,DateTime endDate)
+        {
+            DatabaseTypes myType = DatabaseTypes.SqlServer;
+            string strSql = String.Empty;
+
+            switch (dateFilterType)
+            {
+                case DateFilterTypes.Today:
+                    strSql = DateTimeScript.Instance.GetFilterSqlByDay(myType, dateField);
+                    break;
+                case DateFilterTypes.Week:
+                    strSql = DateTimeScript.Instance.GetFilterSqlByWeek(myType, dateField);
+                    break;
+                case DateFilterTypes.Month:
+                    strSql = DateTimeScript.Instance.GetFilterSqlByMonth(myType, dateField);
+                    break;
+                case DateFilterTypes.Custom:
+                    strSql = DateTimeScript.Instance.GetFilterSqlByCustom(myType, dateField, startDate, endDate);
+                    break;
+            }
+
+            return strSql;
+        }
+        /// <summary>
+        /// 当前日期范围单选按钮选中状态改变时调用的方法
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
+        private void OnDateFilterCheckedChanged(object sender, EventArgs e)
+        {
+            XRadioButton myControl = sender as XRadioButton;
+            if (myControl == null) return;
+            if (myControl.IsChecked == false) return;
+
+            string type = string.Empty;
+            switch (myControl.Name)
+            {
+                case "t_rdo_Today":
+                    type = "Today";
+                    break;
+                case "t_rdo_Week":
+                    type = "Week";
+                    break;
+                case "t_rdo_Month":
+                    type = "Month";
+                    break;
+                case "t_rdo_All":
+                    type = "All";
+                    break;
+                case "t_rdo_Custom":
+                    type = "Custom";
+                    break;
+            }
+
+            DateFilterTypes myType = (DateFilterTypes)Enum.Parse(typeof(DateFilterTypes), type, true);
+            if (myType == DateFilterTypes.Custom)
+            {
+                t_dtp_StartDate.IsEnabled = true;
+                t_dtp_EndDate.IsEnabled = true;
+            }
+            else
+            {
+                t_dtp_StartDate.IsEnabled = false;
+                t_dtp_EndDate.IsEnabled = false;
+            }
+
         }
     }
 }

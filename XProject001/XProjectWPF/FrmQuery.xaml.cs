@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RJ.XStyle;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,11 +16,11 @@ using System.Windows.Shapes;
 namespace XProjectWPF
 {
     /// <summary>
-    /// Window1.xaml 的交互逻辑
+    /// FrmQuery.xaml 的交互逻辑
     /// </summary>
-    public partial class Window1 : Window
+    public partial class FrmQuery : XBaseForm
     {
-        public Window1()
+        public FrmQuery()
         {
             InitializeComponent();
         }

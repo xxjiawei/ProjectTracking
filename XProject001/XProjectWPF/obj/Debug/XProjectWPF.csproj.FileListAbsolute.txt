@@ -118,3 +118,40 @@ C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XPro
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\Template\Template.doc
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\Interop.Office.dll
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.ResolveComReference.cache
+D:\MyProject\XProject001\XProjectWPF\bin\Debug\Template\Template.doc
+D:\MyProject\XProject001\XProjectWPF\bin\Debug\XProjectWPF.exe.config
+D:\MyProject\XProject001\XProjectWPF\bin\Debug\XProjectWPF.exe
+D:\MyProject\XProject001\XProjectWPF\bin\Debug\XProjectWPF.pdb
+D:\MyProject\XProject001\XProjectWPF\bin\Debug\EntityFramework.dll
+D:\MyProject\XProject001\XProjectWPF\bin\Debug\EntityFramework.SqlServer.dll
+D:\MyProject\XProject001\XProjectWPF\bin\Debug\RJ.Common.dll
+D:\MyProject\XProject001\XProjectWPF\bin\Debug\RJ.XStyle.dll
+D:\MyProject\XProject001\XProjectWPF\bin\Debug\EntityFramework.xml
+D:\MyProject\XProject001\XProjectWPF\bin\Debug\EntityFramework.SqlServer.xml
+D:\MyProject\XProject001\XProjectWPF\bin\Debug\zh-Hans\EntityFramework.resources.dll
+D:\MyProject\XProject001\XProjectWPF\bin\Debug\zh-Hans\EntityFramework.SqlServer.resources.dll
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.ResolveComReference.cache
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\FrmQuotation.baml
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\FrmProject.g.cs
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\FrmQuery.g.cs
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\FrmQuotation.g.cs
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\MainWindow.g.cs
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\ManageForm.g.cs
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\UDateFilter.g.cs
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\App.g.cs
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF_Content.g.cs
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF_MarkupCompile.cache
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF_MarkupCompile.lref
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\App.baml
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\FrmProject.baml
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\FrmQuery.baml
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\MainWindow.baml
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\ManageForm.baml
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\UDateFilter.baml
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF.g.resources
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF.Properties.Resources.resources
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.GenerateResource.Cache
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.CoreCompileInputs.cache
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF.exe
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF.pdb

@@ -74,13 +74,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CustomDelegate.cs" />
     <Compile Include="FrmProject.xaml.cs">
       <DependentUpon>FrmProject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FrmQuery.xaml.cs">
+      <DependentUpon>FrmQuery.xaml</DependentUpon>
     </Compile>
     <Compile Include="FrmQuotation.xaml.cs">
       <DependentUpon>FrmQuotation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Method\SerialNumberMethod.cs" />
+    <Compile Include="Model\DateFilterTypes.cs" />
+    <Compile Include="Model\MDateFilterParam.cs" />
     <Compile Include="Model\MQuotation22.cs" />
     <Compile Include="Model\ProjectTracking.Context.cs">
       <AutoGen>True</AutoGen>
@@ -115,10 +121,14 @@
     <Compile Include="Model\PT_B_Quotation.cs">
       <DependentUpon>ProjectTracking.tt</DependentUpon>
     </Compile>
-    <Compile Include="Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
+    <Compile Include="UDateFilter.xaml.cs">
+      <DependentUpon>UDateFilter.xaml</DependentUpon>
     </Compile>
     <Page Include="FrmProject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FrmQuery.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -142,7 +152,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Window1.xaml">
+    <Page Include="UDateFilter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -317,12 +327,6 @@
     <Resource Include="Resources\SetVisible.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Check.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Close.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\CloseFloder.png" />
     <Resource Include="Resources\Info.png" />
     <Resource Include="Resources\OpenFloder.png" />
@@ -346,12 +350,6 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image2.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
