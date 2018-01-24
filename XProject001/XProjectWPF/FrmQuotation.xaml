@@ -33,6 +33,14 @@
                     <Image Source="/Resources/SaveMore.png" Width="16" Height="16"/>
                 </MenuItem.Icon>
             </MenuItem>
+            <MenuItem Margin="5,0,0,0" Name="t_tsb_ExportWord" Click="t_tsb_ExportWord_Click">
+                <MenuItem.Header>
+                    <TextBlock TextAlignment="Left" Margin="-3,1,0,0"  VerticalAlignment="Center" Text="导出Word"/>
+                </MenuItem.Header>
+                <MenuItem.Icon>
+                    <Image Source="/Resources/ColumnStyle_Excel.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+            </MenuItem>
             <MenuItem Margin="5,0,0,0" Name="t_tsb_CreateProject" Click="t_tsb_CreateProject_Click">
                 <MenuItem.Header>
                     <TextBlock TextAlignment="Left" Margin="-3,1,0,0"  VerticalAlignment="Center" Text="生成项目单"/>

@@ -29,7 +29,7 @@ namespace XProjectWPF.Model
         public string Cycle_Time { get; set; }
         public string Price { get; set; }
         public string Is_Tax { get; set; }
-        public DateTime Quotation_Date { get; set; }
+        public Nullable<System.DateTime> Quotation_Date { get; set; }
         public string Account_Receivable { get; set; }
         public string Payment_Receivable { get; set; }
         public string Un_Account_Receivable { get; set; }
@@ -40,18 +40,18 @@ namespace XProjectWPF.Model
         public string Lab_Accounts_Prepaid { get; set; }
         public string Un_Lab_Account_Payable { get; set; }
         public string Other_Account { get; set; }
+        public string Other_Pad_Account { get; set; }
+        public string Un_Other_Account { get; set; }
         public string Profits { get; set; }
+        public string Now_Profits { get; set; }
         public string Pads_Money { get; set; }
         public string Is_Pads { get; set; }
         public string Is_All_Customer { get; set; }
         public string Is_All_Agency { get; set; }
         public string Is_All_Lab { get; set; }
+        public string Is_All_Other { get; set; }
         public string Remark { get; set; }
         public Nullable<System.DateTime> Oper_Time { get; set; }
         public string Bill_Status { get; set; }
-        public string Other_Pad_Account { get; set; }
-        public string Un_Other_Account { get; set; }
-        public string Now_Profits { get; set; }
-        public string Is_All_Other { get; set; }
     }
 }

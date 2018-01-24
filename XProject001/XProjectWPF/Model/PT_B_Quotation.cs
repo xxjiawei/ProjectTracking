@@ -15,7 +15,7 @@ namespace XProjectWPF.Model
     public partial class PT_B_Quotation
     {
         public string Quotation_No { get; set; }
-        public DateTime Quotation_Date { get; set; }
+        public Nullable<System.DateTime> Quotation_Date { get; set; }
         public string Follow_Man { get; set; }
         public string Product_Model { get; set; }
         public string Project_Name { get; set; }

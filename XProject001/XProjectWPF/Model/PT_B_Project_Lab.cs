@@ -20,7 +20,7 @@ namespace XProjectWPF.Model
         public string Lab_Money { get; set; }
         public string Lab { get; set; }
         public string Lab_Remark { get; set; }
-        public DateTime Lab_Date { get; set; }
+        public Nullable<System.DateTime> Lab_Date { get; set; }
         public string Is_Lab_Inv { get; set; }
         public string Lab_Inv_Price { get; set; }
         public string Lab_Inv_No { get; set; }

@@ -939,7 +939,7 @@ namespace XProjectWPF
             t_txt_CycleTime.Text = PTBProject.Cycle_Time;
             t_txt_Price.Text = PTBProject.Price;
             t_chk_IsTax.IsChecked = PTBProject.Is_Tax == "是" ? true : false;
-            t_dtp_QuotationDate.Value = PTBProject.Quotation_Date;
+            t_dtp_QuotationDate.Value = PTBProject.Quotation_Date ==null? DateTime.Parse("1900-01-01"): DateTime.Parse(PTBProject.Quotation_Date.ToString());
             t_txt_Remark.Text = PTBProject.Remark;
             //应收客户账款
             t_txt_AccountReceivable.Text = PTBProject.Account_Receivable;
@@ -1216,7 +1216,7 @@ namespace XProjectWPF
                 t_txt_CustomerMoney.Text = myModel.Customer_Money == null ? string.Empty : myModel.Customer_Money.ToString();
                 t_txt_Customer.Text = myModel.Customer;
                 t_txt_CustomerRemark.Text = myModel.Customer_Remark;
-                t_dtp_CustomerDate.Value = myModel.Customer_Date;
+                t_dtp_CustomerDate.Value = myModel.Customer_Date ==null? DateTime.Parse("1900-01-01") : DateTime.Parse(myModel.Customer_Date.ToString()) ;
                 t_chk_IsCustomerInv.IsChecked = myModel.Is_Customer_Inv == "是" ? true : false;
                 t_txt_CustomerInvPrice.Text = myModel.Customer_Inv_Price == null ? string.Empty : myModel.Customer_Inv_Price.ToString();
                 t_txt_CustomerInvNo.Text = myModel.Customer_Inv_No;
@@ -1248,7 +1248,7 @@ namespace XProjectWPF
                 t_txt_AgencyMoney.Text = myModel.Agency_Money == null ? string.Empty : myModel.Agency_Money.ToString();
                 t_txt_Agency.Text = myModel.Agency;
                 t_txt_AgencyRemark.Text = myModel.Agency_Remark;
-                t_dtp_AgencyDate.Value = myModel.Agency_Date;
+                t_dtp_AgencyDate.Value = myModel.Agency_Date ==null?DateTime.Parse("1900-01-01"):DateTime.Parse(myModel.Agency_Date.ToString());
                 t_chk_IsAgencyInv.IsChecked = myModel.Is_Agency_Inv == "是" ? true : false;
                 t_txt_AgencyInvPrice.Text = myModel.Agency_Inv_Price == null ? string.Empty : myModel.Agency_Inv_Price.ToString();
                 t_txt_AgencyInvNo.Text = myModel.Agency_Inv_No;
@@ -1280,7 +1280,7 @@ namespace XProjectWPF
                 t_txt_LabMoney.Text = myModel.Lab_Money == null ? string.Empty : myModel.Lab_Money.ToString();
                 t_txt_Lab.Text = myModel.Lab;
                 t_txt_LabRemark.Text = myModel.Lab_Remark;
-                t_dtp_LabDate.Value = myModel.Lab_Date;
+                t_dtp_LabDate.Value = myModel.Lab_Date == null ? DateTime.Parse("1900-01-01") : DateTime.Parse(myModel.Lab_Date.ToString());
                 t_chk_IsLabInv.IsChecked = myModel.Is_Lab_Inv == "是" ? true : false;
                 t_txt_LabInvPrice.Text = myModel.Lab_Inv_Price == null ? string.Empty : myModel.Lab_Inv_Price.ToString();
                 t_txt_LabInvNo.Text = myModel.Lab_Inv_No;
@@ -1312,7 +1312,7 @@ namespace XProjectWPF
                 t_txt_OtherMoney.Text = myModel.Other_Money == null ? string.Empty : myModel.Other_Money.ToString();
                 t_txt_Other.Text = myModel.Other;
                 t_txt_OtherRemark.Text = myModel.Other_Remark;
-                t_dtp_OtherDate.Value = myModel.Other_Date;
+                t_dtp_OtherDate.Value = myModel.Other_Date == null ? DateTime.Parse("1900-01-01") : DateTime.Parse(myModel.Other_Date.ToString()); 
                 t_chk_IsOtherInv.IsChecked = myModel.Is_Other_Inv == "是" ? true : false;
                 t_txt_OtherInvPrice.Text = myModel.Other_Inv_Price == null ? string.Empty : myModel.Other_Inv_Price.ToString();
                 t_txt_OtherInvNo.Text = myModel.Other_Inv_No;

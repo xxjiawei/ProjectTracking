@@ -12,5 +12,6 @@
         <XStyle:XTextBox x:Name="t_txt_Password" HorizontalAlignment="Left" Margin="273,122,0,0" VerticalAlignment="Top" Width="155"/>
         <XStyle:XButton x:Name="t_btn_Login" Content="登陆" HorizontalAlignment="Left" Margin="273,173,0,0" VerticalAlignment="Top" Click="t_btn_Login_Click"/>
         <XStyle:XButton x:Name="t_btn_Close" Content="退出" HorizontalAlignment="Left" Margin="353,173,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.749,0.583" Click="t_btn_Close_Click"/>
+        <XStyle:XButton x:Name="t_btn_Close_Copy" Content="创建数据库" HorizontalAlignment="Left" Margin="273,201,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.749,0.583" Click="t_btn_Close_Copy_Click" Visibility="Hidden"/>
     </Grid>
 </XStyle:XBaseForm>

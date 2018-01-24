@@ -20,7 +20,7 @@ namespace XProjectWPF.Model
         public string Agency_Money { get; set; }
         public string Agency { get; set; }
         public string Agency_Remark { get; set; }
-        public DateTime Agency_Date { get; set; }
+        public Nullable<System.DateTime> Agency_Date { get; set; }
         public string Is_Agency_Inv { get; set; }
         public string Agency_Inv_Price { get; set; }
         public string Agency_Inv_No { get; set; }

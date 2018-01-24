@@ -20,7 +20,7 @@ namespace XProjectWPF.Model
         public string Customer_Money { get; set; }
         public string Customer { get; set; }
         public string Customer_Remark { get; set; }
-        public DateTime Customer_Date { get; set; }
+        public Nullable<System.DateTime> Customer_Date { get; set; }
         public string Is_Customer_Inv { get; set; }
         public string Customer_Inv_Price { get; set; }
         public string Customer_Inv_No { get; set; }

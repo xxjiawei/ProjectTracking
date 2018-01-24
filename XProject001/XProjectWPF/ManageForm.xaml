@@ -43,15 +43,6 @@
                     <Image Source="/XProjectWPF;component/Resources/Delete.png" Width="16" Height="16"/>
                 </MenuItem.Icon>
             </MenuItem>
-
-            <MenuItem Margin="3,0,0,0" Name="t_btn_Export">
-                <MenuItem.Header>
-                    <TextBlock TextAlignment="Left" Margin="-5,0,0,0"  VerticalAlignment="Center" Text="导出单据"/>
-                </MenuItem.Header>
-                <MenuItem.Icon>
-                    <Image Source="/XProjectWPF;component/Resources/ColumnStyle_Excel.png" Width="16" Height="16"/>
-                </MenuItem.Icon>
-            </MenuItem>
             <MenuItem Margin="3,0,0,0" Name="t_tsm_Close" Click="t_tsm_Close_Click">
                 <MenuItem.Header>
                     <TextBlock TextAlignment="Left" Margin="-5,0,0,0"  VerticalAlignment="Center" Text="关闭"/>

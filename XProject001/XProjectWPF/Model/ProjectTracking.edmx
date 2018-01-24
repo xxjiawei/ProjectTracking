@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ProjectTrackingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ProjectTrackingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="PT_B_Project">
           <Key>
             <PropertyRef Name="Project_No" />
@@ -144,7 +144,8 @@
           <EntitySet Name="PT_B_Project_Other" EntityType="Self.PT_B_Project_Other" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PT_B_Quotation" EntityType="Self.PT_B_Quotation" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectTrackingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -178,19 +179,19 @@
           <Property Name="Lab_Accounts_Prepaid" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Un_Lab_Account_Payable" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Other_Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Other_Pad_Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Un_Other_Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Profits" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Now_Profits" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Pads_Money" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Is_Pads" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="Is_All_Customer" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="Is_All_Agency" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="Is_All_Lab" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Is_All_Other" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Name="Remark" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
           <Property Name="Oper_Time" Type="DateTime" Precision="3" />
           <Property Name="Bill_Status" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="Other_Pad_Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Un_Other_Account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Now_Profits" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Is_All_Other" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PT_B_Project_Agency">
           <Key>
@@ -296,10 +297,6 @@
           <EntitySetMapping Name="PT_B_Project">
             <EntityTypeMapping TypeName="ProjectTrackingModel.PT_B_Project">
               <MappingFragment StoreEntitySet="PT_B_Project">
-                <ScalarProperty Name="Is_All_Other" ColumnName="Is_All_Other" />
-                <ScalarProperty Name="Now_Profits" ColumnName="Now_Profits" />
-                <ScalarProperty Name="Un_Other_Account" ColumnName="Un_Other_Account" />
-                <ScalarProperty Name="Other_Pad_Account" ColumnName="Other_Pad_Account" />
                 <ScalarProperty Name="Project_No" ColumnName="Project_No" />
                 <ScalarProperty Name="Quotation_No" ColumnName="Quotation_No" />
                 <ScalarProperty Name="Follow_Man" ColumnName="Follow_Man" />
@@ -326,12 +323,16 @@
                 <ScalarProperty Name="Lab_Accounts_Prepaid" ColumnName="Lab_Accounts_Prepaid" />
                 <ScalarProperty Name="Un_Lab_Account_Payable" ColumnName="Un_Lab_Account_Payable" />
                 <ScalarProperty Name="Other_Account" ColumnName="Other_Account" />
+                <ScalarProperty Name="Other_Pad_Account" ColumnName="Other_Pad_Account" />
+                <ScalarProperty Name="Un_Other_Account" ColumnName="Un_Other_Account" />
                 <ScalarProperty Name="Profits" ColumnName="Profits" />
+                <ScalarProperty Name="Now_Profits" ColumnName="Now_Profits" />
                 <ScalarProperty Name="Pads_Money" ColumnName="Pads_Money" />
                 <ScalarProperty Name="Is_Pads" ColumnName="Is_Pads" />
                 <ScalarProperty Name="Is_All_Customer" ColumnName="Is_All_Customer" />
                 <ScalarProperty Name="Is_All_Agency" ColumnName="Is_All_Agency" />
                 <ScalarProperty Name="Is_All_Lab" ColumnName="Is_All_Lab" />
+                <ScalarProperty Name="Is_All_Other" ColumnName="Is_All_Other" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="Oper_Time" ColumnName="Oper_Time" />
                 <ScalarProperty Name="Bill_Status" ColumnName="Bill_Status" />

@@ -1,7 +1,9 @@
-﻿using RJ.XStyle;
+﻿using Microsoft.Win32;
+using RJ.XStyle;
 using RJ.XStyle.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -129,7 +131,7 @@ namespace XProjectWPF
         private void LoadControlsValue()
         {
             t_txt_QuotationNo.Text = PTBQuotation.Quotation_No;
-            t_dtp_QuotationDate.Value = PTBQuotation.Quotation_Date;
+            t_dtp_QuotationDate.Value = PTBQuotation.Quotation_Date == null ? DateTime.Parse("1900-01-01") : DateTime.Parse(PTBQuotation.Quotation_Date.ToString());
             t_txt_FollowMan.Text = PTBQuotation.Follow_Man;
             t_txt_ProductModel.Text = PTBQuotation.Product_Model;
             t_txt_ProjectName.Text = PTBQuotation.Project_Name;
@@ -194,9 +196,9 @@ namespace XProjectWPF
 
         private void t_tsb_CreateProject_Click(object sender, RoutedEventArgs e)
         {
-            if(m_IsModify || t_txt_QuotationNo.Text == "新单")
+            if (m_IsModify || t_txt_QuotationNo.Text == "新单")
             {
-                XMessageBox.Enter("当前单据尚未保存，请保存后再操作！",this);
+                XMessageBox.Enter("当前单据尚未保存，请保存后再操作！", this);
                 return;
             }
             m_IsModify = false;
@@ -247,7 +249,7 @@ namespace XProjectWPF
         {
             if (m_IsModify)
             {
-                MessageResult myResult = XMessageBox.Ask("当前单据尚未保存，是否继续？", 370);
+                MessageResult myResult = XMessageBox.Ask("当前单据尚未保存，是否继续？", this);
                 if (myResult == MessageResult.Yes)
                 {
                     //设置新报检单对象
@@ -370,7 +372,7 @@ namespace XProjectWPF
                 {
                     SaveMethod();
                 }
-                else if(myResult == MessageResult.Cancel)
+                else if (myResult == MessageResult.Cancel)
                 {
                     e.Cancel = true;
                 }
@@ -385,6 +387,51 @@ namespace XProjectWPF
             myForm.PTBProject = myModel;
             myForm.ShowDialog();
             this.Close();
+        }
+
+        private void t_tsb_ExportWord_Click(object sender, RoutedEventArgs e)
+        {
+
+            object oMissing = System.Reflection.Missing.Value;
+            //创建一个Word应用程序实例
+            Microsoft.Office.Interop.Word._Application oWord = new Microsoft.Office.Interop.Word.Application();
+            //设置为不可见
+            oWord.Visible = false;
+            //模板文件地址，这里假设在X盘根目录
+            object oTemplate = System.AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "\\Template\\Template.doc";
+            //以模板为基础生成文档
+            Microsoft.Office.Interop.Word._Document oDoc = oWord.Documents.Add(ref oTemplate, ref oMissing, ref oMissing, ref oMissing);
+            //声明书签数组
+            object[] oBookMark = new object[4];
+            //赋值书签名
+            oBookMark[0] = "Company_Name";
+            oBookMark[1] = "Tel";
+            oBookMark[2] = "Email";
+            oBookMark[3] = "Fax";
+            //赋值任意数据到书签的位置
+            oDoc.Bookmarks.get_Item(ref oBookMark[0]).Range.Text = PTBQuotation.Company_Name;
+            oDoc.Bookmarks.get_Item(ref oBookMark[1]).Range.Text = PTBQuotation.Tel;
+            oDoc.Bookmarks.get_Item(ref oBookMark[2]).Range.Text = PTBQuotation.Email;
+            oDoc.Bookmarks.get_Item(ref oBookMark[3]).Range.Text = PTBQuotation.Fax;
+            //弹出保存文件对话框，保存生成的Word
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Word Document(*.doc)|*.doc";
+            sfd.DefaultExt = "Word Document(*.doc)|*.doc";
+            if (sfd.ShowDialog() == true)
+            {
+                object filename = sfd.FileName;
+
+                oDoc.SaveAs(ref filename, ref oMissing, ref oMissing, ref oMissing,
+                ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+                ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+                ref oMissing, ref oMissing);
+                oDoc.Close(ref oMissing, ref oMissing, ref oMissing);
+                //关闭word
+                oWord.Quit(ref oMissing, ref oMissing, ref oMissing);
+
+                System.Diagnostics.Process.Start(sfd.FileName);
+            }
+
         }
     }
 }

@@ -1,3 +1,10 @@
+
+--drop table PT_B_Project;
+--drop table PT_B_Project_Agency;
+--drop table PT_B_Project_Customer;
+--drop table PT_B_Project_Lab;
+--drop table PT_B_Project_Other;
+--drop table PT_B_Quotation;
 /*    ==脚本参数==
 
     源服务器版本 : SQL Server 2016 (13.0.4001)

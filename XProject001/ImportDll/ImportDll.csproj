@@ -44,6 +44,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Microsoft.Office.Interop.Word.dll" />
     <Content Include="RJ.Common.dll" />
     <Content Include="RJ.XStyle.dll" />
   </ItemGroup>

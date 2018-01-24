@@ -1,9 +1,15 @@
-﻿using RJ.XStyle;
+﻿using Microsoft.Win32;
+using RJ.XStyle;
 using RJ.XStyle.GridEx;
 using RJ.XStyle.Model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -542,5 +548,99 @@ namespace XProjectWPF
             }
         }
         #endregion
+
+        private void t_btn_Export_Click(object sender, RoutedEventArgs e)
+        {
+            //SqlConnection conn = new SqlConnection("server=.; uid=sa; pwd=sa123456");
+            //if (conn.State != ConnectionState.Open)
+            //{
+            //    conn.Open();
+            //}
+            //string sql = "CREATE DATABASE ProjectTracking1 on primary" + "(name=ProjectTracking1,filename='F:\\ProjectTracking1.mdf',size=3, maxsize=5,filegrowth=10%)";
+            //sql += "log on" + "(name=ProjectTracking1_log,filename='F:\\ProjectTracking1_log.ldf',size=3,filegrowth=1)";
+            //SqlCommand cmd = new SqlCommand(sql, conn);
+
+            //cmd.ExecuteNonQuery();
+
+            //excutesqlfile("sa", "sa123456", "ProjectTracking1", @"C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\DataBase\");
+
+           // ExecuteSqlFile("server=.; uid=sa; pwd=sa123456", @"C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\DataBase\数据库脚本.sql");
+        }
+
+        /// <summary>
+        /// 导入sql脚本
+        /// </summary>
+        /// <param name="sqlConnString">连接数据库字符串</param>
+        /// <param name="varFileName">脚本路径</param>
+        /// <returns></returns>
+        private static bool ExecuteSqlFile(string sqlConnString, string varFileName)
+        {
+            if (!File.Exists(varFileName))
+            {
+                return false;
+            }
+            StreamReader rs = new StreamReader(varFileName, System.Text.Encoding.Default);
+            ArrayList alSql = new ArrayList();
+            string commandText = "";
+            string varLine = "";
+            while (rs.Peek() > -1)
+            {
+                varLine = rs.ReadLine();
+                if (varLine == "")
+                {
+                    continue;
+                }
+                if (varLine != "GO")
+                {
+                    commandText += varLine;
+                    commandText += "\r\n";
+                }
+                else
+                {
+                    commandText += "";
+                }
+            }
+            alSql.Add(commandText);
+            rs.Close();
+            try
+            {
+                ExecuteCommand(sqlConnString, alSql);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private static void ExecuteCommand(string sqlConnString, ArrayList varSqlList)
+        {
+            using (SqlConnection conn = new SqlConnection(sqlConnString))
+            {
+                conn.Open();
+                //Don't use Transaction, because some commands cannot execute in one Transaction.
+                //SqlTransaction varTrans = conn.BeginTransaction();
+                SqlCommand command = new SqlCommand();
+                command.Connection = conn;
+                //command.Transaction = varTrans;
+                try
+                {
+                    foreach (string varcommandText in varSqlList)
+                    {
+                        command.CommandText = varcommandText;
+                        command.ExecuteNonQuery();
+                    }
+                    //varTrans.Commit();
+                }
+                catch (Exception ex)
+                {
+                    //varTrans.Rollback();
+                    throw ex;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+        }
     }
 }
