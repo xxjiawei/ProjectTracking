@@ -137,6 +137,8 @@ namespace XProjectWPF
             }
         }
 
+        private DateFilterTypes m_CurrentTypes = DateFilterTypes.All;
+
         #endregion
 
         #region 界面事件
@@ -427,14 +429,22 @@ namespace XProjectWPF
 
             string billStatus = myItem.Tag.ToString();
 
+            string dateFifter = string.Empty;
+
             if (myItem.Nodes.Count == 0)
             {
                 XTreeNode myParent = myItem.Parent as XTreeNode;
                 string parentStatus = myParent.Tag.ToString();
                 if (parentStatus == "Q")
                 {
+                     
+                    dateFifter = GetFilterSql("p.Quotation_Date",t_dtp_StartDate.Value,t_dtp_EndDate.Value);
+
+                    DateTime dt = DateTime.Today.AddDays(-Convert.ToInt32(DateTime.Now.Date.DayOfWeek));
+
+
                     var temp = from p in m_Entities.PT_B_Quotation
-                               where p.Bill_Status == billStatus
+                               where p.Bill_Status == billStatus && p.Quotation_Date > dt
                                select p;
 
                     t_pgg_Bill.SelectedIndex = -1;
@@ -657,35 +667,34 @@ namespace XProjectWPF
         /// </summary>
         /// <param name="dateField">日期数据库字段</param>
         /// <returns>返回格式化的查询语句</returns>
-        private string GetFilterSql(string dateField, DateFilterTypes dateFilterType,DateTime startDate ,DateTime endDate)
+        private string GetFilterSql(string dateField,DateTime startDate ,DateTime endDate)
         {
             DatabaseTypes myType = DatabaseTypes.SqlServer;
-            string strSql = String.Empty;
+            DateTime dt = new DateTime();
 
-            switch (dateFilterType)
+            switch (m_CurrentTypes)
             {
                 case DateFilterTypes.Today:
-                    strSql = DateTimeScript.Instance.GetFilterSqlByDay(myType, dateField);
+                    dt = DateTime.Today.AddDays(-1);
                     break;
                 case DateFilterTypes.Week:
-                    strSql = DateTimeScript.Instance.GetFilterSqlByWeek(myType, dateField);
+                    dt = DateTime.Today.AddDays(-Convert.ToInt32(DateTime.Now.Date.DayOfWeek));
                     break;
                 case DateFilterTypes.Month:
-                    strSql = DateTimeScript.Instance.GetFilterSqlByMonth(myType, dateField);
+                    dt = DateTime.Today.AddDays(-Convert.ToInt32(DateTime.Now.Date.Day));
                     break;
                 case DateFilterTypes.Custom:
-                    strSql = DateTimeScript.Instance.GetFilterSqlByCustom(myType, dateField, startDate, endDate);
+                    
                     break;
             }
-
-            return strSql;
+            return dt.ToShortDateString() ;
         }
         /// <summary>
         /// 当前日期范围单选按钮选中状态改变时调用的方法
         /// </summary>
         /// <param name="sender">事件对象</param>
         /// <param name="e">事件参数</param>
-        private void OnDateFilterCheckedChanged(object sender, EventArgs e)
+        private void OnDateFilterCheckedChanged(object sender, RoutedEventArgs e)
         {
             XRadioButton myControl = sender as XRadioButton;
             if (myControl == null) return;
@@ -711,8 +720,8 @@ namespace XProjectWPF
                     break;
             }
 
-            DateFilterTypes myType = (DateFilterTypes)Enum.Parse(typeof(DateFilterTypes), type, true);
-            if (myType == DateFilterTypes.Custom)
+            m_CurrentTypes = (DateFilterTypes)Enum.Parse(typeof(DateFilterTypes), type, true);
+            if (m_CurrentTypes == DateFilterTypes.Custom)
             {
                 t_dtp_StartDate.IsEnabled = true;
                 t_dtp_EndDate.IsEnabled = true;
@@ -722,7 +731,7 @@ namespace XProjectWPF
                 t_dtp_StartDate.IsEnabled = false;
                 t_dtp_EndDate.IsEnabled = false;
             }
-
         }
+
     }
 }

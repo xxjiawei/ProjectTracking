@@ -55,7 +55,6 @@ C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XPro
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\FrmQuotation.g.cs
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\MainWindow.g.cs
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\ManageForm.g.cs
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\Window1.g.cs
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\App.g.cs
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF_Content.g.cs
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF_MarkupCompile.cache
@@ -74,7 +73,6 @@ C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XPro
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\FrmProject.baml
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\MainWindow.baml
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\ManageForm.baml
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\Window1.baml
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.g.resources
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.Properties.Resources.resources
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.GenerateResource.Cache
@@ -155,3 +153,7 @@ D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.GenerateResour
 D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.CoreCompileInputs.cache
 D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF.exe
 D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF.pdb
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\FrmQuery.g.cs
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\UDateFilter.g.cs
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\FrmQuery.baml
+C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\UDateFilter.baml

@@ -82,14 +82,14 @@
         </xstyle:XDataGrid>
         <xstyle:XGroupBox Header="单据日期范围设置" HorizontalAlignment="Left" Height="134" Margin="10,545,0,0" VerticalAlignment="Top" Width="240" GroupBoxDrawType="TopLine"  Background="#F0F5FA">
             <Grid>
-                <xstyle:XRadioButton x:Name="t_rdo_Today" Content="当天单证" HorizontalAlignment="Left" Margin="15,20,0,0" VerticalAlignment="Top" Checked="OnDateFilterCheckedChanged" Unchecked="OnDateFilterCheckedChanged" Tag="Today"/>
+                <xstyle:XDatePicker x:Name="t_dtp_StartDate" IsEnabled="True" HorizontalAlignment="Left" Margin="140,105,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.578,0.708" />
+                <xstyle:XLabel Content="至" Margin="116,109,110,0" VerticalAlignment="Top" RenderTransformOrigin="2.318,-0.24"/>
+                <xstyle:XDatePicker x:Name="t_dtp_EndDate" IsEnabled="True" HorizontalAlignment="Left" Margin="15,105,0,0" VerticalAlignment="Top" Width="90"/>
+                <xstyle:XRadioButton x:Name="t_rdo_Today" Content="当天单证" HorizontalAlignment="Left" Margin="15,20,0,0" VerticalAlignment="Top" Checked="OnDateFilterCheckedChanged" Tag="Today"/>
                 <xstyle:XRadioButton x:Name="t_rdo_Week" Content="当周单证" HorizontalAlignment="Left" Margin="140,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.224,1.929"  Checked="OnDateFilterCheckedChanged" Unchecked="OnDateFilterCheckedChanged" Tag="Week"/>
                 <xstyle:XRadioButton x:Name="t_rdo_Month" Content="当月单证" HorizontalAlignment="Left" Margin="15,48,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.925,1.214"  Checked="OnDateFilterCheckedChanged" Unchecked="OnDateFilterCheckedChanged" Tag="Month"/>
                 <xstyle:XRadioButton x:Name="t_rdo_All" Content="所有单证" HorizontalAlignment="Left" Margin="140,48,0,0" VerticalAlignment="Top" IsChecked="True" RenderTransformOrigin="0.507,-0.143"  Checked="OnDateFilterCheckedChanged" Unchecked="OnDateFilterCheckedChanged" Tag="All"/>
                 <xstyle:XRadioButton x:Name="t_rdo_Custom" Content="自定义范围" HorizontalAlignment="Left" Margin="15,76,0,0" VerticalAlignment="Top"  Checked="OnDateFilterCheckedChanged" Unchecked="OnDateFilterCheckedChanged" Tag="Custom"/>
-                <xstyle:XDatePicker x:Name="t_dtp_StartDate" IsEnabled="True" HorizontalAlignment="Left" Margin="140,105,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.578,0.708" />
-                <xstyle:XLabel Content="至" Margin="116,109,110,0" VerticalAlignment="Top" RenderTransformOrigin="2.318,-0.24"/>
-                <xstyle:XDatePicker x:Name="t_dtp_EndDate" IsEnabled="True" HorizontalAlignment="Left" Margin="15,105,0,0" VerticalAlignment="Top" Width="90"/>
             </Grid>
         </xstyle:XGroupBox>
     </Grid>
