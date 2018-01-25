@@ -14,3 +14,9 @@ D:\Project\XProject001\ImportDll\obj\Debug\ImportDll.csproj.CoreCompileInputs.ca
 D:\Project\XProject001\ImportDll\obj\Debug\ImportDll.dll
 D:\Project\XProject001\ImportDll\obj\Debug\ImportDll.pdb
 D:\Project\XProject001\ImportDll\obj\Debug\ImportDll.csprojResolveAssemblyReference.cache
+D:\MyProject\XProject001\ImportDll\bin\Debug\ImportDll.dll
+D:\MyProject\XProject001\ImportDll\bin\Debug\ImportDll.pdb
+D:\MyProject\XProject001\ImportDll\obj\Debug\ImportDll.csprojResolveAssemblyReference.cache
+D:\MyProject\XProject001\ImportDll\obj\Debug\ImportDll.csproj.CoreCompileInputs.cache
+D:\MyProject\XProject001\ImportDll\obj\Debug\ImportDll.dll
+D:\MyProject\XProject001\ImportDll\obj\Debug\ImportDll.pdb

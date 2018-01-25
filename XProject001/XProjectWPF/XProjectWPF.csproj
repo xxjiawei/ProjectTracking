@@ -87,6 +87,7 @@
     <Compile Include="Method\SerialNumberMethod.cs" />
     <Compile Include="Model\DateFilterTypes.cs" />
     <Compile Include="Model\MDateFilterParam.cs" />
+    <Compile Include="Model\MQuery.cs" />
     <Compile Include="Model\MQuotation22.cs" />
     <Compile Include="Model\ProjectTracking.Context.cs">
       <AutoGen>True</AutoGen>

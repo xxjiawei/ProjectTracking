@@ -138,7 +138,6 @@ D:\MyProject\XProject001\XProjectWPF\obj\Debug\ManageForm.g.cs
 D:\MyProject\XProject001\XProjectWPF\obj\Debug\UDateFilter.g.cs
 D:\MyProject\XProject001\XProjectWPF\obj\Debug\App.g.cs
 D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF_Content.g.cs
-D:\MyProject\XProject001\XProjectWPF\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF_MarkupCompile.cache
 D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF_MarkupCompile.lref
 D:\MyProject\XProject001\XProjectWPF\obj\Debug\App.baml
@@ -157,3 +156,4 @@ C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XPro
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\UDateFilter.g.cs
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\FrmQuery.baml
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\UDateFilter.baml
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csprojResolveAssemblyReference.cache

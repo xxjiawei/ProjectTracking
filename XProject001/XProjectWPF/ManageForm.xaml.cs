@@ -382,18 +382,38 @@ namespace XProjectWPF
             TreeNodeDictionary["R"] = 0;
             TreeNodeDictionary["A"] = 0;
 
-            var temp = from p in m_Entities.PT_B_Quotation
-                       group p by p.Bill_Status;
-
-            int sum = 0;
-            foreach (var group in temp)
+            DateTime date = new DateTime();
+            if (m_CurrentTypes != DateFilterTypes.Custom)
             {
-                string billStatus = group.Key;
-                int count = group.ToList().Count;
-                sum += count;
-                TreeNodeDictionary[billStatus] = count;
+                date = GetFilterDate();
+                var temp = from p in m_Entities.PT_B_Quotation
+                           where p.Quotation_Date > date
+                           group p by p.Bill_Status;
+                int sum = 0;
+                foreach (var group in temp)
+                {
+                    string billStatus = group.Key;
+                    int count = group.ToList().Count;
+                    sum += count;
+                    TreeNodeDictionary[billStatus] = count;
+                }
+                TreeNodeDictionary["Q"] = sum;
             }
-            TreeNodeDictionary["Q"] = sum;
+            else
+            {
+                var temp = from p in m_Entities.PT_B_Quotation
+                           where p.Quotation_Date >= t_dtp_StartDate.Value && p.Quotation_Date <= t_dtp_EndDate.Value
+                           group p by p.Bill_Status;
+                int sum = 0;
+                foreach (var group in temp)
+                {
+                    string billStatus = group.Key;
+                    int count = group.ToList().Count;
+                    sum += count;
+                    TreeNodeDictionary[billStatus] = count;
+                }
+                TreeNodeDictionary["Q"] = sum;
+            }
         }
         /// <summary>
         /// 计算项目单各状态数量
@@ -406,18 +426,38 @@ namespace XProjectWPF
             TreeNodeProjectDic["R"] = 0;
             TreeNodeProjectDic["A"] = 0;
 
-            var temp = from p in m_Entities.PT_B_Project
-                       group p by p.Bill_Status;
-
-            int sum = 0;
-            foreach (var group in temp)
+            DateTime date = new DateTime();
+            if (m_CurrentTypes != DateFilterTypes.Custom)
             {
-                string billStatus = group.Key;
-                int count = group.ToList().Count;
-                sum += count;
-                TreeNodeProjectDic[billStatus] = count;
+                date = GetFilterDate();
+                var temp = from p in m_Entities.PT_B_Project
+                           where p.Quotation_Date > date
+                           group p by p.Bill_Status;
+                int sum = 0;
+                foreach (var group in temp)
+                {
+                    string billStatus = group.Key;
+                    int count = group.ToList().Count;
+                    sum += count;
+                    TreeNodeProjectDic[billStatus] = count;
+                }
+                TreeNodeProjectDic["P"] = sum;
             }
-            TreeNodeProjectDic["P"] = sum;
+            else
+            {
+                var temp = from p in m_Entities.PT_B_Project
+                           where p.Quotation_Date >= t_dtp_StartDate.Value && p.Quotation_Date<=t_dtp_EndDate.Value
+                           group p by p.Bill_Status;
+                int sum = 0;
+                foreach (var group in temp)
+                {
+                    string billStatus = group.Key;
+                    int count = group.ToList().Count;
+                    sum += count;
+                    TreeNodeProjectDic[billStatus] = count;
+                }
+                TreeNodeProjectDic["P"] = sum;
+            }
         }
         /// <summary>
         /// 加载业务数据
@@ -429,37 +469,52 @@ namespace XProjectWPF
 
             string billStatus = myItem.Tag.ToString();
 
-            string dateFifter = string.Empty;
-
+            DateTime date = new DateTime();
             if (myItem.Nodes.Count == 0)
             {
                 XTreeNode myParent = myItem.Parent as XTreeNode;
                 string parentStatus = myParent.Tag.ToString();
                 if (parentStatus == "Q")
                 {
-                     
-                    dateFifter = GetFilterSql("p.Quotation_Date",t_dtp_StartDate.Value,t_dtp_EndDate.Value);
+                    if (m_CurrentTypes != DateFilterTypes.Custom)
+                    {
+                        date = GetFilterDate();
+                        var temp = from p in m_Entities.PT_B_Quotation
+                                   where p.Bill_Status == billStatus && p.Quotation_Date > date
+                                   select p;
+                        GirdStyleConfig.ItemsSource = temp.ToList();
+                    }
+                    else
+                    {
+                        var temp = from p in m_Entities.PT_B_Quotation
+                                   where p.Bill_Status == billStatus && p.Quotation_Date >= t_dtp_StartDate.Value && p.Quotation_Date <= t_dtp_EndDate.Value
+                                   select p;
+                        GirdStyleConfig.ItemsSource = temp.ToList();
 
-                    DateTime dt = DateTime.Today.AddDays(-Convert.ToInt32(DateTime.Now.Date.DayOfWeek));
-
-
-                    var temp = from p in m_Entities.PT_B_Quotation
-                               where p.Bill_Status == billStatus && p.Quotation_Date > dt
-                               select p;
-
+                    }
                     t_pgg_Bill.SelectedIndex = -1;
-                    GirdStyleConfig.ItemsSource = temp.ToList();
                     t_pgg_Bill.StyleConfig = GirdStyleConfig;
                     t_pgg_Bill.SelectedIndex = 0;
                 }
                 else if (parentStatus == "P")
                 {
-                    var temp = from p in m_Entities.PT_B_Project
-                               where p.Bill_Status == billStatus
-                               select p;
+                    if (m_CurrentTypes != DateFilterTypes.Custom)
+                    {
+                        date = GetFilterDate();
+                        var temp = from p in m_Entities.PT_B_Project
+                                   where p.Bill_Status == billStatus && p.Quotation_Date > date
+                                   select p;
+                        ProjectGirdStyleConfig.ItemsSource = temp.ToList();
+                    }
+                    else
+                    {
+                        var temp = from p in m_Entities.PT_B_Project
+                                   where p.Bill_Status == billStatus && p.Quotation_Date >= t_dtp_StartDate.Value && p.Quotation_Date <= t_dtp_EndDate.Value
+                                   select p;
+                        ProjectGirdStyleConfig.ItemsSource = temp.ToList();
+                    }
 
                     t_pgg_Bill.SelectedIndex = -1;
-                    ProjectGirdStyleConfig.ItemsSource = temp.ToList();
                     t_pgg_Bill.StyleConfig = ProjectGirdStyleConfig;
                     t_pgg_Bill.SelectedIndex = 0;
                 }
@@ -468,23 +523,47 @@ namespace XProjectWPF
             {
                 if (billStatus == "Q")
                 {
-                    var temp = from p in m_Entities.PT_B_Quotation
-                               orderby p.Quotation_No
-                               select p;
-
+                    if (m_CurrentTypes != DateFilterTypes.Custom)
+                    {
+                        date = GetFilterDate();
+                        var temp = from p in m_Entities.PT_B_Quotation
+                                   where p.Quotation_Date > date
+                                   orderby p.Quotation_No
+                                   select p;
+                        GirdStyleConfig.ItemsSource = temp.ToList();
+                    }
+                    else
+                    {
+                        var temp = from p in m_Entities.PT_B_Quotation
+                                   where p.Quotation_Date >= t_dtp_StartDate.Value && p.Quotation_Date <= t_dtp_EndDate.Value
+                                   orderby p.Quotation_No
+                                   select p;
+                        GirdStyleConfig.ItemsSource = temp.ToList();
+                    }
                     t_pgg_Bill.SelectedIndex = -1;
-                    GirdStyleConfig.ItemsSource = temp.ToList();
                     t_pgg_Bill.StyleConfig = GirdStyleConfig;
                     t_pgg_Bill.SelectedIndex = 0;
                 }
                 else if (billStatus == "P")
                 {
-                    var temp = from p in m_Entities.PT_B_Project
-                               orderby p.Quotation_No
-                               select p;
-
+                    if (m_CurrentTypes != DateFilterTypes.Custom)
+                    {
+                        date = GetFilterDate();
+                        var temp = from p in m_Entities.PT_B_Project
+                                   where p.Quotation_Date > date
+                                   orderby p.Quotation_No
+                                   select p;
+                        ProjectGirdStyleConfig.ItemsSource = temp.ToList();
+                    }
+                    else
+                    {
+                        var temp = from p in m_Entities.PT_B_Project
+                                   where p.Quotation_Date >= t_dtp_StartDate.Value && p.Quotation_Date <= t_dtp_EndDate.Value
+                                   orderby p.Quotation_No
+                                   select p;
+                        ProjectGirdStyleConfig.ItemsSource = temp.ToList();
+                    }
                     t_pgg_Bill.SelectedIndex = -1;
-                    ProjectGirdStyleConfig.ItemsSource = temp.ToList();
                     t_pgg_Bill.StyleConfig = ProjectGirdStyleConfig;
                     t_pgg_Bill.SelectedIndex = 0;
                 }
@@ -659,6 +738,47 @@ namespace XProjectWPF
         {
             FrmQuery myForm = new FrmQuery();
             myForm.ShowDialog();
+            MQuery myModel = myForm.QueryModel;
+            if (myModel != null)
+            {
+                if (myModel.BillType == "Q")
+                {
+                    var query = m_Entities.PT_B_Quotation.AsQueryable();
+                    if (myModel.DateFilterType != DateFilterTypes.Custom)
+                    {
+                        DateTime date = GetFilterDate();
+                        query = query.Where(c => c.Quotation_Date > date);
+                    }
+                    else
+                        query = query.Where(c => c.Quotation_Date >= myModel.StartDate && c.Quotation_Date <= myModel.EndDate);
+
+                    if (!string.IsNullOrEmpty(myModel.BillNo))
+                    {
+                        query = query.Where(c => c.Quotation_No.Contains(myModel.BillNo));
+                    }
+                    if (!string.IsNullOrEmpty(myModel.FllowMan))
+                    {
+                        query = query.Where(c => c.Follow_Man.Contains(myModel.FllowMan));
+                    }
+                    if (!string.IsNullOrEmpty(myModel.ProjectName))
+                    {
+                        query = query.Where(c => c.Project_Name.Contains(myModel.ProjectName));
+                    }
+                    if (!string.IsNullOrEmpty(myModel.CompanyName))
+                    {
+                        query = query.Where(c => c.Company_Name.Contains(myModel.CompanyName));
+                    }
+                    if (!string.IsNullOrEmpty(myModel.Type))
+                    {
+                        query = query.Where(c => c.Quotation_Type == myModel.Type);
+                    }
+                    query = query.OrderBy(c => c.Quotation_No);
+                    GirdStyleConfig.ItemsSource = query.ToList();
+                    t_pgg_Bill.SelectedIndex = -1;
+                    t_pgg_Bill.StyleConfig = GirdStyleConfig;
+                    t_pgg_Bill.SelectedIndex = 0;
+                }
+            }
         }
 
 
@@ -667,11 +787,9 @@ namespace XProjectWPF
         /// </summary>
         /// <param name="dateField">日期数据库字段</param>
         /// <returns>返回格式化的查询语句</returns>
-        private string GetFilterSql(string dateField,DateTime startDate ,DateTime endDate)
+        private DateTime GetFilterDate()
         {
-            DatabaseTypes myType = DatabaseTypes.SqlServer;
             DateTime dt = new DateTime();
-
             switch (m_CurrentTypes)
             {
                 case DateFilterTypes.Today:
@@ -683,11 +801,8 @@ namespace XProjectWPF
                 case DateFilterTypes.Month:
                     dt = DateTime.Today.AddDays(-Convert.ToInt32(DateTime.Now.Date.Day));
                     break;
-                case DateFilterTypes.Custom:
-                    
-                    break;
             }
-            return dt.ToShortDateString() ;
+            return dt;
         }
         /// <summary>
         /// 当前日期范围单选按钮选中状态改变时调用的方法
@@ -731,7 +846,17 @@ namespace XProjectWPF
                 t_dtp_StartDate.IsEnabled = false;
                 t_dtp_EndDate.IsEnabled = false;
             }
+            BindTreeNode();
         }
 
+        private void t_dtp_StartDate_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            BindTreeNode();
+        }
+
+        private void t_dtp_EndDate_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            BindTreeNode();
+        }
     }
 }

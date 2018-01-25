@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\
+D:\MyProject\XProject001\XProjectWPF\obj\Debug\
 XProjectWPF
 none
 false
 DEBUG;TRACE
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\App.xaml
+D:\MyProject\XProject001\XProjectWPF\App.xaml
 6612401269
 31778931390
-24-1452527565
-23-1042844431
+25276035778
+221636262962
 FrmProject.xaml;FrmQuery.xaml;FrmQuotation.xaml;MainWindow.xaml;ManageForm.xaml;UDateFilter.xaml;
 
 False
