@@ -112,7 +112,6 @@ D:\Project\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.GenerateResource
 D:\Project\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.CoreCompileInputs.cache
 D:\Project\XProject001\XProjectWPF\obj\Debug\XProjectWPF.exe
 D:\Project\XProject001\XProjectWPF\obj\Debug\XProjectWPF.pdb
-C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csprojResolveAssemblyReference.cache
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\bin\Debug\Template\Template.doc
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\Interop.Office.dll
 C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\obj\Debug\XProjectWPF.csproj.ResolveComReference.cache

@@ -65,9 +65,17 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_tsb_Save_Click(object sender, RoutedEventArgs e)
         {
-            SaveMethod();
-            XMessageBox.Enter("保存成功", this);
-            m_IsModify = false;
+            try
+            {
+                SaveMethod();
+                XMessageBox.Enter("保存成功", this);
+                m_IsModify = false;
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+       
         }
         /// <summary>
         /// 保存方法
@@ -97,13 +105,21 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void XBaseForm_Loaded(object sender, RoutedEventArgs e)
         {
-            if (PTBQuotation == null)
-                CreateNewQuotationModel();
-            LoadControlsValue();
+            try
+            {
+                if (PTBQuotation == null)
+                    CreateNewQuotationModel();
+                LoadControlsValue();
 
-            Thread myThread = new Thread(SetMenuEnabel);
-            myThread.IsBackground = true;
-            myThread.Start();
+                Thread myThread = new Thread(SetMenuEnabel);
+                myThread.IsBackground = true;
+                myThread.Start();
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+          
         }
         /// <summary>
         /// 设置菜单栏是否可用，解决双击表格过快直接点到按钮触发按钮事件问题
@@ -196,39 +212,47 @@ namespace XProjectWPF
 
         private void t_tsb_CreateProject_Click(object sender, RoutedEventArgs e)
         {
-            if (m_IsModify || t_txt_QuotationNo.Text == "新单")
+            try
             {
-                XMessageBox.Enter("当前单据尚未保存，请保存后再操作！", this);
-                return;
+                if (m_IsModify || t_txt_QuotationNo.Text == "新单")
+                {
+                    XMessageBox.Enter("当前单据尚未保存，请保存后再操作！", this);
+                    return;
+                }
+                m_IsModify = false;
+                this.Visibility = Visibility.Hidden;
+
+                PT_B_Project myModel = new PT_B_Project();
+                myModel.Quotation_No = PTBQuotation.Quotation_No;
+                myModel.Quotation_Date = PTBQuotation.Quotation_Date;
+                myModel.Follow_Man = PTBQuotation.Follow_Man;
+                myModel.Product_Model = PTBQuotation.Product_Model;
+                myModel.Project_Name = PTBQuotation.Project_Name;
+                myModel.Price = PTBQuotation.Price;
+                myModel.Is_Tax = PTBQuotation.Is_Tax;
+                myModel.Project_Type = PTBQuotation.Quotation_Type;
+                myModel.Cycle_Time = PTBQuotation.Cycle_Time;
+                myModel.Company_Name = PTBQuotation.Company_Name;
+                myModel.Company_Address = PTBQuotation.Company_Address;
+                myModel.Contact_Man = PTBQuotation.Contact_Man;
+                myModel.Tel = PTBQuotation.Tel;
+                myModel.Email = PTBQuotation.Email;
+                myModel.Fax = PTBQuotation.Fax;
+                myModel.Remark = PTBQuotation.Remark;
+                myModel.Oper_Time = DateTime.Now;
+                myModel.Account_Receivable = PTBQuotation.Price;
+                myModel.Profits = PTBQuotation.Price;
+                FrmProject myForm = new FrmProject();
+                myForm.PTBProject = myModel;
+                myForm.ShowDialog();
+
+                this.Close();
             }
-            m_IsModify = false;
-            this.Visibility = Visibility.Hidden;
-
-            PT_B_Project myModel = new PT_B_Project();
-            myModel.Quotation_No = PTBQuotation.Quotation_No;
-            myModel.Quotation_Date = PTBQuotation.Quotation_Date;
-            myModel.Follow_Man = PTBQuotation.Follow_Man;
-            myModel.Product_Model = PTBQuotation.Product_Model;
-            myModel.Project_Name = PTBQuotation.Project_Name;
-            myModel.Price = PTBQuotation.Price;
-            myModel.Is_Tax = PTBQuotation.Is_Tax;
-            myModel.Project_Type = PTBQuotation.Quotation_Type;
-            myModel.Cycle_Time = PTBQuotation.Cycle_Time;
-            myModel.Company_Name = PTBQuotation.Company_Name;
-            myModel.Company_Address = PTBQuotation.Company_Address;
-            myModel.Contact_Man = PTBQuotation.Contact_Man;
-            myModel.Tel = PTBQuotation.Tel;
-            myModel.Email = PTBQuotation.Email;
-            myModel.Fax = PTBQuotation.Fax;
-            myModel.Remark = PTBQuotation.Remark;
-            myModel.Oper_Time = DateTime.Now;
-            myModel.Account_Receivable = PTBQuotation.Price;
-            myModel.Profits = PTBQuotation.Price;
-            FrmProject myForm = new FrmProject();
-            myForm.PTBProject = myModel;
-            myForm.ShowDialog();
-
-            this.Close();
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+          
         }
         /// <summary>
         /// 关闭窗口事件
@@ -247,10 +271,20 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_tsb_New_Click(object sender, RoutedEventArgs e)
         {
-            if (m_IsModify)
+            try
             {
-                MessageResult myResult = XMessageBox.Ask("当前单据尚未保存，是否继续？", this);
-                if (myResult == MessageResult.Yes)
+                if (m_IsModify)
+                {
+                    MessageResult myResult = XMessageBox.Ask("当前单据尚未保存，是否继续？", this);
+                    if (myResult == MessageResult.Yes)
+                    {
+                        //设置新报检单对象
+                        CreateNewQuotationModel();
+                        //对窗体进行赋值
+                        LoadControlsValue();
+                    }
+                }
+                else
                 {
                     //设置新报检单对象
                     CreateNewQuotationModel();
@@ -258,13 +292,11 @@ namespace XProjectWPF
                     LoadControlsValue();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                //设置新报检单对象
-                CreateNewQuotationModel();
-                //对窗体进行赋值
-                LoadControlsValue();
+                XMessageBox.Exception(ex);
             }
+          
         }
         /// <summary>
         /// 事件注册
@@ -331,32 +363,40 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_tsb_Copy_Click(object sender, RoutedEventArgs e)
         {
-            if (m_IsModify)
+            try
             {
-                XMessageBox.Warning("当前单据尚未保存，请保存后再操作！", this);
-                return;
-            }
-            PT_B_Quotation copyModel = new PT_B_Quotation();
-            copyModel.Quotation_No = "新单";
-            copyModel.Quotation_Date = PTBQuotation.Quotation_Date;
-            copyModel.Follow_Man = PTBQuotation.Follow_Man;
-            copyModel.Product_Model = PTBQuotation.Product_Model;
-            copyModel.Project_Name = PTBQuotation.Project_Name;
-            copyModel.Price = PTBQuotation.Price;
-            copyModel.Is_Tax = PTBQuotation.Is_Tax;
-            copyModel.Quotation_Type = PTBQuotation.Quotation_Type;
-            copyModel.Cycle_Time = PTBQuotation.Cycle_Time;
-            copyModel.Company_Name = PTBQuotation.Company_Name;
-            copyModel.Company_Address = PTBQuotation.Company_Address;
-            copyModel.Contact_Man = PTBQuotation.Contact_Man;
-            copyModel.Tel = PTBQuotation.Tel;
-            copyModel.Email = PTBQuotation.Email;
-            copyModel.Fax = PTBQuotation.Fax;
-            copyModel.Remark = PTBQuotation.Remark;
-            copyModel.Oper_Time = DateTime.Now;
+                if (m_IsModify)
+                {
+                    XMessageBox.Warning("当前单据尚未保存，请保存后再操作！", this);
+                    return;
+                }
+                PT_B_Quotation copyModel = new PT_B_Quotation();
+                copyModel.Quotation_No = "新单";
+                copyModel.Quotation_Date = PTBQuotation.Quotation_Date;
+                copyModel.Follow_Man = PTBQuotation.Follow_Man;
+                copyModel.Product_Model = PTBQuotation.Product_Model;
+                copyModel.Project_Name = PTBQuotation.Project_Name;
+                copyModel.Price = PTBQuotation.Price;
+                copyModel.Is_Tax = PTBQuotation.Is_Tax;
+                copyModel.Quotation_Type = PTBQuotation.Quotation_Type;
+                copyModel.Cycle_Time = PTBQuotation.Cycle_Time;
+                copyModel.Company_Name = PTBQuotation.Company_Name;
+                copyModel.Company_Address = PTBQuotation.Company_Address;
+                copyModel.Contact_Man = PTBQuotation.Contact_Man;
+                copyModel.Tel = PTBQuotation.Tel;
+                copyModel.Email = PTBQuotation.Email;
+                copyModel.Fax = PTBQuotation.Fax;
+                copyModel.Remark = PTBQuotation.Remark;
+                copyModel.Oper_Time = DateTime.Now;
 
-            PTBQuotation = copyModel;
-            LoadControlsValue();
+                PTBQuotation = copyModel;
+                LoadControlsValue();
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+         
         }
         /// <summary>
         /// 窗体关闭前事件
@@ -365,28 +405,48 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void XBaseForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (m_IsModify)
+            try
             {
-                MessageResult myResult = XMessageBox.Select("当前单据已修改，是否保存？", this);
-                if (myResult == MessageResult.Yes)
+                if (m_IsModify)
                 {
-                    SaveMethod();
+                    MessageResult myResult = XMessageBox.Select("当前单据已修改，是否保存？", this);
+                    if (myResult == MessageResult.Yes)
+                    {
+                        SaveMethod();
+                    }
+                    else if (myResult == MessageResult.Cancel)
+                    {
+                        e.Cancel = true;
+                    }
                 }
-                else if (myResult == MessageResult.Cancel)
-                {
-                    e.Cancel = true;
-                }
+
             }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+          
         }
 
         private void t_dge_Project_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            this.Visibility = Visibility.Hidden;
-            PT_B_Project myModel = (PT_B_Project)t_dge_Project.SelectedItem;
-            FrmProject myForm = new FrmProject();
-            myForm.PTBProject = myModel;
-            myForm.ShowDialog();
-            this.Close();
+            try
+            {
+                if (t_dge_Project.Items.Count == 0)
+                    return;
+
+                this.Visibility = Visibility.Hidden;
+                PT_B_Project myModel = (PT_B_Project)t_dge_Project.SelectedItem;
+                FrmProject myForm = new FrmProject();
+                myForm.PTBProject = myModel;
+                myForm.ShowDialog();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+          
         }
 
         private void t_tsb_ExportWord_Click(object sender, RoutedEventArgs e)

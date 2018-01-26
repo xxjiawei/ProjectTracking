@@ -37,11 +37,18 @@ namespace XProjectWPF
 
         private void t_btn_Login_Click(object sender, RoutedEventArgs e)
         {
-            this.Visibility = Visibility.Hidden;
-            ManageForm myForm = new ManageForm();
-            //Window1 myForm = new Window1();
-            myForm.ShowDialog();
-            this.Close();
+            try
+            {
+                this.Visibility = Visibility.Hidden;
+                ManageForm myForm = new ManageForm();
+                //Window1 myForm = new Window1();
+                myForm.ShowDialog();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
         }
         /// <summary>
         /// 导入sql脚本

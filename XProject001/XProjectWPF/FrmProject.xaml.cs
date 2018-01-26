@@ -103,17 +103,25 @@ namespace XProjectWPF
         /// <param name="e">事件对象</param>
         private void XBaseForm_Loaded(object sender, RoutedEventArgs e)
         {
-            //加载控件值
-            LoadData();
-            //计算已收客户资金总和
-            SumPaymentReceivable();
-            //计算已付机构资金总和
-            SumAgencyAccountsPrepaid();
-            //计算已付外包资金总和
-            SumLabAccountsPrepaid();
-            //计算已付其他资金总和
-            SumOtherAccountsPrepaid();
-            m_IsLoad = false;
+            try
+            {
+                //加载控件值
+                LoadData();
+                //计算已收客户资金总和
+                SumPaymentReceivable();
+                //计算已付机构资金总和
+                SumAgencyAccountsPrepaid();
+                //计算已付外包资金总和
+                SumLabAccountsPrepaid();
+                //计算已付其他资金总和
+                SumOtherAccountsPrepaid();
+                m_IsLoad = false;
+            }
+            catch(Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+           
         }
         /// <summary>
         /// 当前报价值改变事件
@@ -135,20 +143,29 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_chk_Save_Click(object sender, RoutedEventArgs e)
         {
-            var checkBoxes = new[] { t_chk_Save, t_chk_EMC, t_chk_Chemis };
-            var current = (CheckBox)sender;
-            if (current.IsChecked == false)
+            try
             {
-                current.IsChecked = true;
-                return;
-            }
-            foreach (var checkBox in checkBoxes)
-            {
-                if (checkBox != current)
+                var checkBoxes = new[] { t_chk_Save, t_chk_EMC, t_chk_Chemis };
+                var current = (CheckBox)sender;
+                if (current.IsChecked == false)
                 {
-                    checkBox.IsChecked = !current.IsChecked;
+                    current.IsChecked = true;
+                    return;
                 }
+                foreach (var checkBox in checkBoxes)
+                {
+                    if (checkBox != current)
+                    {
+                        checkBox.IsChecked = !current.IsChecked;
+                    }
+                }
+
             }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+           
         }
         private void t_tsb_Close_Click(object sender, RoutedEventArgs e)
         {
@@ -162,9 +179,17 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_tsb_Save_Click(object sender, RoutedEventArgs e)
         {
-            SaveMethod();
-            XMessageBox.Enter("保存成功", this);
-            m_IsModify = false;
+            try
+            {
+                SaveMethod();
+                XMessageBox.Enter("保存成功", this);
+                m_IsModify = false;
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+
         }
         /// <summary>
         /// 保存调用方法
@@ -377,17 +402,25 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_btn_CustomerAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (t_dge_CustomBill.Items.Count == 0)
-                SetCustomerReadOnly(false);
+            try
+            {
+                if (t_dge_CustomBill.Items.Count == 0)
+                    SetCustomerReadOnly(false);
 
-            //添加新对象
-            PT_B_Project_Customer newModel = new PT_B_Project_Customer();
-            newModel.Customer_Date = DateTime.Today;
-            newModel.Is_Customer_Inv = "否";
-            m_CustomerList.Add(newModel);
-            t_dge_CustomBill.Items.Refresh();
-            t_dge_CustomBill.SelectedIndex = m_CustomerList.Count - 1;
-            t_dge_CustomBill.Focus();
+                //添加新对象
+                PT_B_Project_Customer newModel = new PT_B_Project_Customer();
+                newModel.Customer_Date = DateTime.Today;
+                newModel.Is_Customer_Inv = "否";
+                m_CustomerList.Add(newModel);
+                t_dge_CustomBill.Items.Refresh();
+                t_dge_CustomBill.SelectedIndex = m_CustomerList.Count - 1;
+                t_dge_CustomBill.Focus();
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+          
         }
         /// <summary>
         /// 客户信息删除按钮事件
@@ -396,38 +429,45 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_btn_CustomerDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (t_dge_CustomBill.Items.Count < 1)
+            try
             {
-                XMessageBox.Warning("请选择需要删除的记录行!", this);
-                return;
+                if (t_dge_CustomBill.Items.Count < 1)
+                {
+                    XMessageBox.Warning("请选择需要删除的记录行!", this);
+                    return;
+                }
+
+                PT_B_Project_Customer myModel = t_dge_CustomBill.SelectedItem as PT_B_Project_Customer;
+                if (myModel == null) return;
+
+                int myIndex = t_dge_CustomBill.SelectedIndex;
+                MessageResult myResult = XMessageBox.Ask("确定要删除当前数据吗？", this);
+                if (myResult == MessageResult.No) return;
+
+                m_CustomerList.Remove(myModel);
+
+                t_dge_CustomBill.Items.Refresh();
+                t_dge_CustomBill_SelectionChanged(null, null);
+
+                if (t_dge_CustomBill.Items.Count == 0)
+                {
+                    SetCustomerReadOnly(true);
+                }
+
+                if (myIndex == 0)
+                    myIndex++;
+                t_dge_CustomBill.SelectedIndex = myIndex - 1;
+                t_dge_CustomBill.Focus();
+
+                //计算已收客户资金总和
+                SumPaymentReceivable();
+                //校验开票
+                ValidateIsAllCustomer();
             }
-
-            PT_B_Project_Customer myModel = t_dge_CustomBill.SelectedItem as PT_B_Project_Customer;
-            if (myModel == null) return;
-
-            int myIndex = t_dge_CustomBill.SelectedIndex;
-            MessageResult myResult = XMessageBox.Ask("确定要删除当前数据吗？", this);
-            if (myResult == MessageResult.No) return;
-
-            m_CustomerList.Remove(myModel);
-
-            t_dge_CustomBill.Items.Refresh();
-            t_dge_CustomBill_SelectionChanged(null, null);
-
-            if (t_dge_CustomBill.Items.Count == 0)
+            catch (Exception ex)
             {
-                SetCustomerReadOnly(true);
+                XMessageBox.Exception(ex);
             }
-
-            if (myIndex == 0)
-                myIndex++;
-            t_dge_CustomBill.SelectedIndex = myIndex - 1;
-            t_dge_CustomBill.Focus();
-
-            //计算已收客户资金总和
-            SumPaymentReceivable();
-            //校验开票
-            ValidateIsAllCustomer();
         }
         /// <summary>
         /// 机构信息添加按钮事件
@@ -436,17 +476,24 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_btn_AgencyAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (t_dge_Agency.Items.Count == 0)
-                SetAgencyReadOnly(false);
+            try
+            {
+                if (t_dge_Agency.Items.Count == 0)
+                    SetAgencyReadOnly(false);
 
-            //添加新对象
-            PT_B_Project_Agency newModel = new PT_B_Project_Agency();
-            newModel.Agency_Date = DateTime.Today;
-            newModel.Is_Agency_Inv = "否";
-            m_AgencyList.Add(newModel);
-            t_dge_Agency.Items.Refresh();
-            t_dge_Agency.SelectedIndex = m_AgencyList.Count - 1;
-            t_dge_Agency.Focus();
+                //添加新对象
+                PT_B_Project_Agency newModel = new PT_B_Project_Agency();
+                newModel.Agency_Date = DateTime.Today;
+                newModel.Is_Agency_Inv = "否";
+                m_AgencyList.Add(newModel);
+                t_dge_Agency.Items.Refresh();
+                t_dge_Agency.SelectedIndex = m_AgencyList.Count - 1;
+                t_dge_Agency.Focus();
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
         }
         /// <summary>
         /// 机构信息删除按钮事件
@@ -455,37 +502,44 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_btn_AgencyDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (t_dge_Agency.Items.Count < 1)
+            try
             {
-                XMessageBox.Warning("请选择需要删除的记录行!", this);
-                return;
+                if (t_dge_Agency.Items.Count < 1)
+                {
+                    XMessageBox.Warning("请选择需要删除的记录行!", this);
+                    return;
+                }
+
+                PT_B_Project_Agency myModel = t_dge_Agency.SelectedItem as PT_B_Project_Agency;
+                if (myModel == null) return;
+
+                int myIndex = t_dge_Agency.SelectedIndex;
+                MessageResult myResult = XMessageBox.Ask("确定要删除当前数据吗？", this);
+                if (myResult == MessageResult.No) return;
+
+                m_AgencyList.Remove(myModel);
+
+                t_dge_Agency.Items.Refresh();
+                t_dge_Agency_SelectionChanged(null, null);
+
+                if (t_dge_Agency.Items.Count == 0)
+                {
+                    SetAgencyReadOnly(true);
+                }
+
+                if (myIndex == 0)
+                    myIndex++;
+                t_dge_Agency.SelectedIndex = myIndex - 1;
+                t_dge_Agency.Focus();
+                //计算已付机构资金总和
+                SumAgencyAccountsPrepaid();
+                //校验开票
+                ValidateIsAllAgency();
             }
-
-            PT_B_Project_Agency myModel = t_dge_Agency.SelectedItem as PT_B_Project_Agency;
-            if (myModel == null) return;
-
-            int myIndex = t_dge_Agency.SelectedIndex;
-            MessageResult myResult = XMessageBox.Ask("确定要删除当前数据吗？", this);
-            if (myResult == MessageResult.No) return;
-
-            m_AgencyList.Remove(myModel);
-
-            t_dge_Agency.Items.Refresh();
-            t_dge_Agency_SelectionChanged(null, null);
-
-            if (t_dge_Agency.Items.Count == 0)
+            catch (Exception ex)
             {
-                SetAgencyReadOnly(true);
+                XMessageBox.Exception(ex);
             }
-
-            if (myIndex == 0)
-                myIndex++;
-            t_dge_Agency.SelectedIndex = myIndex - 1;
-            t_dge_Agency.Focus();
-            //计算已付机构资金总和
-            SumAgencyAccountsPrepaid();
-            //校验开票
-            ValidateIsAllAgency();
         }
         /// <summary>
         /// 外包信息添加按钮事件
@@ -494,17 +548,24 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_btn_LabAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (t_dge_Lab.Items.Count == 0)
-                SetLabReadOnly(false);
+            try
+            {
+                if (t_dge_Lab.Items.Count == 0)
+                    SetLabReadOnly(false);
 
-            //添加新对象
-            PT_B_Project_Lab newModel = new PT_B_Project_Lab();
-            newModel.Lab_Date = DateTime.Today;
-            newModel.Is_Lab_Inv = "否";
-            m_LabList.Add(newModel);
-            t_dge_Lab.Items.Refresh();
-            t_dge_Lab.SelectedIndex = m_LabList.Count - 1;
-            t_dge_Lab.Focus();
+                //添加新对象
+                PT_B_Project_Lab newModel = new PT_B_Project_Lab();
+                newModel.Lab_Date = DateTime.Today;
+                newModel.Is_Lab_Inv = "否";
+                m_LabList.Add(newModel);
+                t_dge_Lab.Items.Refresh();
+                t_dge_Lab.SelectedIndex = m_LabList.Count - 1;
+                t_dge_Lab.Focus();
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
         }
         /// <summary>
         /// 外包信息删除按钮事件
@@ -513,37 +574,45 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_btn_LabDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (t_dge_Lab.Items.Count < 1)
+            try
             {
-                XMessageBox.Warning("请选择需要删除的记录行!", this);
-                return;
+                if (t_dge_Lab.Items.Count < 1)
+                {
+                    XMessageBox.Warning("请选择需要删除的记录行!", this);
+                    return;
+                }
+
+                PT_B_Project_Lab myModel = t_dge_Lab.SelectedItem as PT_B_Project_Lab;
+                if (myModel == null) return;
+
+                int myIndex = t_dge_Lab.SelectedIndex;
+                MessageResult myResult = XMessageBox.Ask("确定要删除当前数据吗？", this);
+                if (myResult == MessageResult.No) return;
+
+                m_LabList.Remove(myModel);
+
+                t_dge_Lab.Items.Refresh();
+                t_dge_Lab_SelectionChanged(null, null);
+
+                if (t_dge_Lab.Items.Count == 0)
+                {
+                    SetLabReadOnly(true);
+                }
+
+                if (myIndex == 0)
+                    myIndex++;
+                t_dge_Lab.SelectedIndex = myIndex - 1;
+                t_dge_Lab.Focus();
+                //计算已付外包资金总和
+                SumLabAccountsPrepaid();
+                //校验开票
+                ValidateIsAllLab();
             }
-
-            PT_B_Project_Lab myModel = t_dge_Lab.SelectedItem as PT_B_Project_Lab;
-            if (myModel == null) return;
-
-            int myIndex = t_dge_Lab.SelectedIndex;
-            MessageResult myResult = XMessageBox.Ask("确定要删除当前数据吗？", this);
-            if (myResult == MessageResult.No) return;
-
-            m_LabList.Remove(myModel);
-
-            t_dge_Lab.Items.Refresh();
-            t_dge_Lab_SelectionChanged(null, null);
-
-            if (t_dge_Lab.Items.Count == 0)
+            catch (Exception ex)
             {
-                SetLabReadOnly(true);
+                XMessageBox.Exception(ex);
             }
-
-            if (myIndex == 0)
-                myIndex++;
-            t_dge_Lab.SelectedIndex = myIndex - 1;
-            t_dge_Lab.Focus();
-            //计算已付外包资金总和
-            SumLabAccountsPrepaid();
-            //校验开票
-            ValidateIsAllLab();
+        
         }
         /// <summary>
         /// 其他信息添加按钮事件
@@ -552,17 +621,25 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_btn_OtherAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (t_dge_Other.Items.Count == 0)
-                SetOtherReadOnly(false);
+            try
+            {
+                if (t_dge_Other.Items.Count == 0)
+                    SetOtherReadOnly(false);
 
-            //添加新对象
-            PT_B_Project_Other newModel = new PT_B_Project_Other();
-            newModel.Other_Date = DateTime.Today;
-            newModel.Is_Other_Inv = "否";
-            m_OtherList.Add(newModel);
-            t_dge_Other.Items.Refresh();
-            t_dge_Other.SelectedIndex = m_OtherList.Count - 1;
-            t_dge_Other.Focus();
+                //添加新对象
+                PT_B_Project_Other newModel = new PT_B_Project_Other();
+                newModel.Other_Date = DateTime.Today;
+                newModel.Is_Other_Inv = "否";
+                m_OtherList.Add(newModel);
+                t_dge_Other.Items.Refresh();
+                t_dge_Other.SelectedIndex = m_OtherList.Count - 1;
+                t_dge_Other.Focus();
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+
         }
         /// <summary>
         /// 其他信息删除按钮事件
@@ -571,37 +648,45 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_btn_OtherDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (t_dge_Other.Items.Count < 1)
+            try
             {
-                XMessageBox.Warning("请选择需要删除的记录行!", this);
-                return;
+                if (t_dge_Other.Items.Count < 1)
+                {
+                    XMessageBox.Warning("请选择需要删除的记录行!", this);
+                    return;
+                }
+
+                PT_B_Project_Other myModel = t_dge_Other.SelectedItem as PT_B_Project_Other;
+                if (myModel == null) return;
+
+                int myIndex = t_dge_Other.SelectedIndex;
+                MessageResult myResult = XMessageBox.Ask("确定要删除当前数据吗？", this);
+                if (myResult == MessageResult.No) return;
+
+                m_OtherList.Remove(myModel);
+
+                t_dge_Other.Items.Refresh();
+                t_dge_Other_SelectionChanged(null, null);
+
+                if (t_dge_Other.Items.Count == 0)
+                {
+                    SetOtherReadOnly(true);
+                }
+
+                if (myIndex == 0)
+                    myIndex++;
+                t_dge_Other.SelectedIndex = myIndex - 1;
+                t_dge_Other.Focus();
+                //计算已付其他资金总和
+                SumOtherAccountsPrepaid();
+                //校验开票
+                ValidateIsOtherLab();
             }
-
-            PT_B_Project_Other myModel = t_dge_Other.SelectedItem as PT_B_Project_Other;
-            if (myModel == null) return;
-
-            int myIndex = t_dge_Other.SelectedIndex;
-            MessageResult myResult = XMessageBox.Ask("确定要删除当前数据吗？", this);
-            if (myResult == MessageResult.No) return;
-
-            m_OtherList.Remove(myModel);
-
-            t_dge_Other.Items.Refresh();
-            t_dge_Other_SelectionChanged(null, null);
-
-            if (t_dge_Other.Items.Count == 0)
+            catch (Exception ex)
             {
-                SetOtherReadOnly(true);
+                XMessageBox.Exception(ex);
             }
-
-            if (myIndex == 0)
-                myIndex++;
-            t_dge_Other.SelectedIndex = myIndex - 1;
-            t_dge_Other.Focus();
-            //计算已付其他资金总和
-            SumOtherAccountsPrepaid();
-            //校验开票
-            ValidateIsOtherLab();
+          
         }
 
         #endregion
@@ -615,17 +700,25 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_dge_CustomBill_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e == null) return;
-
-            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            try
             {
-                m_IsCustomerGridLoad = true;
-                //对新行控件进行赋值
-                PT_B_Project_Customer myModel = e.AddedItems[0] as PT_B_Project_Customer;
-                BindCustomerModelToControl(myModel);
-                m_IsCustomerGridLoad = false;
+                if (e == null) return;
+
+                if (e.AddedItems != null && e.AddedItems.Count > 0)
+                {
+                    m_IsCustomerGridLoad = true;
+                    //对新行控件进行赋值
+                    PT_B_Project_Customer myModel = e.AddedItems[0] as PT_B_Project_Customer;
+                    BindCustomerModelToControl(myModel);
+                    m_IsCustomerGridLoad = false;
+                }
+                t_dge_CustomBill.Items.Refresh();
             }
-            t_dge_CustomBill.Items.Refresh();
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+         
         }
         /// <summary>
         /// 机构表格行切换事件
@@ -634,17 +727,25 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_dge_Agency_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e == null) return;
-
-            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            try
             {
-                m_IsAgencyGridLoad = true;
-                //对新行控件进行赋值
-                PT_B_Project_Agency myModel = e.AddedItems[0] as PT_B_Project_Agency;
-                BindAgencyModelToControl(myModel);
-                m_IsAgencyGridLoad = false;
+                if (e == null) return;
+
+                if (e.AddedItems != null && e.AddedItems.Count > 0)
+                {
+                    m_IsAgencyGridLoad = true;
+                    //对新行控件进行赋值
+                    PT_B_Project_Agency myModel = e.AddedItems[0] as PT_B_Project_Agency;
+                    BindAgencyModelToControl(myModel);
+                    m_IsAgencyGridLoad = false;
+                }
+                t_dge_Agency.Items.Refresh();
             }
-            t_dge_Agency.Items.Refresh();
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+         
         }
         /// <summary>
         /// 外包表格行切换事件
@@ -653,17 +754,25 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_dge_Lab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e == null) return;
-
-            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            try
             {
-                m_IsLabGridLoad = true;
-                //对新行控件进行赋值
-                PT_B_Project_Lab myModel = e.AddedItems[0] as PT_B_Project_Lab;
-                BindLabModelToControl(myModel);
-                m_IsLabGridLoad = false;
+                if (e == null) return;
+
+                if (e.AddedItems != null && e.AddedItems.Count > 0)
+                {
+                    m_IsLabGridLoad = true;
+                    //对新行控件进行赋值
+                    PT_B_Project_Lab myModel = e.AddedItems[0] as PT_B_Project_Lab;
+                    BindLabModelToControl(myModel);
+                    m_IsLabGridLoad = false;
+                }
+                t_dge_CustomBill.Items.Refresh();
             }
-            t_dge_CustomBill.Items.Refresh();
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+          
         }
         /// <summary>
         /// 其他表格行切换事件
@@ -672,17 +781,26 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_dge_Other_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e == null) return;
-
-            if (e.AddedItems != null && e.AddedItems.Count > 0)
+            try
             {
-                m_IsOtherGridLoad = true;
-                //对新行控件进行赋值
-                PT_B_Project_Other myModel = e.AddedItems[0] as PT_B_Project_Other;
-                BindOtherModelToControl(myModel);
-                m_IsOtherGridLoad = false;
+                if (e == null) return;
+
+                if (e.AddedItems != null && e.AddedItems.Count > 0)
+                {
+                    m_IsOtherGridLoad = true;
+                    //对新行控件进行赋值
+                    PT_B_Project_Other myModel = e.AddedItems[0] as PT_B_Project_Other;
+                    BindOtherModelToControl(myModel);
+                    m_IsOtherGridLoad = false;
+                }
+                t_dge_CustomBill.Items.Refresh();
             }
-            t_dge_CustomBill.Items.Refresh();
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+
+         
         }
 
         #endregion
@@ -696,21 +814,29 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_txt_AccountReceivable_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //计算待收钱款
-            double accountReceivable = string.IsNullOrEmpty(t_txt_AccountReceivable.Text) ? 0 : double.Parse(t_txt_AccountReceivable.Text);
-            double paymentReceivable = string.IsNullOrEmpty(t_txt_PaymentReceivable.Text) ? 0 : double.Parse(t_txt_PaymentReceivable.Text);
-            double unAccountReceivable = accountReceivable - paymentReceivable;
-            t_txt_UnAccountReceivable.Text = unAccountReceivable.ToString() == "0" ? string.Empty : unAccountReceivable.ToString();
+            try
+            {
+                //计算待收钱款
+                double accountReceivable = string.IsNullOrEmpty(t_txt_AccountReceivable.Text) ? 0 : double.Parse(t_txt_AccountReceivable.Text);
+                double paymentReceivable = string.IsNullOrEmpty(t_txt_PaymentReceivable.Text) ? 0 : double.Parse(t_txt_PaymentReceivable.Text);
+                double unAccountReceivable = accountReceivable - paymentReceivable;
+                t_txt_UnAccountReceivable.Text = unAccountReceivable.ToString() == "0" ? string.Empty : unAccountReceivable.ToString();
 
-            //计算总利润
-            double agencyAccountPayable = string.IsNullOrEmpty(t_txt_AgencyAccountPayable.Text) ? 0 : double.Parse(t_txt_AgencyAccountPayable.Text);
-            double labAccountPayable = string.IsNullOrEmpty(t_txt_LabAccountPayable.Text) ? 0 : double.Parse(t_txt_LabAccountPayable.Text);
-            double otherAccount = string.IsNullOrEmpty(t_txt_OtherAccount.Text) ? 0 : double.Parse(t_txt_OtherAccount.Text);
-            double profits = accountReceivable - agencyAccountPayable - labAccountPayable - otherAccount;
-            t_txt_Profits.Text = profits.ToString() == "0" ? string.Empty : profits.ToString();
+                //计算总利润
+                double agencyAccountPayable = string.IsNullOrEmpty(t_txt_AgencyAccountPayable.Text) ? 0 : double.Parse(t_txt_AgencyAccountPayable.Text);
+                double labAccountPayable = string.IsNullOrEmpty(t_txt_LabAccountPayable.Text) ? 0 : double.Parse(t_txt_LabAccountPayable.Text);
+                double otherAccount = string.IsNullOrEmpty(t_txt_OtherAccount.Text) ? 0 : double.Parse(t_txt_OtherAccount.Text);
+                double profits = accountReceivable - agencyAccountPayable - labAccountPayable - otherAccount;
+                t_txt_Profits.Text = profits.ToString() == "0" ? string.Empty : profits.ToString();
 
-            //校验是否全开票
-            ValidateIsAllCustomer();
+                //校验是否全开票
+                ValidateIsAllCustomer();
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+           
         }
         /// <summary>
         /// 机构资金值变更事件
@@ -719,18 +845,25 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_txt_AgencyAccountPayable_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //计算待付钱款
-            double agencyAccountPayable = string.IsNullOrEmpty(t_txt_AgencyAccountPayable.Text) ? 0 : double.Parse(t_txt_AgencyAccountPayable.Text);
-            double agencyAccountsPrepaid = string.IsNullOrEmpty(t_txt_AgencyAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_AgencyAccountsPrepaid.Text);
-            double unAgencyAccountPayable = agencyAccountPayable - agencyAccountsPrepaid;
-            t_txt_UnAgencyAccountPayable.Text = unAgencyAccountPayable.ToString() == "0" ? string.Empty : unAgencyAccountPayable.ToString();
+            try
+            {
+                //计算待付钱款
+                double agencyAccountPayable = string.IsNullOrEmpty(t_txt_AgencyAccountPayable.Text) ? 0 : double.Parse(t_txt_AgencyAccountPayable.Text);
+                double agencyAccountsPrepaid = string.IsNullOrEmpty(t_txt_AgencyAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_AgencyAccountsPrepaid.Text);
+                double unAgencyAccountPayable = agencyAccountPayable - agencyAccountsPrepaid;
+                t_txt_UnAgencyAccountPayable.Text = unAgencyAccountPayable.ToString() == "0" ? string.Empty : unAgencyAccountPayable.ToString();
 
-            //计算利润
-            double accountReceivable = string.IsNullOrEmpty(t_txt_AccountReceivable.Text) ? 0 : double.Parse(t_txt_AccountReceivable.Text);
-            double labAccountPayable = string.IsNullOrEmpty(t_txt_LabAccountPayable.Text) ? 0 : double.Parse(t_txt_LabAccountPayable.Text);
-            double otherAccount = string.IsNullOrEmpty(t_txt_OtherAccount.Text) ? 0 : double.Parse(t_txt_OtherAccount.Text);
-            double profits = accountReceivable - agencyAccountPayable - labAccountPayable - otherAccount;
-            t_txt_Profits.Text = profits.ToString() == "0" ? string.Empty : profits.ToString();
+                //计算利润
+                double accountReceivable = string.IsNullOrEmpty(t_txt_AccountReceivable.Text) ? 0 : double.Parse(t_txt_AccountReceivable.Text);
+                double labAccountPayable = string.IsNullOrEmpty(t_txt_LabAccountPayable.Text) ? 0 : double.Parse(t_txt_LabAccountPayable.Text);
+                double otherAccount = string.IsNullOrEmpty(t_txt_OtherAccount.Text) ? 0 : double.Parse(t_txt_OtherAccount.Text);
+                double profits = accountReceivable - agencyAccountPayable - labAccountPayable - otherAccount;
+                t_txt_Profits.Text = profits.ToString() == "0" ? string.Empty : profits.ToString();
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
         }
         /// <summary>
         /// 外包资金值变更事件
@@ -739,18 +872,25 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_txt_LabAccountPayable_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //计算待付钱款
-            double labAccountPayable = string.IsNullOrEmpty(t_txt_LabAccountPayable.Text) ? 0 : double.Parse(t_txt_LabAccountPayable.Text);
-            double labAccountsPrepaid = string.IsNullOrEmpty(t_txt_LabAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_LabAccountsPrepaid.Text);
-            double unLabAccountPayable = labAccountPayable - labAccountsPrepaid;
-            t_txt_UnLabAccountPayable.Text = unLabAccountPayable.ToString() == "0" ? string.Empty : unLabAccountPayable.ToString();
+            try
+            {
+                //计算待付钱款
+                double labAccountPayable = string.IsNullOrEmpty(t_txt_LabAccountPayable.Text) ? 0 : double.Parse(t_txt_LabAccountPayable.Text);
+                double labAccountsPrepaid = string.IsNullOrEmpty(t_txt_LabAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_LabAccountsPrepaid.Text);
+                double unLabAccountPayable = labAccountPayable - labAccountsPrepaid;
+                t_txt_UnLabAccountPayable.Text = unLabAccountPayable.ToString() == "0" ? string.Empty : unLabAccountPayable.ToString();
 
-            //计算利润
-            double accountReceivable = string.IsNullOrEmpty(t_txt_AccountReceivable.Text) ? 0 : double.Parse(t_txt_AccountReceivable.Text);
-            double agencyAccountPayable = string.IsNullOrEmpty(t_txt_AgencyAccountPayable.Text) ? 0 : double.Parse(t_txt_AgencyAccountPayable.Text);
-            double otherAccount = string.IsNullOrEmpty(t_txt_OtherAccount.Text) ? 0 : double.Parse(t_txt_OtherAccount.Text);
-            double profits = accountReceivable - agencyAccountPayable - labAccountPayable - otherAccount;
-            t_txt_Profits.Text = profits.ToString() == "0" ? string.Empty : profits.ToString();
+                //计算利润
+                double accountReceivable = string.IsNullOrEmpty(t_txt_AccountReceivable.Text) ? 0 : double.Parse(t_txt_AccountReceivable.Text);
+                double agencyAccountPayable = string.IsNullOrEmpty(t_txt_AgencyAccountPayable.Text) ? 0 : double.Parse(t_txt_AgencyAccountPayable.Text);
+                double otherAccount = string.IsNullOrEmpty(t_txt_OtherAccount.Text) ? 0 : double.Parse(t_txt_OtherAccount.Text);
+                double profits = accountReceivable - agencyAccountPayable - labAccountPayable - otherAccount;
+                t_txt_Profits.Text = profits.ToString() == "0" ? string.Empty : profits.ToString();
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
         }
         /// <summary>
         /// 其他资金值变更事件
@@ -759,13 +899,20 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_txt_OtherAccount_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //计算利润
-            double accountReceivable = string.IsNullOrEmpty(t_txt_AccountReceivable.Text) ? 0 : double.Parse(t_txt_AccountReceivable.Text);
-            double agencyAccountPayable = string.IsNullOrEmpty(t_txt_AgencyAccountPayable.Text) ? 0 : double.Parse(t_txt_AgencyAccountPayable.Text);
-            double labAccountPayable = string.IsNullOrEmpty(t_txt_LabAccountPayable.Text) ? 0 : double.Parse(t_txt_LabAccountPayable.Text);
-            double otherAccount = string.IsNullOrEmpty(t_txt_OtherAccount.Text) ? 0 : double.Parse(t_txt_OtherAccount.Text);
-            double profits = accountReceivable - agencyAccountPayable - labAccountPayable - otherAccount;
-            t_txt_Profits.Text = profits.ToString() == "0" ? string.Empty : profits.ToString();
+            try
+            {
+                //计算利润
+                double accountReceivable = string.IsNullOrEmpty(t_txt_AccountReceivable.Text) ? 0 : double.Parse(t_txt_AccountReceivable.Text);
+                double agencyAccountPayable = string.IsNullOrEmpty(t_txt_AgencyAccountPayable.Text) ? 0 : double.Parse(t_txt_AgencyAccountPayable.Text);
+                double labAccountPayable = string.IsNullOrEmpty(t_txt_LabAccountPayable.Text) ? 0 : double.Parse(t_txt_LabAccountPayable.Text);
+                double otherAccount = string.IsNullOrEmpty(t_txt_OtherAccount.Text) ? 0 : double.Parse(t_txt_OtherAccount.Text);
+                double profits = accountReceivable - agencyAccountPayable - labAccountPayable - otherAccount;
+                t_txt_Profits.Text = profits.ToString() == "0" ? string.Empty : profits.ToString();
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
         }
 
         #endregion
@@ -779,30 +926,38 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_txt_PaymentReceivable_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //计算待收钱款
-            double accountReceivable = string.IsNullOrEmpty(t_txt_AccountReceivable.Text) ? 0 : double.Parse(t_txt_AccountReceivable.Text);
-            double paymentReceivable = string.IsNullOrEmpty(t_txt_PaymentReceivable.Text) ? 0 : double.Parse(t_txt_PaymentReceivable.Text);
-            double unAccountReceivable = accountReceivable - paymentReceivable;
-            t_txt_UnAccountReceivable.Text = unAccountReceivable.ToString() == "0" ? string.Empty : unAccountReceivable.ToString();
-
-            //计算当前利润
-            double agencyAccountsPrepaid = string.IsNullOrEmpty(t_txt_AgencyAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_AgencyAccountsPrepaid.Text);
-            double labAccountsPrepaid = string.IsNullOrEmpty(t_txt_LabAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_LabAccountsPrepaid.Text);
-            double otherPadAccoun = string.IsNullOrEmpty(t_txt_OtherPadAccount.Text) ? 0 : double.Parse(t_txt_OtherPadAccount.Text);
-            double nowProfits = paymentReceivable - agencyAccountsPrepaid - labAccountsPrepaid - otherPadAccoun;
-            t_txt_NowProfits.Text = nowProfits.ToString() == "0" ? string.Empty : nowProfits.ToString();
-
-            //计算垫付金额
-            if (nowProfits < 0)
+            try
             {
-                t_txt_PadsMoney.Text = (-1 * nowProfits).ToString();
-                t_chk_IsPads.IsChecked = true;
+                //计算待收钱款
+                double accountReceivable = string.IsNullOrEmpty(t_txt_AccountReceivable.Text) ? 0 : double.Parse(t_txt_AccountReceivable.Text);
+                double paymentReceivable = string.IsNullOrEmpty(t_txt_PaymentReceivable.Text) ? 0 : double.Parse(t_txt_PaymentReceivable.Text);
+                double unAccountReceivable = accountReceivable - paymentReceivable;
+                t_txt_UnAccountReceivable.Text = unAccountReceivable.ToString() == "0" ? string.Empty : unAccountReceivable.ToString();
+
+                //计算当前利润
+                double agencyAccountsPrepaid = string.IsNullOrEmpty(t_txt_AgencyAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_AgencyAccountsPrepaid.Text);
+                double labAccountsPrepaid = string.IsNullOrEmpty(t_txt_LabAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_LabAccountsPrepaid.Text);
+                double otherPadAccoun = string.IsNullOrEmpty(t_txt_OtherPadAccount.Text) ? 0 : double.Parse(t_txt_OtherPadAccount.Text);
+                double nowProfits = paymentReceivable - agencyAccountsPrepaid - labAccountsPrepaid - otherPadAccoun;
+                t_txt_NowProfits.Text = nowProfits.ToString() == "0" ? string.Empty : nowProfits.ToString();
+
+                //计算垫付金额
+                if (nowProfits < 0)
+                {
+                    t_txt_PadsMoney.Text = (-1 * nowProfits).ToString();
+                    t_chk_IsPads.IsChecked = true;
+                }
+                else
+                {
+                    t_txt_PadsMoney.Text = string.Empty;
+                    t_chk_IsPads.IsChecked = false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                t_txt_PadsMoney.Text = string.Empty;
-                t_chk_IsPads.IsChecked = false;
+                XMessageBox.Exception(ex);
             }
+         
         }
         /// <summary>
         /// 已付机构账款值变更事件
@@ -811,30 +966,38 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_txt_AgencyAccountsPrepaid_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //计算待付钱款
-            double AgencyAccountPayable = string.IsNullOrEmpty(t_txt_AgencyAccountPayable.Text) ? 0 : double.Parse(t_txt_AgencyAccountPayable.Text);
-            double agencyAccountsPrepaid = string.IsNullOrEmpty(t_txt_AgencyAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_AgencyAccountsPrepaid.Text);
-            double unAgencyAccountPayable = AgencyAccountPayable - agencyAccountsPrepaid;
-            t_txt_UnAgencyAccountPayable.Text = unAgencyAccountPayable.ToString() == "0" ? string.Empty : unAgencyAccountPayable.ToString();
-
-            //计算当前利润
-            double paymentReceivable = string.IsNullOrEmpty(t_txt_PaymentReceivable.Text) ? 0 : double.Parse(t_txt_PaymentReceivable.Text);
-            double labAccountsPrepaid = string.IsNullOrEmpty(t_txt_LabAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_LabAccountsPrepaid.Text);
-            double otherPadAccoun = string.IsNullOrEmpty(t_txt_OtherPadAccount.Text) ? 0 : double.Parse(t_txt_OtherPadAccount.Text);
-            double nowProfits = paymentReceivable - agencyAccountsPrepaid - labAccountsPrepaid - otherPadAccoun;
-            t_txt_NowProfits.Text = nowProfits.ToString() == "0" ? string.Empty : nowProfits.ToString();
-
-            //计算垫付金额
-            if (nowProfits < 0)
+            try
             {
-                t_txt_PadsMoney.Text = (-1 * nowProfits).ToString();
-                t_chk_IsPads.IsChecked = true;
+                //计算待付钱款
+                double AgencyAccountPayable = string.IsNullOrEmpty(t_txt_AgencyAccountPayable.Text) ? 0 : double.Parse(t_txt_AgencyAccountPayable.Text);
+                double agencyAccountsPrepaid = string.IsNullOrEmpty(t_txt_AgencyAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_AgencyAccountsPrepaid.Text);
+                double unAgencyAccountPayable = AgencyAccountPayable - agencyAccountsPrepaid;
+                t_txt_UnAgencyAccountPayable.Text = unAgencyAccountPayable.ToString() == "0" ? string.Empty : unAgencyAccountPayable.ToString();
+
+                //计算当前利润
+                double paymentReceivable = string.IsNullOrEmpty(t_txt_PaymentReceivable.Text) ? 0 : double.Parse(t_txt_PaymentReceivable.Text);
+                double labAccountsPrepaid = string.IsNullOrEmpty(t_txt_LabAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_LabAccountsPrepaid.Text);
+                double otherPadAccoun = string.IsNullOrEmpty(t_txt_OtherPadAccount.Text) ? 0 : double.Parse(t_txt_OtherPadAccount.Text);
+                double nowProfits = paymentReceivable - agencyAccountsPrepaid - labAccountsPrepaid - otherPadAccoun;
+                t_txt_NowProfits.Text = nowProfits.ToString() == "0" ? string.Empty : nowProfits.ToString();
+
+                //计算垫付金额
+                if (nowProfits < 0)
+                {
+                    t_txt_PadsMoney.Text = (-1 * nowProfits).ToString();
+                    t_chk_IsPads.IsChecked = true;
+                }
+                else
+                {
+                    t_txt_PadsMoney.Text = string.Empty;
+                    t_chk_IsPads.IsChecked = false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                t_txt_PadsMoney.Text = string.Empty;
-                t_chk_IsPads.IsChecked = false;
+                XMessageBox.Exception(ex);
             }
+
         }
         /// <summary>
         /// 已付外包账款值变更事件
@@ -843,30 +1006,38 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_txt_LabAccountsPrepaid_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //计算待付钱款
-            double labAccountPayable = string.IsNullOrEmpty(t_txt_LabAccountPayable.Text) ? 0 : double.Parse(t_txt_LabAccountPayable.Text);
-            double labAccountsPrepaid = string.IsNullOrEmpty(t_txt_LabAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_LabAccountsPrepaid.Text);
-            double unLabAccountPayable = labAccountPayable - labAccountsPrepaid;
-            t_txt_UnLabAccountPayable.Text = unLabAccountPayable.ToString() == "0" ? string.Empty : unLabAccountPayable.ToString();
-
-            //计算当前利润
-            double paymentReceivable = string.IsNullOrEmpty(t_txt_PaymentReceivable.Text) ? 0 : double.Parse(t_txt_PaymentReceivable.Text);
-            double agencyAccountsPrepaid = string.IsNullOrEmpty(t_txt_AgencyAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_AgencyAccountsPrepaid.Text);
-            double otherPadAccoun = string.IsNullOrEmpty(t_txt_OtherPadAccount.Text) ? 0 : double.Parse(t_txt_OtherPadAccount.Text);
-            double nowProfits = paymentReceivable - agencyAccountsPrepaid - labAccountsPrepaid - otherPadAccoun;
-            t_txt_NowProfits.Text = nowProfits.ToString() == "0" ? string.Empty : nowProfits.ToString();
-
-            //计算垫付金额
-            if (nowProfits < 0)
+            try
             {
-                t_txt_PadsMoney.Text = (-1 * nowProfits).ToString();
-                t_chk_IsPads.IsChecked = true;
+                //计算待付钱款
+                double labAccountPayable = string.IsNullOrEmpty(t_txt_LabAccountPayable.Text) ? 0 : double.Parse(t_txt_LabAccountPayable.Text);
+                double labAccountsPrepaid = string.IsNullOrEmpty(t_txt_LabAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_LabAccountsPrepaid.Text);
+                double unLabAccountPayable = labAccountPayable - labAccountsPrepaid;
+                t_txt_UnLabAccountPayable.Text = unLabAccountPayable.ToString() == "0" ? string.Empty : unLabAccountPayable.ToString();
+
+                //计算当前利润
+                double paymentReceivable = string.IsNullOrEmpty(t_txt_PaymentReceivable.Text) ? 0 : double.Parse(t_txt_PaymentReceivable.Text);
+                double agencyAccountsPrepaid = string.IsNullOrEmpty(t_txt_AgencyAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_AgencyAccountsPrepaid.Text);
+                double otherPadAccoun = string.IsNullOrEmpty(t_txt_OtherPadAccount.Text) ? 0 : double.Parse(t_txt_OtherPadAccount.Text);
+                double nowProfits = paymentReceivable - agencyAccountsPrepaid - labAccountsPrepaid - otherPadAccoun;
+                t_txt_NowProfits.Text = nowProfits.ToString() == "0" ? string.Empty : nowProfits.ToString();
+
+                //计算垫付金额
+                if (nowProfits < 0)
+                {
+                    t_txt_PadsMoney.Text = (-1 * nowProfits).ToString();
+                    t_chk_IsPads.IsChecked = true;
+                }
+                else
+                {
+                    t_txt_PadsMoney.Text = string.Empty;
+                    t_chk_IsPads.IsChecked = false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                t_txt_PadsMoney.Text = string.Empty;
-                t_chk_IsPads.IsChecked = false;
+                XMessageBox.Exception(ex);
             }
+         
         }
         /// <summary>
         /// 已付其他账款值变更事件
@@ -875,31 +1046,39 @@ namespace XProjectWPF
         /// <param name="e">事件参数</param>
         private void t_txt_OtherPadAccount_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //计算待付钱款
-            double otherAccount = string.IsNullOrEmpty(t_txt_OtherAccount.Text) ? 0 : double.Parse(t_txt_OtherAccount.Text);
-            double otherPadAccount = string.IsNullOrEmpty(t_txt_OtherPadAccount.Text) ? 0 : double.Parse(t_txt_OtherPadAccount.Text);
-            double unOtherAccount = otherAccount - otherPadAccount;
-            t_txt_UnOtherAccount.Text = unOtherAccount.ToString() == "0" ? string.Empty : unOtherAccount.ToString();
-
-            //计算当前利润
-            double paymentReceivable = string.IsNullOrEmpty(t_txt_PaymentReceivable.Text) ? 0 : double.Parse(t_txt_PaymentReceivable.Text);
-            double agencyAccountsPrepaid = string.IsNullOrEmpty(t_txt_AgencyAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_AgencyAccountsPrepaid.Text);
-            double otherPadAccoun = string.IsNullOrEmpty(t_txt_OtherPadAccount.Text) ? 0 : double.Parse(t_txt_OtherPadAccount.Text);
-            double labAccountsPrepaid = string.IsNullOrEmpty(t_txt_LabAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_LabAccountsPrepaid.Text);
-            double nowProfits = paymentReceivable - agencyAccountsPrepaid - labAccountsPrepaid - otherPadAccoun;
-            t_txt_NowProfits.Text = nowProfits.ToString() == "0" ? string.Empty : nowProfits.ToString();
-
-            //计算垫付金额
-            if (nowProfits < 0)
+            try
             {
-                t_txt_PadsMoney.Text = (-1 * nowProfits).ToString();
-                t_chk_IsPads.IsChecked = true;
+                //计算待付钱款
+                double otherAccount = string.IsNullOrEmpty(t_txt_OtherAccount.Text) ? 0 : double.Parse(t_txt_OtherAccount.Text);
+                double otherPadAccount = string.IsNullOrEmpty(t_txt_OtherPadAccount.Text) ? 0 : double.Parse(t_txt_OtherPadAccount.Text);
+                double unOtherAccount = otherAccount - otherPadAccount;
+                t_txt_UnOtherAccount.Text = unOtherAccount.ToString() == "0" ? string.Empty : unOtherAccount.ToString();
+
+                //计算当前利润
+                double paymentReceivable = string.IsNullOrEmpty(t_txt_PaymentReceivable.Text) ? 0 : double.Parse(t_txt_PaymentReceivable.Text);
+                double agencyAccountsPrepaid = string.IsNullOrEmpty(t_txt_AgencyAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_AgencyAccountsPrepaid.Text);
+                double otherPadAccoun = string.IsNullOrEmpty(t_txt_OtherPadAccount.Text) ? 0 : double.Parse(t_txt_OtherPadAccount.Text);
+                double labAccountsPrepaid = string.IsNullOrEmpty(t_txt_LabAccountsPrepaid.Text) ? 0 : double.Parse(t_txt_LabAccountsPrepaid.Text);
+                double nowProfits = paymentReceivable - agencyAccountsPrepaid - labAccountsPrepaid - otherPadAccoun;
+                t_txt_NowProfits.Text = nowProfits.ToString() == "0" ? string.Empty : nowProfits.ToString();
+
+                //计算垫付金额
+                if (nowProfits < 0)
+                {
+                    t_txt_PadsMoney.Text = (-1 * nowProfits).ToString();
+                    t_chk_IsPads.IsChecked = true;
+                }
+                else
+                {
+                    t_txt_PadsMoney.Text = string.Empty;
+                    t_chk_IsPads.IsChecked = false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                t_txt_PadsMoney.Text = string.Empty;
-                t_chk_IsPads.IsChecked = false;
+                XMessageBox.Exception(ex);
             }
+
         }
 
         #endregion
