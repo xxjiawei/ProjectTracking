@@ -14,6 +14,7 @@ namespace XProjectWPF.Model
     
     public partial class PT_B_Project
     {
+        public string Project_Id { get; set; }
         public string Project_No { get; set; }
         public string Quotation_No { get; set; }
         public string Follow_Man { get; set; }

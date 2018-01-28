@@ -49,7 +49,13 @@ namespace XProjectWPF
         /// 数据库操作类
         /// </summary>
         private ProjectTrackingEntities m_Entities = new ProjectTrackingEntities();
+        /// <summary>
+        /// 报价单表格风格配置
+        /// </summary>
         private DataGridStyleConfig m_GirdStyleConfig;
+        /// <summary>
+        /// 报价单表格风格配置
+        /// </summary>
         public DataGridStyleConfig GirdStyleConfig
         {
             get
@@ -58,19 +64,32 @@ namespace XProjectWPF
                 {
                     m_GirdStyleConfig = new DataGridStyleConfig();
 
-                    m_GirdStyleConfig.Add("Quotation_No", "报价单号", 100);
-                    m_GirdStyleConfig.Add("Company_Name", "公司名称", 120);
-                    m_GirdStyleConfig.Add("Project_Name", "测试项目", 120);
-                    m_GirdStyleConfig.Add("Price", "当前报价", 63);
-                    m_GirdStyleConfig.Add("Follow_Man", "业务跟进人", 70);
-                    m_GirdStyleConfig.Add("Contact_Man", "联系人", 60);
-                    m_GirdStyleConfig.Add("Tel", "联系电话", 90);
-                    m_GirdStyleConfig.Add("Quotation_Date", "报价日期", 80);
+                    m_GirdStyleConfig.Add("Quotation_No", "报价单号", 90);
+                    m_GirdStyleConfig.Add("Company_Name", "公司名称", 140);
+                    m_GirdStyleConfig.Add("Project_Name", "测试项目", 180);
+                    m_GirdStyleConfig.Add("Price", "当前报价", 90);
+                    m_GirdStyleConfig.Add("Is_Tax", "含税", 40);
+                    m_GirdStyleConfig.Add("Quotation_Type", "报价类型", 80);
+                    m_GirdStyleConfig.AddDateTime("Quotation_Date", "报价日期", 100);
+                    m_GirdStyleConfig.Add("Product_Model", "产品/型号", 80);
+                    m_GirdStyleConfig.Add("Cycle_Time", "认证周期", 80);
+                    m_GirdStyleConfig.Add("Follow_Man", "业务跟进人", 80);
+                    m_GirdStyleConfig.Add("Contact_Man", "联系人", 80);
+                    m_GirdStyleConfig.Add("Tel", "联系电话", 100);
+                    m_GirdStyleConfig.Add("Email", "电子邮箱", 100);
+                    m_GirdStyleConfig.Add("Fax", "传真", 100);
+                    m_GirdStyleConfig.Add("Remark", "备注", 150);
                 }
                 return m_GirdStyleConfig;
             }
         }
+        /// <summary>
+        /// 项目单表格风格配置
+        /// </summary>
         private DataGridStyleConfig m_ProjectGirdStyleConfig;
+        /// <summary>
+        /// 项目单表格风格配置
+        /// </summary>
         public DataGridStyleConfig ProjectGirdStyleConfig
         {
             get
@@ -79,15 +98,25 @@ namespace XProjectWPF
                 {
                     m_ProjectGirdStyleConfig = new DataGridStyleConfig();
 
-                    m_ProjectGirdStyleConfig.Add("Project_No", "项目单号", 100);
-                    m_ProjectGirdStyleConfig.Add("Quotation_No", "报价单号", 100);
-                    m_ProjectGirdStyleConfig.Add("Company_Name", "公司名称", 120);
-                    m_ProjectGirdStyleConfig.Add("Project_Name", "测试项目", 120);
-                    m_ProjectGirdStyleConfig.Add("Price", "当前报价", 63);
+                    m_ProjectGirdStyleConfig.Add("Project_No", "项目单号", 90);
+                    m_ProjectGirdStyleConfig.Add("Quotation_No", "关联报价单号", 90);
+                    m_ProjectGirdStyleConfig.Add("Company_Name", "公司名称", 140);
+                    m_ProjectGirdStyleConfig.Add("Project_Name", "测试项目", 180);
+                    m_ProjectGirdStyleConfig.Add("Price", "当前报价", 90);
+                    m_ProjectGirdStyleConfig.Add("Profits", "测试总利润", 90);
+                    m_ProjectGirdStyleConfig.Add("Is_Pads", "垫付", 40);
+                    m_ProjectGirdStyleConfig.Add("Project_Type", "项目类型", 80);
+                    m_ProjectGirdStyleConfig.Add("Account_Receivable", "应收客户账款", 90);
+                    m_ProjectGirdStyleConfig.Add("Agency_Account_Payable", "应付机构账款", 90);
+                    m_ProjectGirdStyleConfig.Add("Lab_Account_Payable", "应付外包账款", 90);
+                    m_ProjectGirdStyleConfig.Add("Other_Account", "其他费用", 90);
+                    m_ProjectGirdStyleConfig.AddDateTime("Quotation_Date", "报价日期", 80);
                     m_ProjectGirdStyleConfig.Add("Follow_Man", "业务跟进人", 70);
                     m_ProjectGirdStyleConfig.Add("Contact_Man", "联系人", 60);
                     m_ProjectGirdStyleConfig.Add("Tel", "联系电话", 90);
-                    m_ProjectGirdStyleConfig.Add("Quotation_Date", "报价日期", 80);
+                    m_ProjectGirdStyleConfig.Add("Email", "电子邮箱", 100);
+                    m_ProjectGirdStyleConfig.Add("Fax", "传真", 100);
+                    m_ProjectGirdStyleConfig.Add("Remark", "备注", 150);
                 }
                 return m_ProjectGirdStyleConfig;
             }
@@ -136,8 +165,14 @@ namespace XProjectWPF
                 return m_TreeNodeProjectDic;
             }
         }
-
+        /// <summary>
+        /// 时间选中类型
+        /// </summary>
         private DateFilterTypes m_CurrentTypes = DateFilterTypes.All;
+        /// <summary>
+        /// 查询对象
+        /// </summary>
+        private MQuery m_MQuery;
 
         #endregion
 
@@ -158,6 +193,7 @@ namespace XProjectWPF
                 t_tvw_Module.Focus();
                 TreeViewItem myItem = t_tvw_Module.ItemContainerGenerator.ContainerFromIndex(0) as TreeViewItem;
                 myItem.IsSelected = true;
+
             }
             catch (Exception ex)
             {
@@ -192,7 +228,8 @@ namespace XProjectWPF
             {
                 FrmQuotation myForm = new FrmQuotation();
                 myForm.ShowDialog();
-
+                m_Entities.Dispose();
+                m_Entities = new ProjectTrackingEntities();
                 RefreshTreeNode();
             }
             catch (Exception ex)
@@ -233,18 +270,28 @@ namespace XProjectWPF
         {
             try
             {
+                if (t_pgg_Bill.SelectedItem == null) return;
                 XTreeNode myItem = t_tvw_Module.SelectedItem as XTreeNode;
-                string myTag = myItem.Tag.ToString();
+                string myTag = string.Empty;
                 string parentTag = string.Empty;
-                if (myItem.Parent != null)
-                    parentTag = myItem.Parent.Tag.ToString();
-
+                if (myItem == null && m_MQuery != null)
+                {
+                    myTag = m_MQuery.BillType;
+                }
+                else
+                {
+                    myTag = myItem.Tag.ToString();
+                    if (myItem.Parent != null)
+                        parentTag = myItem.Parent.Tag.ToString();
+                }
                 if (myTag == "Q" || parentTag == "Q")
                 {
                     PT_B_Quotation myModel = (PT_B_Quotation)t_pgg_Bill.SelectedItem;
                     FrmQuotation myForm = new FrmQuotation();
                     myForm.PTBQuotation = myModel;
                     myForm.ShowDialog();
+                    m_Entities.Dispose();
+                    m_Entities = new ProjectTrackingEntities();
                     RefreshTreeNode();
                 }
                 else
@@ -253,9 +300,10 @@ namespace XProjectWPF
                     FrmProject myForm = new FrmProject();
                     myForm.PTBProject = myModel;
                     myForm.ShowDialog();
+                    m_Entities.Dispose();
+                    m_Entities = new ProjectTrackingEntities();
                     RefreshTreeNode();
                 }
-
             }
             catch (Exception ex)
             {
@@ -286,10 +334,18 @@ namespace XProjectWPF
                     return;
                 }
                 XTreeNode myItem = t_tvw_Module.SelectedItem as XTreeNode;
-                string myTag = myItem.Tag.ToString();
+                string myTag = string.Empty;
                 string parentTag = string.Empty;
-                if (myItem.Parent != null)
-                    parentTag = myItem.Parent.Tag.ToString();
+                if (myItem == null && m_MQuery != null)
+                {
+                    myTag = m_MQuery.BillType;
+                }
+                else
+                {
+                    myTag = myItem.Tag.ToString();
+                    if (myItem.Parent != null)
+                        parentTag = myItem.Parent.Tag.ToString();
+                }
                 if (myTag == "Q" || parentTag == "Q")
                 {
                     PT_B_Quotation myModel = (PT_B_Quotation)t_pgg_Bill.SelectedItem;
@@ -346,9 +402,179 @@ namespace XProjectWPF
                 XMessageBox.Exception(ex);
             }
         }
+        /// <summary>
+        /// 查询按钮点击事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
+        private void t_tsb_Query_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                FrmQuery myForm = new FrmQuery();
+                myForm.ShowDialog();
+                m_MQuery = myForm.QueryModel;
+
+                QueryMethod();
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+
+        }
+        /// <summary>
+        /// 开始时间值改变事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
+        private void t_dtp_StartDate_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BindTreeNode();
+
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+
+        }
+        /// <summary>
+        /// 结束时间值改变事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
+        private void t_dtp_EndDate_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BindTreeNode();
+
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+        }
+        /// <summary>
+        /// 打开按钮事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
+        private void t_tsb_Open_Click(object sender, RoutedEventArgs e)
+        {
+            t_btn_Open_Click(null, null);
+        }
+        /// <summary>
+        /// 删除按钮事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void t_tsb_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            t_btn_Delete_Click(null, null);
+        }
+        /// <summary>
+        /// 右键点击前事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
+        private void t_pgg_Bill_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                ArrayList statusList = new ArrayList();
+                statusList.Add("已入库");
+                statusList.Add("回收站");
+                statusList.Add("归档");
+                XTreeNode myItem = t_tvw_Module.SelectedItem as XTreeNode;
+                string myTag = string.Empty;
+                string parentTag = string.Empty;
+                if (myItem == null && m_MQuery != null)
+                {
+                    myTag = m_MQuery.BillType;
+                }
+                else
+                {
+                    myTag = myItem.Tag.ToString();
+                    if (myItem.Parent != null)
+                        parentTag = myItem.Parent.Tag.ToString();
+                }
+                string billStatus = string.Empty;
+                if (myTag == "Q" || parentTag == "Q")
+                {
+                    PT_B_Quotation myModel = (PT_B_Quotation)t_pgg_Bill.SelectedItem;
+                    statusList.Remove(SetBillStatus(myModel.Bill_Status));
+                    billStatus = "Q";
+                }
+                else
+                {
+                    PT_B_Project myModel = (PT_B_Project)t_pgg_Bill.SelectedItem;
+                    statusList.Remove(SetBillStatus(myModel.Bill_Status));
+                    billStatus = "P";
+                }
+                t_tsb_ChangeState.Items.Clear();
+                foreach (string status in statusList)
+                {
+                    MenuItem item = new MenuItem();
+                    item.Header = status;
+                    item.Tag = billStatus;
+                    item.Click += Item_Click;
+                    t_tsb_ChangeState.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+        }
+        /// <summary>
+        ///  改变状态方法
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
+        private void Item_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MenuItem myItem = sender as MenuItem;
+
+                if (myItem.Tag.ToString() == "Q")
+                {
+                    PT_B_Quotation myModel = (PT_B_Quotation)t_pgg_Bill.SelectedItem;
+                    string mes = string.Format("确定将此单据状态修改为【{0}】", myItem.Header.ToString());
+                    MessageResult myResult = XMessageBox.Ask(mes, this);
+                    if (myResult == MessageResult.Yes)
+                    {
+                        myModel.Bill_Status = SetBillStatus(myItem.Header.ToString());
+                        m_Entities.SaveChanges();
+                        RefreshTreeNode();
+                    }
+                }
+                else
+                {
+                    PT_B_Project myModel = (PT_B_Project)t_pgg_Bill.SelectedItem;
+                    string mes = string.Format("确定将此单据状态修改为【{0}】", myItem.Header.ToString());
+                    MessageResult myResult = XMessageBox.Ask(mes, this);
+                    if (myResult == MessageResult.Yes)
+                    {
+                        myModel.Bill_Status = SetBillStatus(myItem.Header.ToString());
+                        m_Entities.SaveChanges();
+                        RefreshTreeNode();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+        }
         #endregion
 
         #region 私有方法
+
         /// <summary>
         /// 绑定树节点方法
         /// </summary>
@@ -528,6 +754,7 @@ namespace XProjectWPF
                         date = GetFilterDate();
                         var temp = from p in m_Entities.PT_B_Quotation
                                    where p.Bill_Status == billStatus && p.Quotation_Date > date
+                                   orderby p.Quotation_No
                                    select p;
                         GirdStyleConfig.ItemsSource = temp.ToList();
                     }
@@ -535,6 +762,7 @@ namespace XProjectWPF
                     {
                         var temp = from p in m_Entities.PT_B_Quotation
                                    where p.Bill_Status == billStatus && p.Quotation_Date >= t_dtp_StartDate.Value && p.Quotation_Date <= t_dtp_EndDate.Value
+                                   orderby p.Quotation_No
                                    select p;
                         GirdStyleConfig.ItemsSource = temp.ToList();
 
@@ -550,6 +778,7 @@ namespace XProjectWPF
                         date = GetFilterDate();
                         var temp = from p in m_Entities.PT_B_Project
                                    where p.Bill_Status == billStatus && p.Quotation_Date > date
+                                   orderby p.Project_No
                                    select p;
                         ProjectGirdStyleConfig.ItemsSource = temp.ToList();
                     }
@@ -557,6 +786,7 @@ namespace XProjectWPF
                     {
                         var temp = from p in m_Entities.PT_B_Project
                                    where p.Bill_Status == billStatus && p.Quotation_Date >= t_dtp_StartDate.Value && p.Quotation_Date <= t_dtp_EndDate.Value
+                                   orderby p.Project_No
                                    select p;
                         ProjectGirdStyleConfig.ItemsSource = temp.ToList();
                     }
@@ -645,12 +875,22 @@ namespace XProjectWPF
         private void RefreshTreeNode()
         {
             XTreeNode myItem = t_tvw_Module.SelectedItem as XTreeNode;
-            string myTag = myItem.Tag.ToString();
+            string myTag = string.Empty;
             string parentTag = string.Empty;
-            if (myItem.Parent != null)
-                parentTag = myItem.Parent.Tag.ToString();
+            if (myItem == null && m_MQuery != null)
+            {
+                myTag = m_MQuery.BillType;
+            }
+            else
+            {
+                myTag = myItem.Tag.ToString();
+                if (myItem.Parent != null)
+                    parentTag = myItem.Parent.Tag.ToString();
+            }
             BindTreeNode();
             SetSelected(t_tvw_Module.Nodes, myTag, parentTag);
+            if (myItem == null && m_MQuery != null)
+                QueryMethod();
         }
         /// <summary>
         /// 设置树是否展开或收缩
@@ -684,197 +924,91 @@ namespace XProjectWPF
             {
             }
         }
-        #endregion
-
-        private void t_btn_Export_Click(object sender, RoutedEventArgs e)
-        {
-            //SqlConnection conn = new SqlConnection("server=.; uid=sa; pwd=sa123456");
-            //if (conn.State != ConnectionState.Open)
-            //{
-            //    conn.Open();
-            //}
-            //string sql = "CREATE DATABASE ProjectTracking1 on primary" + "(name=ProjectTracking1,filename='F:\\ProjectTracking1.mdf',size=3, maxsize=5,filegrowth=10%)";
-            //sql += "log on" + "(name=ProjectTracking1_log,filename='F:\\ProjectTracking1_log.ldf',size=3,filegrowth=1)";
-            //SqlCommand cmd = new SqlCommand(sql, conn);
-
-            //cmd.ExecuteNonQuery();
-
-            //excutesqlfile("sa", "sa123456", "ProjectTracking1", @"C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\DataBase\");
-
-           // ExecuteSqlFile("server=.; uid=sa; pwd=sa123456", @"C:\Users\40326\Documents\Visual Studio 2017\XProject001\ProjectTracking.git\XProject001\XProjectWPF\DataBase\数据库脚本.sql");
-        }
-
         /// <summary>
-        /// 导入sql脚本
+        /// 查询方法
         /// </summary>
-        /// <param name="sqlConnString">连接数据库字符串</param>
-        /// <param name="varFileName">脚本路径</param>
-        /// <returns></returns>
-        private static bool ExecuteSqlFile(string sqlConnString, string varFileName)
+        private void QueryMethod()
         {
-            if (!File.Exists(varFileName))
+            if (m_MQuery == null) return;
+            if (m_MQuery.BillType == "Q")
             {
-                return false;
-            }
-            StreamReader rs = new StreamReader(varFileName, System.Text.Encoding.Default);
-            ArrayList alSql = new ArrayList();
-            string commandText = "";
-            string varLine = "";
-            while (rs.Peek() > -1)
-            {
-                varLine = rs.ReadLine();
-                if (varLine == "")
+                var query = m_Entities.PT_B_Quotation.AsQueryable();
+                if (m_MQuery.DateFilterType != DateFilterTypes.Custom)
                 {
-                    continue;
-                }
-                if (varLine != "GO")
-                {
-                    commandText += varLine;
-                    commandText += "\r\n";
+                    DateTime date = GetFilterDate();
+                    query = query.Where(c => c.Quotation_Date > date);
                 }
                 else
+                    query = query.Where(c => c.Quotation_Date >= m_MQuery.StartDate && c.Quotation_Date <= m_MQuery.EndDate);
+
+                if (!string.IsNullOrEmpty(m_MQuery.BillNo))
                 {
-                    commandText += "";
+                    query = query.Where(c => c.Quotation_No.Contains(m_MQuery.BillNo));
                 }
+                if (!string.IsNullOrEmpty(m_MQuery.FllowMan))
+                {
+                    query = query.Where(c => c.Follow_Man.Contains(m_MQuery.FllowMan));
+                }
+                if (!string.IsNullOrEmpty(m_MQuery.ProjectName))
+                {
+                    query = query.Where(c => c.Project_Name.Contains(m_MQuery.ProjectName));
+                }
+                if (!string.IsNullOrEmpty(m_MQuery.CompanyName))
+                {
+                    query = query.Where(c => c.Company_Name.Contains(m_MQuery.CompanyName));
+                }
+                if (m_MQuery.Type.Length > 0)
+                {
+                    query = query.Where(c => m_MQuery.Type.Contains(c.Quotation_Type));
+                }
+                query = query.OrderBy(c => c.Quotation_No);
+                GirdStyleConfig.ItemsSource = query.ToList();
+                t_pgg_Bill.SelectedIndex = -1;
+                t_pgg_Bill.StyleConfig = GirdStyleConfig;
+                t_pgg_Bill.SelectedIndex = 0;
             }
-            alSql.Add(commandText);
-            rs.Close();
-            try
+            else if (m_MQuery.BillType == "P")
             {
-                ExecuteCommand(sqlConnString, alSql);
-                return true;
+                var query = m_Entities.PT_B_Project.AsQueryable();
+                if (m_MQuery.DateFilterType != DateFilterTypes.Custom)
+                {
+                    DateTime date = GetFilterDate();
+                    query = query.Where(c => c.Quotation_Date > date);
+                }
+                else
+                    query = query.Where(c => c.Quotation_Date >= m_MQuery.StartDate && c.Quotation_Date <= m_MQuery.EndDate);
+
+                if (!string.IsNullOrEmpty(m_MQuery.BillNo))
+                {
+                    query = query.Where(c => c.Project_No.Contains(m_MQuery.BillNo));
+                }
+                if (!string.IsNullOrEmpty(m_MQuery.FllowMan))
+                {
+                    query = query.Where(c => c.Follow_Man.Contains(m_MQuery.FllowMan));
+                }
+                if (!string.IsNullOrEmpty(m_MQuery.ProjectName))
+                {
+                    query = query.Where(c => c.Project_Name.Contains(m_MQuery.ProjectName));
+                }
+                if (!string.IsNullOrEmpty(m_MQuery.CompanyName))
+                {
+                    query = query.Where(c => c.Company_Name.Contains(m_MQuery.CompanyName));
+                }
+                if (m_MQuery.Type.Length > 0)
+                {
+                    query = query.Where(c => m_MQuery.Type.Contains(c.Project_Type));
+                }
+                query = query.OrderBy(c => c.Project_No);
+                ProjectGirdStyleConfig.ItemsSource = query.ToList();
+                t_pgg_Bill.SelectedIndex = -1;
+                t_pgg_Bill.StyleConfig = ProjectGirdStyleConfig;
+                t_pgg_Bill.SelectedIndex = 0;
             }
-            catch (Exception ex)
+            foreach (XTreeNode myNode in t_tvw_Module.Nodes)
             {
-                throw ex;
+                myNode.IsSelected = false;
             }
         }
-        private static void ExecuteCommand(string sqlConnString, ArrayList varSqlList)
-        {
-            using (SqlConnection conn = new SqlConnection(sqlConnString))
-            {
-                conn.Open();
-                //Don't use Transaction, because some commands cannot execute in one Transaction.
-                //SqlTransaction varTrans = conn.BeginTransaction();
-                SqlCommand command = new SqlCommand();
-                command.Connection = conn;
-                //command.Transaction = varTrans;
-                try
-                {
-                    foreach (string varcommandText in varSqlList)
-                    {
-                        command.CommandText = varcommandText;
-                        command.ExecuteNonQuery();
-                    }
-                    //varTrans.Commit();
-                }
-                catch (Exception ex)
-                {
-                    //varTrans.Rollback();
-                    throw ex;
-                }
-                finally
-                {
-                    conn.Close();
-                }
-            }
-        }
-
-
-        private void t_tsb_Query_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                FrmQuery myForm = new FrmQuery();
-                myForm.ShowDialog();
-                MQuery myModel = myForm.QueryModel;
-                if (myModel != null)
-                {
-                    if (myModel.BillType == "Q")
-                    {
-                        var query = m_Entities.PT_B_Quotation.AsQueryable();
-                        if (myModel.DateFilterType != DateFilterTypes.Custom)
-                        {
-                            DateTime date = GetFilterDate();
-                            query = query.Where(c => c.Quotation_Date > date);
-                        }
-                        else
-                            query = query.Where(c => c.Quotation_Date >= myModel.StartDate && c.Quotation_Date <= myModel.EndDate);
-
-                        if (!string.IsNullOrEmpty(myModel.BillNo))
-                        {
-                            query = query.Where(c => c.Quotation_No.Contains(myModel.BillNo));
-                        }
-                        if (!string.IsNullOrEmpty(myModel.FllowMan))
-                        {
-                            query = query.Where(c => c.Follow_Man.Contains(myModel.FllowMan));
-                        }
-                        if (!string.IsNullOrEmpty(myModel.ProjectName))
-                        {
-                            query = query.Where(c => c.Project_Name.Contains(myModel.ProjectName));
-                        }
-                        if (!string.IsNullOrEmpty(myModel.CompanyName))
-                        {
-                            query = query.Where(c => c.Company_Name.Contains(myModel.CompanyName));
-                        }
-                        if (!string.IsNullOrEmpty(myModel.Type))
-                        {
-                            query = query.Where(c => c.Quotation_Type == myModel.Type);
-                        }
-                        query = query.OrderBy(c => c.Quotation_No);
-                        GirdStyleConfig.ItemsSource = query.ToList();
-                        t_pgg_Bill.SelectedIndex = -1;
-                        t_pgg_Bill.StyleConfig = GirdStyleConfig;
-                        t_pgg_Bill.SelectedIndex = 0;
-                    }
-                    else if (myModel.BillType == "P")
-                    {
-                        var query = m_Entities.PT_B_Project.AsQueryable();
-                        if (myModel.DateFilterType != DateFilterTypes.Custom)
-                        {
-                            DateTime date = GetFilterDate();
-                            query = query.Where(c => c.Quotation_Date > date);
-                        }
-                        else
-                            query = query.Where(c => c.Quotation_Date >= myModel.StartDate && c.Quotation_Date <= myModel.EndDate);
-
-                        if (!string.IsNullOrEmpty(myModel.BillNo))
-                        {
-                            query = query.Where(c => c.Project_No.Contains(myModel.BillNo));
-                        }
-                        if (!string.IsNullOrEmpty(myModel.FllowMan))
-                        {
-                            query = query.Where(c => c.Follow_Man.Contains(myModel.FllowMan));
-                        }
-                        if (!string.IsNullOrEmpty(myModel.ProjectName))
-                        {
-                            query = query.Where(c => c.Project_Name.Contains(myModel.ProjectName));
-                        }
-                        if (!string.IsNullOrEmpty(myModel.CompanyName))
-                        {
-                            query = query.Where(c => c.Company_Name.Contains(myModel.CompanyName));
-                        }
-                        if (!string.IsNullOrEmpty(myModel.Type))
-                        {
-                            query = query.Where(c => c.Project_Type == myModel.Type);
-                        }
-                        query = query.OrderBy(c => c.Project_No);
-                        ProjectGirdStyleConfig.ItemsSource = query.ToList();
-                        t_pgg_Bill.SelectedIndex = -1;
-                        t_pgg_Bill.StyleConfig = ProjectGirdStyleConfig;
-                        t_pgg_Bill.SelectedIndex = 0;
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                XMessageBox.Exception(ex);
-            }
-           
-        }
-
-
         /// <summary>
         /// 获取当前参数格式化的查询语句
         /// </summary>
@@ -939,34 +1073,56 @@ namespace XProjectWPF
                 t_dtp_StartDate.IsEnabled = false;
                 t_dtp_EndDate.IsEnabled = false;
             }
+            XTreeNode myItem = t_tvw_Module.SelectedItem as XTreeNode;
+            string myTag = string.Empty;
+            string parentTag = string.Empty;
             BindTreeNode();
-        }
+            if (myItem == null && m_MQuery != null)
+            {
+                myTag = m_MQuery.BillType;
+                SetSelected(t_tvw_Module.Nodes, myTag, parentTag);
+            }
+            else if (myItem != null)
+            {
+                myTag = myItem.Tag.ToString();
+                if (myItem.Parent != null)
+                    parentTag = myItem.Parent.Tag.ToString();
+                SetSelected(t_tvw_Module.Nodes, myTag, parentTag);
+            }
 
-        private void t_dtp_StartDate_ValueChanged(object sender, RoutedEventArgs e)
+        }
+        /// <summary>
+        /// 状态值转换
+        /// </summary>
+        /// <param name="billStatus">状态</param>
+        /// <returns>返回转换的状态值</returns>
+        private string SetBillStatus(string billStatus)
         {
-            try
+            string myStatus = string.Empty;
+            switch (billStatus)
             {
-                BindTreeNode();
-
+                case "1":
+                    myStatus = "已入库";
+                    break;
+                case "R":
+                    myStatus = "回收站";
+                    break;
+                case "A":
+                    myStatus = "归档";
+                    break;
+                case "已入库":
+                    myStatus = "1";
+                    break;
+                case "回收站":
+                    myStatus = "R";
+                    break;
+                case "归档":
+                    myStatus = "A";
+                    break;
             }
-            catch (Exception ex)
-            {
-                XMessageBox.Exception(ex);
-            }
-
+            return myStatus;
         }
 
-        private void t_dtp_EndDate_ValueChanged(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                BindTreeNode();
-
-            }
-            catch (Exception ex)
-            {
-                XMessageBox.Exception(ex);
-            }
-        }
+        #endregion
     }
 }

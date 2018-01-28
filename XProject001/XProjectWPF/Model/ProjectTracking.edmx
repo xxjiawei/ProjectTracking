@@ -7,9 +7,10 @@
       <Schema Namespace="ProjectTrackingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="PT_B_Project">
           <Key>
-            <PropertyRef Name="Project_No" />
+            <PropertyRef Name="Project_Id" />
           </Key>
-          <Property Name="Project_No" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Project_Id" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Project_No" Type="varchar" MaxLength="20" />
           <Property Name="Quotation_No" Type="varchar" MaxLength="20" />
           <Property Name="Follow_Man" Type="varchar" MaxLength="50" />
           <Property Name="Project_Type" Type="varchar" MaxLength="4" />
@@ -115,9 +116,10 @@
         </EntityType>
         <EntityType Name="PT_B_Quotation">
           <Key>
-            <PropertyRef Name="Quotation_No" />
+            <PropertyRef Name="Quotation_Id" />
           </Key>
-          <Property Name="Quotation_No" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Quotation_Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Quotation_No" Type="varchar" MaxLength="20" />
           <Property Name="Quotation_Date" Type="datetime" />
           <Property Name="Follow_Man" Type="varchar" MaxLength="50" />
           <Property Name="Product_Model" Type="varchar" MaxLength="100" />
@@ -151,9 +153,10 @@
       <Schema Namespace="ProjectTrackingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="PT_B_Project">
           <Key>
-            <PropertyRef Name="Project_No" />
+            <PropertyRef Name="Project_Id" />
           </Key>
-          <Property Name="Project_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Project_Id" Type="String" MaxLength="32" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Project_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Quotation_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Follow_Man" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Project_Type" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
@@ -259,9 +262,10 @@
         </EntityType>
         <EntityType Name="PT_B_Quotation">
           <Key>
-            <PropertyRef Name="Quotation_No" />
+            <PropertyRef Name="Quotation_Id" />
           </Key>
-          <Property Name="Quotation_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Quotation_Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Quotation_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Quotation_Date" Type="DateTime" Precision="3" />
           <Property Name="Follow_Man" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Product_Model" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
@@ -297,6 +301,7 @@
           <EntitySetMapping Name="PT_B_Project">
             <EntityTypeMapping TypeName="ProjectTrackingModel.PT_B_Project">
               <MappingFragment StoreEntitySet="PT_B_Project">
+                <ScalarProperty Name="Project_Id" ColumnName="Project_Id" />
                 <ScalarProperty Name="Project_No" ColumnName="Project_No" />
                 <ScalarProperty Name="Quotation_No" ColumnName="Quotation_No" />
                 <ScalarProperty Name="Follow_Man" ColumnName="Follow_Man" />
@@ -410,6 +415,7 @@
           <EntitySetMapping Name="PT_B_Quotation">
             <EntityTypeMapping TypeName="ProjectTrackingModel.PT_B_Quotation">
               <MappingFragment StoreEntitySet="PT_B_Quotation">
+                <ScalarProperty Name="Quotation_Id" ColumnName="Quotation_Id" />
                 <ScalarProperty Name="Quotation_No" ColumnName="Quotation_No" />
                 <ScalarProperty Name="Quotation_Date" ColumnName="Quotation_Date" />
                 <ScalarProperty Name="Follow_Man" ColumnName="Follow_Man" />

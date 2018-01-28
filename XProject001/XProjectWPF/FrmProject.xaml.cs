@@ -91,10 +91,13 @@ namespace XProjectWPF
         /// 标识是否已加载完成
         /// </summary>
         private bool m_IsLoad = true;
+        /// <summary>
+        /// 标识是否手动生成单号
+        /// </summary>
+        private bool m_IsHand = false;
         #endregion
 
         #region 界面事件
-
 
         /// <summary>
         /// 窗体加载事件
@@ -117,11 +120,11 @@ namespace XProjectWPF
                 SumOtherAccountsPrepaid();
                 m_IsLoad = false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 XMessageBox.Exception(ex);
             }
-           
+
         }
         /// <summary>
         /// 当前报价值改变事件
@@ -165,13 +168,110 @@ namespace XProjectWPF
             {
                 XMessageBox.Exception(ex);
             }
-           
+
         }
+        /// <summary>
+        /// 窗体关闭事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
         private void t_tsb_Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+        /// <summary>
+        /// 窗体关闭时事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
+        private void XBaseForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (m_IsModify)
+            {
+                MessageResult myResult = XMessageBox.Select("当前单据已修改，是否保存？", this);
+                if (myResult == MessageResult.Yes)
+                {
+                    SaveMethod();
+                }
+                else if (myResult == MessageResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
+            }
+        }
+        /// <summary>
+        /// 查看原始报价单
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
+        private void t_tsb_Back_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (m_IsModify)
+                {
+                    MessageResult myResult = XMessageBox.Ask("当前单据已修改，是否保存？", this);
+                    if (myResult == MessageResult.Yes)
+                    {
+                        SaveMethod();
+                        m_IsModify = false;
+                    }
+                }
+                var temp = from p in m_Entities.PT_B_Quotation
+                           where p.Quotation_No == PTBProject.Quotation_No
+                           select p;
 
+                if (temp.ToList().Count == 0)
+                {
+                    XMessageBox.Warning("未能找到原始报价单，可能已被删除！");
+                    return;
+                }
+                foreach (PT_B_Quotation model in temp)
+                {
+                    this.Visibility = Visibility.Hidden;
+                    FrmQuotation myForm = new FrmQuotation();
+                    myForm.PTBQuotation = model;
+                    myForm.ShowDialog();
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+        }
+        /// <summary>
+        /// 单号手动录入切换
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
+        private void t_tsb_Hand_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                TextBlock myBlock = t_tsb_Change.Header as TextBlock;
+
+                if (myBlock.Text == "单号手动录入")
+                {
+                    //手动生成单号处理
+                    myBlock.Text = "单号自动生成";
+                    m_IsHand = true;
+                    t_txt_ProjectNo.IsReadOnly = false;
+                }
+                else
+                {
+                    myBlock.Text = "单号手动录入";
+                    m_IsHand = false;
+                    t_txt_ProjectNo.IsReadOnly = true;
+                    t_txt_ProjectNo.Text = PTBProject.Project_No;
+                }
+            }
+            catch (Exception ex)
+            {
+                XMessageBox.Exception(ex);
+            }
+
+        }
         /// <summary>
         /// 保存按钮事件
         /// </summary>
@@ -194,21 +294,47 @@ namespace XProjectWPF
         /// <summary>
         /// 保存调用方法
         /// </summary>
-        private void SaveMethod()
+        private bool SaveMethod()
         {
-            //保存基本信息
+            //新单模式
             if (string.IsNullOrEmpty(PTBProject.Bill_Status))
             {
-                string type = string.Empty;
-
-                if (t_chk_Save.IsChecked == true)
-                    type = "S";
-                if (t_chk_Chemis.IsChecked == true)
-                    type = "E";
-                if (t_chk_EMC.IsChecked == true)
-                    type = "C";
-
-                string newProjectNo = m_SerialNumberMethod.GetMaxPNumber(type);
+                string newProjectNo = string.Empty;
+                if (m_IsHand)
+                {
+                    //校验是否新单
+                    if (t_txt_ProjectNo.Text.Trim() == "新单" || string.IsNullOrEmpty(t_txt_ProjectNo.Text.Trim()))
+                    {
+                        XMessageBox.Warning("项目单号不能为空或包含【新单】字符！");
+                        t_txt_ProjectNo.Focus();
+                        return false;
+                    }
+                    //校验是否重号
+                    var temp = from p in m_Entities.PT_B_Project
+                               where p.Project_No == t_txt_ProjectNo.Text.Trim()
+                               select p;
+                    if (temp.ToList().Count > 0)
+                    {
+                        string mes = string.Format("项目单号：{0} 已存在，请修改！", t_txt_ProjectNo.Text.Trim());
+                        XMessageBox.Warning(mes);
+                        t_txt_ProjectNo.Focus();
+                        return false;
+                    }
+                    newProjectNo = t_txt_ProjectNo.Text.Trim();
+                }
+                else
+                {
+                    //单号自动生成
+                    string type = string.Empty;
+                    if (t_chk_Save.IsChecked == true)
+                        type = "S";
+                    if (t_chk_Chemis.IsChecked == true)
+                        type = "C";
+                    if (t_chk_EMC.IsChecked == true)
+                        type = "E";
+                    newProjectNo = m_SerialNumberMethod.GetMaxPNumber(type);
+                }
+                PTBProject.Project_Id = Guid.NewGuid().ToString("N");
                 SaveBaseModel(newProjectNo);
                 m_Entities.PT_B_Project.Add(PTBProject);
                 t_txt_ProjectNo.Text = newProjectNo;
@@ -216,6 +342,33 @@ namespace XProjectWPF
             }
             else
             {
+                //打开单证，手动录入单号情况
+                if (m_IsHand)
+                {
+                    //校验是否新单
+                    if (t_txt_ProjectNo.Text.Trim() == "新单" || string.IsNullOrEmpty(t_txt_ProjectNo.Text.Trim()))
+                    {
+                        XMessageBox.Warning("项目单号不能为空或包含【新单】字符！");
+                        t_txt_ProjectNo.Focus();
+                        return false;
+                    }
+                    //当项目单号有修改时
+                    if (t_txt_ProjectNo.Text.Trim() != PTBProject.Quotation_No)
+                    {
+                        //读取数据库判断是否有重号
+                        ProjectTrackingEntities qEntities = new ProjectTrackingEntities();
+                        var temp = from p in qEntities.PT_B_Project
+                                   where p.Project_No == t_txt_ProjectNo.Text.Trim()
+                                   select p;
+                        if (temp.ToList().Count > 0)
+                        {
+                            string mes = string.Format("项目单号：{0} 已存在，请修改！", t_txt_QuotationNo.Text.Trim());
+                            XMessageBox.Warning(mes);
+                            t_txt_QuotationNo.Focus();
+                            return false;
+                        }
+                    }
+                }
                 SaveBaseModel(t_txt_ProjectNo.Text);
                 m_Entities.Entry(PTBProject).State = System.Data.Entity.EntityState.Modified;
             }
@@ -225,6 +378,7 @@ namespace XProjectWPF
             SaveAgency();
             SaveLab();
             SaveOther();
+            return true;
         }
         /// <summary>
         /// 保存基本信息
@@ -320,8 +474,8 @@ namespace XProjectWPF
         {
             var agency = from p in m_Entities.PT_B_Project_Agency
                          where p.Project_No == PTBProject.Project_No
-                           orderby p.Seq_No
-                           select p;
+                         orderby p.Seq_No
+                         select p;
             foreach (PT_B_Project_Agency myModel in agency)
             {
                 m_Entities.PT_B_Project_Agency.Remove(myModel);
@@ -345,9 +499,9 @@ namespace XProjectWPF
         private void SaveLab()
         {
             var lab = from p in m_Entities.PT_B_Project_Lab
-                           where p.Project_No == PTBProject.Project_No
-                           orderby p.Seq_No
-                           select p;
+                      where p.Project_No == PTBProject.Project_No
+                      orderby p.Seq_No
+                      select p;
             foreach (PT_B_Project_Lab myModel in lab)
             {
                 m_Entities.PT_B_Project_Lab.Remove(myModel);
@@ -371,9 +525,9 @@ namespace XProjectWPF
         private void SaveOther()
         {
             var other = from p in m_Entities.PT_B_Project_Other
-                           where p.Project_No == PTBProject.Project_No
-                           orderby p.Seq_No
-                           select p;
+                        where p.Project_No == PTBProject.Project_No
+                        orderby p.Seq_No
+                        select p;
             foreach (PT_B_Project_Other myModel in other)
             {
                 m_Entities.PT_B_Project_Other.Remove(myModel);
@@ -411,6 +565,7 @@ namespace XProjectWPF
                 PT_B_Project_Customer newModel = new PT_B_Project_Customer();
                 newModel.Customer_Date = DateTime.Today;
                 newModel.Is_Customer_Inv = "否";
+                newModel.Customer = t_txt_FollowMan.Text.Trim();
                 m_CustomerList.Add(newModel);
                 t_dge_CustomBill.Items.Refresh();
                 t_dge_CustomBill.SelectedIndex = m_CustomerList.Count - 1;
@@ -420,7 +575,7 @@ namespace XProjectWPF
             {
                 XMessageBox.Exception(ex);
             }
-          
+
         }
         /// <summary>
         /// 客户信息删除按钮事件
@@ -485,6 +640,7 @@ namespace XProjectWPF
                 PT_B_Project_Agency newModel = new PT_B_Project_Agency();
                 newModel.Agency_Date = DateTime.Today;
                 newModel.Is_Agency_Inv = "否";
+                newModel.Agency = t_txt_FollowMan.Text.Trim();
                 m_AgencyList.Add(newModel);
                 t_dge_Agency.Items.Refresh();
                 t_dge_Agency.SelectedIndex = m_AgencyList.Count - 1;
@@ -557,6 +713,7 @@ namespace XProjectWPF
                 PT_B_Project_Lab newModel = new PT_B_Project_Lab();
                 newModel.Lab_Date = DateTime.Today;
                 newModel.Is_Lab_Inv = "否";
+                newModel.Lab = t_txt_FollowMan.Text.Trim();
                 m_LabList.Add(newModel);
                 t_dge_Lab.Items.Refresh();
                 t_dge_Lab.SelectedIndex = m_LabList.Count - 1;
@@ -612,7 +769,7 @@ namespace XProjectWPF
             {
                 XMessageBox.Exception(ex);
             }
-        
+
         }
         /// <summary>
         /// 其他信息添加按钮事件
@@ -630,6 +787,7 @@ namespace XProjectWPF
                 PT_B_Project_Other newModel = new PT_B_Project_Other();
                 newModel.Other_Date = DateTime.Today;
                 newModel.Is_Other_Inv = "否";
+                newModel.Other = t_txt_FollowMan.Text.Trim();
                 m_OtherList.Add(newModel);
                 t_dge_Other.Items.Refresh();
                 t_dge_Other.SelectedIndex = m_OtherList.Count - 1;
@@ -686,7 +844,7 @@ namespace XProjectWPF
             {
                 XMessageBox.Exception(ex);
             }
-          
+
         }
 
         #endregion
@@ -718,7 +876,7 @@ namespace XProjectWPF
             {
                 XMessageBox.Exception(ex);
             }
-         
+
         }
         /// <summary>
         /// 机构表格行切换事件
@@ -745,7 +903,7 @@ namespace XProjectWPF
             {
                 XMessageBox.Exception(ex);
             }
-         
+
         }
         /// <summary>
         /// 外包表格行切换事件
@@ -772,7 +930,7 @@ namespace XProjectWPF
             {
                 XMessageBox.Exception(ex);
             }
-          
+
         }
         /// <summary>
         /// 其他表格行切换事件
@@ -800,7 +958,7 @@ namespace XProjectWPF
                 XMessageBox.Exception(ex);
             }
 
-         
+
         }
 
         #endregion
@@ -836,7 +994,7 @@ namespace XProjectWPF
             {
                 XMessageBox.Exception(ex);
             }
-           
+
         }
         /// <summary>
         /// 机构资金值变更事件
@@ -901,11 +1059,16 @@ namespace XProjectWPF
         {
             try
             {
+                //计算待付钱款
+                double otherAccount = string.IsNullOrEmpty(t_txt_OtherAccount.Text) ? 0 : double.Parse(t_txt_OtherAccount.Text);
+                double otherPadAccount = string.IsNullOrEmpty(t_txt_OtherPadAccount.Text) ? 0 : double.Parse(t_txt_OtherPadAccount.Text);
+                double unOtherAccount = otherAccount - otherPadAccount;
+                t_txt_UnOtherAccount.Text = unOtherAccount.ToString() == "0" ? string.Empty : unOtherAccount.ToString();
+
                 //计算利润
                 double accountReceivable = string.IsNullOrEmpty(t_txt_AccountReceivable.Text) ? 0 : double.Parse(t_txt_AccountReceivable.Text);
                 double agencyAccountPayable = string.IsNullOrEmpty(t_txt_AgencyAccountPayable.Text) ? 0 : double.Parse(t_txt_AgencyAccountPayable.Text);
                 double labAccountPayable = string.IsNullOrEmpty(t_txt_LabAccountPayable.Text) ? 0 : double.Parse(t_txt_LabAccountPayable.Text);
-                double otherAccount = string.IsNullOrEmpty(t_txt_OtherAccount.Text) ? 0 : double.Parse(t_txt_OtherAccount.Text);
                 double profits = accountReceivable - agencyAccountPayable - labAccountPayable - otherAccount;
                 t_txt_Profits.Text = profits.ToString() == "0" ? string.Empty : profits.ToString();
             }
@@ -946,18 +1109,23 @@ namespace XProjectWPF
                 {
                     t_txt_PadsMoney.Text = (-1 * nowProfits).ToString();
                     t_chk_IsPads.IsChecked = true;
+
+                    t_chk_IsPads.Foreground = Brushes.Red;
+
                 }
                 else
                 {
                     t_txt_PadsMoney.Text = string.Empty;
                     t_chk_IsPads.IsChecked = false;
+
+                    t_chk_IsPads.Foreground = Brushes.Black;
                 }
             }
             catch (Exception ex)
             {
                 XMessageBox.Exception(ex);
             }
-         
+
         }
         /// <summary>
         /// 已付机构账款值变更事件
@@ -986,11 +1154,16 @@ namespace XProjectWPF
                 {
                     t_txt_PadsMoney.Text = (-1 * nowProfits).ToString();
                     t_chk_IsPads.IsChecked = true;
+
+                    t_chk_IsPads.Foreground = Brushes.Red;
+
                 }
                 else
                 {
                     t_txt_PadsMoney.Text = string.Empty;
                     t_chk_IsPads.IsChecked = false;
+
+                    t_chk_IsPads.Foreground = Brushes.Black;
                 }
             }
             catch (Exception ex)
@@ -1026,18 +1199,21 @@ namespace XProjectWPF
                 {
                     t_txt_PadsMoney.Text = (-1 * nowProfits).ToString();
                     t_chk_IsPads.IsChecked = true;
+
+                    t_chk_IsPads.Foreground = Brushes.Red;
                 }
                 else
                 {
                     t_txt_PadsMoney.Text = string.Empty;
                     t_chk_IsPads.IsChecked = false;
+                    t_chk_IsPads.Foreground = Brushes.Black;
                 }
             }
             catch (Exception ex)
             {
                 XMessageBox.Exception(ex);
             }
-         
+
         }
         /// <summary>
         /// 已付其他账款值变更事件
@@ -1067,11 +1243,16 @@ namespace XProjectWPF
                 {
                     t_txt_PadsMoney.Text = (-1 * nowProfits).ToString();
                     t_chk_IsPads.IsChecked = true;
+
+                    t_chk_IsPads.Foreground = Brushes.Red;
+
                 }
                 else
                 {
                     t_txt_PadsMoney.Text = string.Empty;
                     t_chk_IsPads.IsChecked = false;
+
+                    t_chk_IsPads.Foreground = Brushes.Black;
                 }
             }
             catch (Exception ex)
@@ -1118,7 +1299,7 @@ namespace XProjectWPF
             t_txt_CycleTime.Text = PTBProject.Cycle_Time;
             t_txt_Price.Text = PTBProject.Price;
             t_chk_IsTax.IsChecked = PTBProject.Is_Tax == "是" ? true : false;
-            t_dtp_QuotationDate.Value = PTBProject.Quotation_Date ==null? DateTime.Parse("1900-01-01"): DateTime.Parse(PTBProject.Quotation_Date.ToString());
+            t_dtp_QuotationDate.Value = PTBProject.Quotation_Date == null ? DateTime.Parse("1900-01-01") : DateTime.Parse(PTBProject.Quotation_Date.ToString());
             t_txt_Remark.Text = PTBProject.Remark;
             //应收客户账款
             t_txt_AccountReceivable.Text = PTBProject.Account_Receivable;
@@ -1137,14 +1318,28 @@ namespace XProjectWPF
             t_chk_IsAllLab.IsChecked = PTBProject.Is_All_Lab == "是" ? true : false;
             //其他账款信息
             t_txt_OtherAccount.Text = PTBProject.Other_Account;
-            t_txt_OtherPadAccount.Text = PTBProject.Other_Pad_Account ;
-            t_txt_UnOtherAccount.Text= PTBProject.Un_Other_Account ;
+            t_txt_OtherPadAccount.Text = PTBProject.Other_Pad_Account;
+            t_txt_UnOtherAccount.Text = PTBProject.Un_Other_Account;
             t_chk_IsAllOther.IsChecked = PTBProject.Is_All_Other == "是" ? true : false;
             //利润与垫付信息
             t_txt_Profits.Text = PTBProject.Profits;
             t_txt_NowProfits.Text = PTBProject.Now_Profits;
             t_txt_PadsMoney.Text = PTBProject.Pads_Money;
             t_chk_IsPads.IsChecked = PTBProject.Is_Pads == "是" ? true : false;
+            if (t_chk_IsPads.IsChecked == true)
+                t_chk_IsPads.Foreground = Brushes.Red;
+            else
+                t_chk_IsPads.Foreground = Brushes.Black;
+
+            if (PTBProject.Bill_Status == "R")
+                t_tslStateText.Text = "回收站";
+            else if (PTBProject.Bill_Status == "A")
+                t_tslStateText.Text = "归档";
+            else if (PTBProject.Bill_Status == "1")
+                t_tslStateText.Text = "已入库";
+            else
+                t_tslStateText.Text = "新建";
+
             //客户资金往来
             var customer = from p in m_Entities.PT_B_Project_Customer
                            where p.Project_No == PTBProject.Project_No
@@ -1395,7 +1590,7 @@ namespace XProjectWPF
                 t_txt_CustomerMoney.Text = myModel.Customer_Money == null ? string.Empty : myModel.Customer_Money.ToString();
                 t_txt_Customer.Text = myModel.Customer;
                 t_txt_CustomerRemark.Text = myModel.Customer_Remark;
-                t_dtp_CustomerDate.Value = myModel.Customer_Date ==null? DateTime.Parse("1900-01-01") : DateTime.Parse(myModel.Customer_Date.ToString()) ;
+                t_dtp_CustomerDate.Value = myModel.Customer_Date == null ? DateTime.Parse("1900-01-01") : DateTime.Parse(myModel.Customer_Date.ToString());
                 t_chk_IsCustomerInv.IsChecked = myModel.Is_Customer_Inv == "是" ? true : false;
                 t_txt_CustomerInvPrice.Text = myModel.Customer_Inv_Price == null ? string.Empty : myModel.Customer_Inv_Price.ToString();
                 t_txt_CustomerInvNo.Text = myModel.Customer_Inv_No;
@@ -1427,7 +1622,7 @@ namespace XProjectWPF
                 t_txt_AgencyMoney.Text = myModel.Agency_Money == null ? string.Empty : myModel.Agency_Money.ToString();
                 t_txt_Agency.Text = myModel.Agency;
                 t_txt_AgencyRemark.Text = myModel.Agency_Remark;
-                t_dtp_AgencyDate.Value = myModel.Agency_Date ==null?DateTime.Parse("1900-01-01"):DateTime.Parse(myModel.Agency_Date.ToString());
+                t_dtp_AgencyDate.Value = myModel.Agency_Date == null ? DateTime.Parse("1900-01-01") : DateTime.Parse(myModel.Agency_Date.ToString());
                 t_chk_IsAgencyInv.IsChecked = myModel.Is_Agency_Inv == "是" ? true : false;
                 t_txt_AgencyInvPrice.Text = myModel.Agency_Inv_Price == null ? string.Empty : myModel.Agency_Inv_Price.ToString();
                 t_txt_AgencyInvNo.Text = myModel.Agency_Inv_No;
@@ -1491,7 +1686,7 @@ namespace XProjectWPF
                 t_txt_OtherMoney.Text = myModel.Other_Money == null ? string.Empty : myModel.Other_Money.ToString();
                 t_txt_Other.Text = myModel.Other;
                 t_txt_OtherRemark.Text = myModel.Other_Remark;
-                t_dtp_OtherDate.Value = myModel.Other_Date == null ? DateTime.Parse("1900-01-01") : DateTime.Parse(myModel.Other_Date.ToString()); 
+                t_dtp_OtherDate.Value = myModel.Other_Date == null ? DateTime.Parse("1900-01-01") : DateTime.Parse(myModel.Other_Date.ToString());
                 t_chk_IsOtherInv.IsChecked = myModel.Is_Other_Inv == "是" ? true : false;
                 t_txt_OtherInvPrice.Text = myModel.Other_Inv_Price == null ? string.Empty : myModel.Other_Inv_Price.ToString();
                 t_txt_OtherInvNo.Text = myModel.Other_Inv_No;
@@ -1838,78 +2033,8 @@ namespace XProjectWPF
 
         #endregion
 
-        /// <summary>
-        /// 客户信息保存按钮事件
-        /// </summary>
-        /// <param name="sender">事件对象</param>
-        /// <param name="e">事件参数</param>
-        private void t_btn_CustomerSave_Click(object sender, RoutedEventArgs e)
-        {
-            //客户资金往来
-            var customer = from p in m_Entities.PT_B_Project_Customer
-                           where p.Project_No == PTBProject.Project_No
-                           orderby p.Seq_No
-                           select p;
+        #region 私有方法
 
-
-            foreach (PT_B_Project_Customer myModel in customer)
-            {
-                m_Entities.PT_B_Project_Customer.Remove(myModel);
-            }
-
-            m_Entities.SaveChanges();
-
-            int seqNo = 1;
-            foreach (PT_B_Project_Customer myModel in m_CustomerList)
-            {
-                if (string.IsNullOrEmpty(myModel.Customer_Pays_Id))
-                    myModel.Customer_Pays_Id = Guid.NewGuid().ToString("N");
-                myModel.Project_No = PTBProject.Project_No;
-                myModel.Seq_No = seqNo;
-                seqNo++;
-                m_Entities.PT_B_Project_Customer.Add(myModel);
-            }
-            m_Entities.SaveChanges();
-
-            XMessageBox.Enter("保存成功", this);
-
-
-            //GirdStyleConfig.ItemsSource = m_CustomerList;
-            //t_dge_CustomBill.StyleConfig = GirdStyleConfig;
-
-            //t_dge_CustomBill.ItemsSource = m_CustomerList;
-
-            //if (m_CustomerList != null && m_CustomerList.Count > 0)
-            //{
-            //    t_dge_CustomBill.SelectedIndex = 0;
-            //    t_dge_CustomBill.Focus();
-            //}
-            //else
-            //{
-            //    t_btn_CustomerAdd_Click(null, null);
-            //}
-            ////机构资金往来
-            //var agency = from p in m_Entities.PT_B_Project_Agency
-            //             where p.Project_No == PTBProject.Project_No
-            //             orderby p.Seq_No
-            //             select p;
-            //AgencyGirdStyleConfig.ItemsSource = agency.ToList();
-            //t_dge_Agency.StyleConfig = AgencyGirdStyleConfig;
-            ////外包资金往来
-            //var lab = from p in m_Entities.PT_B_Project_Customer
-            //          where p.Project_No == PTBProject.Project_No
-            //          orderby p.Seq_No
-            //          select p;
-            //LabGirdStyleConfig.ItemsSource = lab.ToList();
-            //t_dge_Lab.StyleConfig = LabGirdStyleConfig;
-            ////其他资金往来
-            //var other = from p in m_Entities.PT_B_Project_Customer
-            //            where p.Project_No == PTBProject.Project_No
-            //            orderby p.Seq_No
-            //            select p;
-            //OtherGirdStyleConfig.ItemsSource = other.ToList();
-            //t_dge_Other.StyleConfig = OtherGirdStyleConfig;
-        }
         /// <summary>
         /// 事件注册
         /// </summary>
@@ -1952,68 +2077,37 @@ namespace XProjectWPF
                 }
             }
         }
+        /// <summary>
+        /// 值变更事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
         private void myChecked(object sender, RoutedEventArgs e)
         {
             if (!m_IsLoad && !m_IsLabGridLoad)
                 m_IsModify = true;
         }
-
+        /// <summary>
+        /// 值变更事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
         private void myValueChanged(object sender, RoutedEventArgs e)
         {
             if (!m_IsLoad && !m_IsLabGridLoad)
                 m_IsModify = true;
         }
-
+        /// <summary>
+        /// 值变更事件
+        /// </summary>
+        /// <param name="sender">事件对象</param>
+        /// <param name="e">事件参数</param>
         private void myTextChanged(object sender, TextChangedEventArgs e)
         {
             if (!m_IsLoad && !m_IsLabGridLoad)
                 m_IsModify = true;
         }
 
-        private void XBaseForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (m_IsModify)
-            {
-                MessageResult myResult = XMessageBox.Select("当前单据已修改，是否保存？", this);
-                if (myResult == MessageResult.Yes)
-                {
-                    SaveMethod();
-                }
-                else if (myResult == MessageResult.Cancel)
-                {
-                    e.Cancel = true;
-                }
-            }
-        }
-        /// <summary>
-        /// 查看原始报价单
-        /// </summary>
-        /// <param name="sender">事件对象</param>
-        /// <param name="e">事件参数</param>
-        private void t_tsb_Back_Click(object sender, RoutedEventArgs e)
-        {
-            if (m_IsModify)
-            {
-                MessageResult myResult = XMessageBox.Ask("当前单据已修改，是否保存？", this);
-                if (myResult == MessageResult.Yes)
-                {
-                    SaveMethod();
-                    m_IsModify = false;
-                }
-            }
-            var temp = from p in m_Entities.PT_B_Quotation
-                       where p.Quotation_No == PTBProject.Quotation_No
-                       select p;
-
-            foreach (PT_B_Quotation model in temp)
-            {
-                this.Visibility = Visibility.Hidden;
-                FrmQuotation myForm = new FrmQuotation();
-                myForm.PTBQuotation = model;
-                myForm.ShowDialog();
-                this.Close();
-            }
-
-        }
+        #endregion
     }
 }

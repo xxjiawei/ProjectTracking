@@ -1,5 +1,6 @@
 ﻿using RJ.XStyle;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -72,36 +73,6 @@ namespace XProjectWPF
                 XMessageBox.Exception(ex);
             }
 
-          
-        }
-        /// <summary>
-        /// 复选框控制只能选折一个事件
-        /// </summary>
-        /// <param name="sender">事件对象</param>
-        /// <param name="e">事件参数</param>
-        private void t_chk_Save_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var checkBoxes = new[] { t_chk_Save, t_chk_EMC, t_chk_Chemis };
-                var current = (CheckBox)sender;
-                if (current.IsChecked == false)
-                {
-                    current.IsChecked = true;
-                    return;
-                }
-                foreach (var checkBox in checkBoxes)
-                {
-                    if (checkBox != current)
-                    {
-                        checkBox.IsChecked = !current.IsChecked;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                XMessageBox.Exception(ex);
-            }
           
         }
         private void t_cmb_Type_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -179,7 +150,7 @@ namespace XProjectWPF
             t_txt_FllowMan.Text = string.Empty;
             t_txt_ProjectName.Text = string.Empty;
             t_txt_CompanyName.Text = string.Empty;
-            t_chk_Save.IsChecked = true;
+            t_chk_Save.IsChecked = false;
             t_chk_EMC.IsChecked = false;
             t_chk_Chemis.IsChecked = false;
         }
@@ -219,12 +190,21 @@ namespace XProjectWPF
                 myModel.FllowMan = t_txt_FllowMan.Text;
                 myModel.ProjectName = t_txt_ProjectName.Text;
                 myModel.CompanyName = t_txt_CompanyName.Text;
+
+                ArrayList myList = new ArrayList();
                 if (t_chk_Save.IsChecked == true)
-                    myModel.Type = "安全";
+                    myList.Add("安全");
                 if (t_chk_EMC.IsChecked == true)
-                    myModel.Type = "EMC";
+                    myList.Add("EMC");
                 if (t_chk_Chemis.IsChecked == true)
-                    myModel.Type = "化学";
+                    myList.Add("化学");
+
+                string[] type = new string[myList.Count];
+                for (int i = 0; i < myList.Count; i++)
+                {
+                    type[i] = myList[i].ToString();
+                }
+                myModel.Type = type;
                 QueryModel = myModel;
                 this.Close();
             }

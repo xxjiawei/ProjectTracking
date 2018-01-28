@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,6 @@ namespace XProjectWPF.Model
         public string FllowMan { get; set; }
         public string ProjectName { get; set; }
         public string CompanyName { get; set; }
-        public string Type { get; set; }
+        public string[] Type { get; set; }
     }
 }

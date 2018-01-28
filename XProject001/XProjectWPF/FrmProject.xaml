@@ -9,13 +9,21 @@
         mc:Ignorable="d"
         Title="项目单" Height="720" Width="896" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" MaximizeBox="False" Loaded="XBaseForm_Loaded" Closing="XBaseForm_Closing">
     <Grid>
-        <Menu Name="t_meu_Menu" IsEnabled="True"  VerticalContentAlignment="Top" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#FFDDEAFA"  Width="887" Height="30" BorderBrush="#FFD0D0EA" BorderThickness="1" Margin="0,0,0,0">
+        <Menu Name="t_meu_Menu" IsEnabled="True"  VerticalContentAlignment="Top" VerticalAlignment="Top" HorizontalAlignment="Left" Background="#FFDDEAFA"  Width="891" Height="30" BorderBrush="#FFD0D0EA" BorderThickness="1" Margin="0,0,0,0">
             <MenuItem Margin="5,0,0,0" Name="t_tsb_Save" Click="t_tsb_Save_Click">
                 <MenuItem.Header>
                     <TextBlock TextAlignment="Left" Margin="-3,1,0,0"  VerticalAlignment="Center" Text="保存"/>
                 </MenuItem.Header>
                 <MenuItem.Icon>
                     <Image Source="/Resources/SaveMore.png" Width="16" Height="16"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Margin="5,0,0,0" Name="t_tsb_Change" Click="t_tsb_Hand_Click">
+                <MenuItem.Header>
+                    <TextBlock TextAlignment="Left" Margin="-3,1,0,0"  VerticalAlignment="Center" Text="单号手动录入"/>
+                </MenuItem.Header>
+                <MenuItem.Icon>
+                    <Image Source="/Resources/SetVisible.png" Width="16" Height="16"/>
                 </MenuItem.Icon>
             </MenuItem>
             <MenuItem Margin="5,0,0,0" Name="t_tsb_Back" Click="t_tsb_Back_Click">
@@ -35,46 +43,46 @@
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>
-        <TextBlock x:Name="t_tslStateText" VerticalAlignment="Center" Margin="0,6,7,669" RenderTransformOrigin="0.703,-0.867" Foreground="#FF0712F7" HorizontalAlignment="Right" Width="37" ><Run Text="状态"/></TextBlock>
+        <TextBlock x:Name="t_tslStateText" VerticalAlignment="Center" Margin="0,6,15,669" RenderTransformOrigin="0.703,-0.867" Foreground="#FF0712F7" HorizontalAlignment="Right" Width="37" ><Run Text="状态"/></TextBlock>
 
         <xstyle:XGroupBox Header="项目基本信息" HorizontalAlignment="Left" Height="155" Margin="10,47,0,0" VerticalAlignment="Top" Width="876" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8"  Foreground="#FF2562A4">
             <Grid  Name="t_grp_BaseInfo">
                 <xstyle:XLabel Content="项目号"  HorizontalAlignment="Left" Margin="42,18,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.771,1.100"/>
-                <xstyle:XTextBox Name="t_txt_ProjectNo" IsReadOnly="True" Text="新单" HorizontalAlignment="Left" Height="23" Margin="83,14,0,0" VerticalAlignment="Top" Width="130"/>
+                <xstyle:XTextBox Name="t_txt_ProjectNo" IsReadOnly="True" Text="新单" HorizontalAlignment="Left" Height="23" Margin="83,14,0,0" VerticalAlignment="Top" Width="130" TabIndex="1"/>
                 <xstyle:XLabel Content="关联报价单号" HorizontalAlignment="Left" Margin="220,17,0,0" VerticalAlignment="Top"/>
-                <xstyle:XTextBox Name="t_txt_QuotationNo" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="301,12,0,0" VerticalAlignment="Top" Width="130"/>
+                <xstyle:XTextBox Name="t_txt_QuotationNo" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="301,12,0,0" VerticalAlignment="Top" Width="130" TabIndex="2"/>
                 <xstyle:XLabel Content="业务跟进人" HorizontalAlignment="Left" Margin="455,17,0,0" VerticalAlignment="Top"/>
-                <xstyle:XTextBox Name="t_txt_FollowMan" HorizontalAlignment="Left"  Margin="520,12,0,0" VerticalAlignment="Top" Width="130" RenderTransformOrigin="0.925,-1.609"/>
+                <xstyle:XTextBox Name="t_txt_FollowMan" HorizontalAlignment="Left"  Margin="520,12,0,0" VerticalAlignment="Top" Width="130" RenderTransformOrigin="0.925,-1.609" TabIndex="3"/>
                 <xstyle:XLabel  Content="测试项目" HorizontalAlignment="Left" Margin="30,101,0,0" VerticalAlignment="Top" RenderTransformOrigin="-9.479,-0.235"/>
-                <xstyle:XTextBox  Name="t_txt_CompanyAddress" HorizontalAlignment="Left" Height="23" Margin="83,69,0,0" VerticalAlignment="Top" Width="348" />
+                <xstyle:XTextBox  Name="t_txt_CompanyAddress" HorizontalAlignment="Left" Height="23" Margin="83,69,0,0" VerticalAlignment="Top" Width="348" TabIndex="10" />
                 <xstyle:XLabel  Content="当前报价" HorizontalAlignment="Left" Margin="30,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                <xstyle:XTextBox Name="t_txt_Price" TextChanged="t_txt_Price_TextChanged" HorizontalAlignment="Left" Height="23" Margin="83,125,0,0" VerticalAlignment="Top" Width="64"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
+                <xstyle:XTextBox Name="t_txt_Price" TextChanged="t_txt_Price_TextChanged" HorizontalAlignment="Left" Height="23" Margin="83,125,0,0" VerticalAlignment="Top" Width="64"  RenderTransformOrigin="0.492,0.826" InputValueType="Int" TabIndex="16"/>
                 <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="152,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                <xstyle:XCheckBox Name="t_chk_IsTax" Content="含税" HorizontalAlignment="Left" Margin="172,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312"/>
+                <xstyle:XCheckBox Name="t_chk_IsTax" Content="含税" HorizontalAlignment="Left" Margin="172,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312" TabIndex="17"/>
                 <xstyle:XLabel Content="报价日期" HorizontalAlignment="Left" Margin="248,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.083,0.529"/>
-                <xstyle:XDatePicker x:Name="t_dtp_QuotationDate" HorizontalAlignment="Left" Margin="301,125,0,0" VerticalAlignment="Top" Width="130"/>
-                <xstyle:XCheckBox Name="t_chk_Save" Click="t_chk_Save_Click" Content="安全" HorizontalAlignment="Left" Margin="685,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312"/>
-                <xstyle:XCheckBox Name="t_chk_EMC" Click="t_chk_Save_Click"  Content="EMC" HorizontalAlignment="Left" Margin="731,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312"/>
-                <xstyle:XCheckBox Name="t_chk_Chemis" Click="t_chk_Save_Click"  Content="化学" HorizontalAlignment="Left" Margin="779,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312"/>
+                <xstyle:XDatePicker x:Name="t_dtp_QuotationDate" HorizontalAlignment="Left" Margin="301,125,0,0" VerticalAlignment="Top" Width="130" TabIndex="18"/>
+                <xstyle:XCheckBox Name="t_chk_Save" Click="t_chk_Save_Click" Content="安全" HorizontalAlignment="Left" Margin="685,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312" TabIndex="4"/>
+                <xstyle:XCheckBox Name="t_chk_EMC" Click="t_chk_Save_Click"  Content="EMC" HorizontalAlignment="Left" Margin="731,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312" TabIndex="5"/>
+                <xstyle:XCheckBox Name="t_chk_Chemis" Click="t_chk_Save_Click"  Content="化学" HorizontalAlignment="Left" Margin="779,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312" TabIndex="6"/>
                 <xstyle:XLabel Content="公司名称" HorizontalAlignment="Left" Margin="30,47,0,0" VerticalAlignment="Top"/>
-                <xstyle:XTextBox Name="t_txt_CompanyName" HorizontalAlignment="Left" Height="23" Margin="83,41,0,0" VerticalAlignment="Top" Width="348"/>
+                <xstyle:XTextBox Name="t_txt_CompanyName" HorizontalAlignment="Left" Height="23" Margin="83,41,0,0" VerticalAlignment="Top" Width="348" MaxLines="2147483642" TabIndex="7"/>
                 <xstyle:XLabel Content="公司地址" HorizontalAlignment="Left" Margin="30,74,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.625,0"/>
                 <xstyle:XLabel Content="联系人" HorizontalAlignment="Left" Margin="479,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,0.588"/>
-                <xstyle:XTextBox Name="t_txt_ContactMan" HorizontalAlignment="Left" Height="23" Margin="520,40,0,0" VerticalAlignment="Top" Width="130"/>
+                <xstyle:XTextBox Name="t_txt_ContactMan" HorizontalAlignment="Left" Height="23" Margin="520,40,0,0" VerticalAlignment="Top" Width="130" TabIndex="8"/>
                 <xstyle:XLabel Content="联系电话" HorizontalAlignment="Left" Margin="685,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.229,0.471"/>
-                <xstyle:XTextBox Name="t_txt_Tel" HorizontalAlignment="Left" Height="23" Margin="738,40,0,0" VerticalAlignment="Top" Width="130"/>
+                <xstyle:XTextBox Name="t_txt_Tel" HorizontalAlignment="Left" Height="23" Margin="738,40,0,0" VerticalAlignment="Top" Width="130" TabIndex="9"/>
                 <xstyle:XLabel Content="电子邮箱" HorizontalAlignment="Left" Margin="685,74,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.042,0.882"/>
-                <xstyle:XTextBox Name="t_txt_Email" HorizontalAlignment="Left" Height="23" Margin="738,68,0,0" VerticalAlignment="Top" Width="130" RenderTransformOrigin="1.865,0.826"/>
-                <xstyle:XTextBox Name="t_txt_ProjectName"  HorizontalAlignment="Left" Height="23" Margin="83,97,0,0" VerticalAlignment="Top" Width="348" />
+                <xstyle:XTextBox Name="t_txt_Email" HorizontalAlignment="Left" Height="23" Margin="738,68,0,0" VerticalAlignment="Top" Width="130" RenderTransformOrigin="1.865,0.826" TabIndex="12"/>
+                <xstyle:XTextBox Name="t_txt_ProjectName"  HorizontalAlignment="Left" Height="23" Margin="83,97,0,0" VerticalAlignment="Top" Width="348" TabIndex="13" />
                 <xstyle:XLabel Content="报价日期" HorizontalAlignment="Left" Margin="263,522,0,-407" VerticalAlignment="Top"/>
                 <xstyle:XLabel Content="传真" HorizontalAlignment="Left" Margin="491,74,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.229,0.471"/>
-                <xstyle:XTextBox x:Name="t_txt_Fax" HorizontalAlignment="Left" Height="23" Margin="520,68,0,0" VerticalAlignment="Top" Width="130"/>
+                <xstyle:XTextBox x:Name="t_txt_Fax" HorizontalAlignment="Left" Height="23" Margin="520,68,0,0" VerticalAlignment="Top" Width="130" TabIndex="11"/>
                 <xstyle:XLabel Content="产品/型号" HorizontalAlignment="Left" Margin="462,101,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.229,0.471"/>
-                <xstyle:XTextBox x:Name="t_txt_ProductModel" HorizontalAlignment="Left" Height="23" Margin="520,96,0,0" VerticalAlignment="Top" Width="130"/>
+                <xstyle:XTextBox x:Name="t_txt_ProductModel" HorizontalAlignment="Left" Height="23" Margin="520,96,0,0" VerticalAlignment="Top" Width="130" TabIndex="14"/>
                 <xstyle:XLabel Content="认证周期" HorizontalAlignment="Left" Margin="685,101,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.229,0.471"/>
-                <xstyle:XTextBox x:Name="t_txt_CycleTime" HorizontalAlignment="Left" Height="23" Margin="738,96,0,0" VerticalAlignment="Top" Width="130"/>
+                <xstyle:XTextBox x:Name="t_txt_CycleTime" HorizontalAlignment="Left" Height="23" Margin="738,96,0,0" VerticalAlignment="Top" Width="130" TabIndex="15"/>
                 <xstyle:XLabel  Content="备注信息" HorizontalAlignment="Left" Margin="467,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="-9.479,-0.235"/>
-                <xstyle:XTextBox x:Name="t_txt_Remark"  HorizontalAlignment="Left" Height="23" Margin="520,124,0,0" VerticalAlignment="Top" Width="348" />
+                <xstyle:XTextBox x:Name="t_txt_Remark"  HorizontalAlignment="Left" Height="23" Margin="520,124,0,0" VerticalAlignment="Top" Width="348" TabIndex="19" />
 
             </Grid>
         </xstyle:XGroupBox>
@@ -90,7 +98,7 @@
                 <xstyle:XTextBox Name="t_txt_UnAccountReceivable" IsReadOnly="True" HorizontalAlignment="Left" Height="23" Margin="520,14,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
                 <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="625,18,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                 <xstyle:XLabel  Content="应付机构账款" HorizontalAlignment="Left" Margin="6,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                <xstyle:XTextBox Name="t_txt_AgencyAccountPayable" TextChanged="t_txt_AgencyAccountPayable_TextChanged" HorizontalAlignment="Left" Height="23" Margin="83,42,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
+                <xstyle:XTextBox Name="t_txt_AgencyAccountPayable" TextChanged="t_txt_AgencyAccountPayable_TextChanged" HorizontalAlignment="Left" Height="23" Margin="83,42,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int" TabIndex="20"/>
                 <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="188,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                 <xstyle:XLabel  Content="已付机构账款" HorizontalAlignment="Left" Margin="224,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                 <xstyle:XTextBox Name="t_txt_AgencyAccountsPrepaid" TextChanged="t_txt_AgencyAccountsPrepaid_TextChanged" HorizontalAlignment="Left" IsReadOnly="True" Height="23" Margin="301,42,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
@@ -99,7 +107,7 @@
                 <xstyle:XTextBox Name="t_txt_UnAgencyAccountPayable" HorizontalAlignment="Left" IsReadOnly="True" Height="23" Margin="520,42,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
                 <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="625,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                 <xstyle:XLabel  Content="应付外包账款" HorizontalAlignment="Left" Margin="6,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                <xstyle:XTextBox Name="t_txt_LabAccountPayable" TextChanged="t_txt_LabAccountPayable_TextChanged" HorizontalAlignment="Left" Height="23" Margin="83,70,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
+                <xstyle:XTextBox Name="t_txt_LabAccountPayable" TextChanged="t_txt_LabAccountPayable_TextChanged" HorizontalAlignment="Left" Height="23" Margin="83,70,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int" TabIndex="21"/>
                 <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="188,74,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                 <xstyle:XLabel  Content="已付外包账款" HorizontalAlignment="Left" Margin="224,74,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                 <xstyle:XTextBox Name="t_txt_LabAccountsPrepaid" TextChanged="t_txt_LabAccountsPrepaid_TextChanged" HorizontalAlignment="Left" IsReadOnly="True" Height="23" Margin="301,70,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
@@ -108,7 +116,7 @@
                 <xstyle:XTextBox Name="t_txt_UnLabAccountPayable" HorizontalAlignment="Left" IsReadOnly="True" Height="23" Margin="520,70,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
                 <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="625,74,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                 <xstyle:XLabel  Content="其他费用" HorizontalAlignment="Left" Margin="30,102,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                <xstyle:XTextBox Name="t_txt_OtherAccount" TextChanged="t_txt_OtherAccount_TextChanged" HorizontalAlignment="Left" Height="Auto" Margin="83,98,0,30" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
+                <xstyle:XTextBox Name="t_txt_OtherAccount" TextChanged="t_txt_OtherAccount_TextChanged" HorizontalAlignment="Left" Height="Auto" Margin="83,98,0,30" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int" TabIndex="22"/>
                 <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="188,102,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                 <xstyle:XLabel  Content="项目总利润" HorizontalAlignment="Left" Margin="18,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                 <xstyle:XTextBox Name="t_txt_Profits" HorizontalAlignment="Left" IsReadOnly="True" Height="23" Margin="83,126,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
@@ -134,7 +142,7 @@
         </xstyle:XGroupBox>
         <xstyle:XGroupBox Header="项目跟踪信息" HorizontalAlignment="Left" Height="306" Margin="10,375,0,0" VerticalAlignment="Top" Width="876" BorderBrush="#FFE4E0E0" GroupBoxDrawType="TopLine" Background="#FFE1E0E8"  Foreground="#FF2562A4">
             <Grid>
-                <TabControl Name="t_tab_Info" HorizontalAlignment="Left" Height="296" Margin="4,10,0,0" VerticalAlignment="Top" Width="862">
+                <xstyle:XTabControl Name="t_tab_Info" HorizontalAlignment="Left" Height="296" Margin="4,10,0,0" VerticalAlignment="Top" Width="862">
                     <TabItem Header="客户资金往来">
                         <Grid Margin="0,0,0,6">
                             <xstyle:XDataGrid Name="t_dge_CustomBill" HorizontalAlignment="Left" Height="150" VerticalAlignment="Top" Width="846" DisplayRowNum="True" IsReadOnly="True" SelectionChanged="t_dge_CustomBill_SelectionChanged">
@@ -152,23 +160,23 @@
                             <xstyle:XGroupBox Header="客户支付信息" Margin="0,164,104,-12" GroupBoxDrawType="TopLine"  Foreground="#FF2562A4">
                                 <Grid Margin="0,0,0,-13" Name="t_grp_Customer" >
                                     <xstyle:XLabel  Content="已收客户金额" HorizontalAlignment="Left" Margin="1,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                                    <xstyle:XTextBox Name="t_txt_CustomerMoney" HorizontalAlignment="Left" Height="23" Margin="78,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int" TextChanged="Control_TextChanged"/>
+                                    <xstyle:XTextBox Name="t_txt_CustomerMoney" HorizontalAlignment="Left" Height="23" Margin="78,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int" TextChanged="Control_TextChanged" TabIndex="23"/>
                                     <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="183,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                                     <xstyle:XLabel Content="支付日期" HorizontalAlignment="Left" Margin="25,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.062,0.471"/>
-                                    <xstyle:XDatePicker Name="t_dtp_CustomerDate" HorizontalAlignment="Left" Margin="78,46,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.54,0.13" TextChanged="Control_TextChanged"/>
-                                    <xstyle:XCheckBox Name="t_chk_IsCustomerInv" Content="开票" Margin="246,51,0,0" RenderTransformOrigin="-0.065,0.562" VerticalAlignment="Top" HorizontalAlignment="Left" Width="46"  Checked="Control_TextChanged" Unchecked="Control_TextChanged"/>
-                                    <xstyle:XTextBox Name="t_txt_CustomerInvPrice" IsReadOnly="True" HorizontalAlignment="Left" Height="24" Margin="293,46,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" TextChanged="Control_TextChanged" InputValueType="Int"/>
+                                    <xstyle:XDatePicker Name="t_dtp_CustomerDate" HorizontalAlignment="Left" Margin="78,46,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.54,0.13" TextChanged="Control_TextChanged" TabIndex="26"/>
+                                    <xstyle:XCheckBox Name="t_chk_IsCustomerInv" Content="开票" Margin="246,51,0,0" RenderTransformOrigin="-0.065,0.562" VerticalAlignment="Top" HorizontalAlignment="Left" Width="46"  Checked="Control_TextChanged" Unchecked="Control_TextChanged" TabIndex="27"/>
+                                    <xstyle:XTextBox Name="t_txt_CustomerInvPrice" IsReadOnly="True" HorizontalAlignment="Left" Height="24" Margin="293,46,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" TextChanged="Control_TextChanged" InputValueType="Int" TabIndex="28"/>
                                     <xstyle:XLabel  Content="发票号" HorizontalAlignment="Left" Margin="428,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059" Height="16"/>
-                                    <xstyle:XTextBox Name="t_txt_CustomerInvNo" IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="469,47,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.56,0.409" TextChanged="Control_TextChanged"/>
+                                    <xstyle:XTextBox Name="t_txt_CustomerInvNo" IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="469,47,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.56,0.409" TextChanged="Control_TextChanged" TabIndex="29"/>
                                     <xstyle:XLabel  Content="发票日期" HorizontalAlignment="Left" Margin="585,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059" Height="16"/>
-                                    <xstyle:XDatePicker Name="t_dtp_CustomerInvDate" IsReadOnly="True" HorizontalAlignment="Left" Margin="638,47,0,0" VerticalAlignment="Top" Width="100" Height="22" RenderTransformOrigin="-0.685,0.227"   ValueChanged ="Control_TextChanged"/>
+                                    <xstyle:XDatePicker Name="t_dtp_CustomerInvDate" IsReadOnly="True" HorizontalAlignment="Left" Margin="638,47,0,0" VerticalAlignment="Top" Width="100" Height="22" RenderTransformOrigin="-0.685,0.227"   ValueChanged ="Control_TextChanged" TabIndex="30"/>
                                     <xstyle:XButton Name="t_btn_CustomerAdd" Click="t_btn_CustomerAdd_Click" Content="添加" Width="70" Height="24" Margin="78,80,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.171,0.458"/>
                                     <xstyle:XButton Name="t_btn_CustomerDelete" Click="t_btn_CustomerDelete_Click" Content="删除" Width="70" Height="24"  Margin="153,80,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.643,0.5" />
                                     <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="395,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                                     <xstyle:XLabel  Content="备注" HorizontalAlignment="Left" Margin="440,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                                    <xstyle:XTextBox Name="t_txt_CustomerRemark" HorizontalAlignment="Left" Height="24" Margin="469,18,0,0" VerticalAlignment="Top" Width="269"  RenderTransformOrigin="0.492,0.826" TextChanged="Control_TextChanged"/>
+                                    <xstyle:XTextBox Name="t_txt_CustomerRemark" HorizontalAlignment="Left" Height="24" Margin="469,18,0,0" VerticalAlignment="Top" Width="269"  RenderTransformOrigin="0.492,0.826" TextChanged="Control_TextChanged" TabIndex="25"/>
                                     <xstyle:XLabel  Content="收款人" HorizontalAlignment="Left" Margin="252,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                                    <xstyle:XTextBox Name="t_txt_Customer" HorizontalAlignment="Left" Height="24" Margin="293,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" TextChanged="Control_TextChanged"/>
+                                    <xstyle:XTextBox Name="t_txt_Customer" HorizontalAlignment="Left" Height="24" Margin="293,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" TextChanged="Control_TextChanged" TabIndex="24"/>
                                 </Grid>
                             </xstyle:XGroupBox>
                         </Grid>
@@ -190,23 +198,23 @@
                             <xstyle:XGroupBox Header="机构支付信息" Margin="0,164,104,0" GroupBoxDrawType="TopLine" Foreground="#FF2562A4">
                                 <Grid Name="t_grp_Agency" >
                                     <xstyle:XLabel  Content="已付机构金额" HorizontalAlignment="Left" Margin="1,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                                    <xstyle:XTextBox Name="t_txt_AgencyMoney" TextChanged="Agency_Control_TextChanged" HorizontalAlignment="Left" Height="23" Margin="78,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
+                                    <xstyle:XTextBox Name="t_txt_AgencyMoney" TextChanged="Agency_Control_TextChanged" HorizontalAlignment="Left" Height="23" Margin="78,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int" TabIndex="31"/>
                                     <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="183,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                                     <xstyle:XLabel Content="支付日期" HorizontalAlignment="Left" Margin="25,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.062,0.471"/>
-                                    <xstyle:XDatePicker Name="t_dtp_AgencyDate" ValueChanged="Agency_Control_TextChanged" HorizontalAlignment="Left" Margin="78,46,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.54,0.13"/>
-                                    <xstyle:XCheckBox Name="t_chk_IsAgencyInv" Checked="Agency_Control_TextChanged" Unchecked="Agency_Control_TextChanged" Content="开票" Margin="246,51,0,0" RenderTransformOrigin="-0.065,0.562" VerticalAlignment="Top" HorizontalAlignment="Left" Width="46" />
-                                    <xstyle:XTextBox Name="t_txt_AgencyInvPrice" TextChanged="Agency_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Height="24" Margin="293,46,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
+                                    <xstyle:XDatePicker Name="t_dtp_AgencyDate" ValueChanged="Agency_Control_TextChanged" HorizontalAlignment="Left" Margin="78,46,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.54,0.13" TabIndex="34"/>
+                                    <xstyle:XCheckBox Name="t_chk_IsAgencyInv" Checked="Agency_Control_TextChanged" Unchecked="Agency_Control_TextChanged" Content="开票" Margin="246,51,0,0" RenderTransformOrigin="-0.065,0.562" VerticalAlignment="Top" HorizontalAlignment="Left" Width="46" TabIndex="35" />
+                                    <xstyle:XTextBox Name="t_txt_AgencyInvPrice" TextChanged="Agency_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Height="24" Margin="293,46,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int" TabIndex="36"/>
                                     <xstyle:XLabel  Content="发票号" HorizontalAlignment="Left" Margin="428,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059" Height="16"/>
-                                    <xstyle:XTextBox Name="t_txt_AgencyInvNo" TextChanged="Agency_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="469,47,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.56,0.409"/>
+                                    <xstyle:XTextBox Name="t_txt_AgencyInvNo" TextChanged="Agency_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="469,47,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.56,0.409" TabIndex="37"/>
                                     <xstyle:XLabel  Content="发票日期" HorizontalAlignment="Left" Margin="585,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059" Height="16"/>
-                                    <xstyle:XDatePicker Name="t_dtp_AgencyInvDate" ValueChanged="Agency_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Margin="638,47,0,0" VerticalAlignment="Top" Width="100" Height="22" RenderTransformOrigin="-0.685,0.227"/>
+                                    <xstyle:XDatePicker Name="t_dtp_AgencyInvDate" ValueChanged="Agency_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Margin="638,47,0,0" VerticalAlignment="Top" Width="100" Height="22" RenderTransformOrigin="-0.685,0.227" TabIndex="38"/>
                                     <xstyle:XButton Name="t_btn_AgencyAdd" Click="t_btn_AgencyAdd_Click" Content="添加" Width="70" Height="24" Margin="78,80,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.171,0.458"/>
                                     <xstyle:XButton Name="t_btn_AgencyDelete" Click="t_btn_AgencyDelete_Click" Content="删除" Width="70" Height="24"  Margin="153,80,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.643,0.5" />
                                     <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="395,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                                     <xstyle:XLabel  Content="备注" HorizontalAlignment="Left" Margin="440,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                                    <xstyle:XTextBox Name="t_txt_AgencyRemark" TextChanged="Agency_Control_TextChanged" HorizontalAlignment="Left" Height="24" Margin="469,18,0,0" VerticalAlignment="Top" Width="269"  RenderTransformOrigin="0.492,0.826"/>
+                                    <xstyle:XTextBox Name="t_txt_AgencyRemark" TextChanged="Agency_Control_TextChanged" HorizontalAlignment="Left" Height="24" Margin="469,18,0,0" VerticalAlignment="Top" Width="269"  RenderTransformOrigin="0.492,0.826" TabIndex="33"/>
                                     <xstyle:XLabel  Content="付款人" HorizontalAlignment="Left" Margin="252,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                                    <xstyle:XTextBox Name="t_txt_Agency" TextChanged="Agency_Control_TextChanged" HorizontalAlignment="Left" Height="24" Margin="293,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826"/>
+                                    <xstyle:XTextBox Name="t_txt_Agency" TextChanged="Agency_Control_TextChanged" HorizontalAlignment="Left" Height="24" Margin="293,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" TabIndex="32"/>
                                 </Grid>
                             </xstyle:XGroupBox>
                         </Grid>
@@ -228,23 +236,23 @@
                             <xstyle:XGroupBox Header="外包支付信息"  Margin="0,164,104,0" GroupBoxDrawType="TopLine" Foreground="#FF2562A4">
                                 <Grid Name="t_grp_Lab">
                                     <xstyle:XLabel  Content="已付外包金额" HorizontalAlignment="Left" Margin="1,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                                    <xstyle:XTextBox Name="t_txt_LabMoney" TextChanged="Lab_Control_TextChanged" HorizontalAlignment="Left" Height="23" Margin="78,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
+                                    <xstyle:XTextBox Name="t_txt_LabMoney" TextChanged="Lab_Control_TextChanged" HorizontalAlignment="Left" Height="23" Margin="78,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int" TabIndex="39"/>
                                     <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="183,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                                     <xstyle:XLabel Content="支付日期" HorizontalAlignment="Left" Margin="25,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.062,0.471"/>
-                                    <xstyle:XDatePicker Name="t_dtp_LabDate" ValueChanged="Lab_Control_TextChanged" HorizontalAlignment="Left" Margin="78,46,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.54,0.13"/>
-                                    <xstyle:XCheckBox Name="t_chk_IsLabInv" Checked="Lab_Control_TextChanged" Unchecked="Lab_Control_TextChanged" Content="开票" Margin="246,51,0,0" RenderTransformOrigin="-0.065,0.562" VerticalAlignment="Top" HorizontalAlignment="Left" Width="46" />
-                                    <xstyle:XTextBox Name="t_txt_LabInvPrice" TextChanged="Lab_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Height="24" Margin="293,46,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
+                                    <xstyle:XDatePicker Name="t_dtp_LabDate" ValueChanged="Lab_Control_TextChanged" HorizontalAlignment="Left" Margin="78,46,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.54,0.13" TabIndex="42"/>
+                                    <xstyle:XCheckBox Name="t_chk_IsLabInv" Checked="Lab_Control_TextChanged" Unchecked="Lab_Control_TextChanged" Content="开票" Margin="246,51,0,0" RenderTransformOrigin="-0.065,0.562" VerticalAlignment="Top" HorizontalAlignment="Left" Width="46" TabIndex="43" />
+                                    <xstyle:XTextBox Name="t_txt_LabInvPrice" TextChanged="Lab_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Height="24" Margin="293,46,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int" TabIndex="44"/>
                                     <xstyle:XLabel  Content="发票号" HorizontalAlignment="Left" Margin="428,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059" Height="16"/>
-                                    <xstyle:XTextBox Name="t_txt_LabInvNo" TextChanged="Lab_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="469,47,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.56,0.409"/>
+                                    <xstyle:XTextBox Name="t_txt_LabInvNo" TextChanged="Lab_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="469,47,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.56,0.409" TabIndex="45"/>
                                     <xstyle:XLabel  Content="发票日期" HorizontalAlignment="Left" Margin="585,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059" Height="16"/>
-                                    <xstyle:XDatePicker Name="t_dtp_LabInvDate" ValueChanged="Lab_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Margin="638,47,0,0" VerticalAlignment="Top" Width="100" Height="22" RenderTransformOrigin="-0.685,0.227"/>
+                                    <xstyle:XDatePicker Name="t_dtp_LabInvDate" ValueChanged="Lab_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Margin="638,47,0,0" VerticalAlignment="Top" Width="100" Height="22" RenderTransformOrigin="-0.685,0.227" TabIndex="46"/>
                                     <xstyle:XButton Name="t_btn_LabAdd" Click="t_btn_LabAdd_Click" Content="添加" Width="70" Height="24" Margin="78,80,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.171,0.458"/>
                                     <xstyle:XButton Name="t_btn_LabDelete" Click="t_btn_LabDelete_Click" Content="删除" Width="70" Height="24"  Margin="153,80,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.643,0.5" />
                                     <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="395,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                                     <xstyle:XLabel  Content="备注" HorizontalAlignment="Left" Margin="440,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                                    <xstyle:XTextBox Name="t_txt_LabRemark" TextChanged="Lab_Control_TextChanged" HorizontalAlignment="Left" Height="24" Margin="469,18,0,0" VerticalAlignment="Top" Width="269"  RenderTransformOrigin="0.492,0.826"/>
+                                    <xstyle:XTextBox Name="t_txt_LabRemark" TextChanged="Lab_Control_TextChanged" HorizontalAlignment="Left" Height="24" Margin="469,18,0,0" VerticalAlignment="Top" Width="269"  RenderTransformOrigin="0.492,0.826" TabIndex="41"/>
                                     <xstyle:XLabel  Content="付款人" HorizontalAlignment="Left" Margin="252,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                                    <xstyle:XTextBox Name="t_txt_Lab" TextChanged="Lab_Control_TextChanged" HorizontalAlignment="Left" Height="24" Margin="293,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826"/>
+                                    <xstyle:XTextBox Name="t_txt_Lab" TextChanged="Lab_Control_TextChanged" HorizontalAlignment="Left" Height="24" Margin="293,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" TabIndex="40"/>
                                 </Grid>
                             </xstyle:XGroupBox>
                         </Grid>
@@ -266,28 +274,28 @@
                             <xstyle:XGroupBox Header="其他支付信息" Margin="0,164,104,0" GroupBoxDrawType="TopLine"  Foreground="#FF2562A4">
                                 <Grid Name="t_grp_Other" >
                                     <xstyle:XLabel  Content="已付其他金额" HorizontalAlignment="Left" Margin="1,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                                    <xstyle:XTextBox Name="t_txt_OtherMoney" TextChanged="Other_Control_TextChanged" HorizontalAlignment="Left" Height="23" Margin="78,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
+                                    <xstyle:XTextBox Name="t_txt_OtherMoney" TextChanged="Other_Control_TextChanged" HorizontalAlignment="Left" Height="23" Margin="78,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int" TabIndex="47"/>
                                     <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="183,22,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                                     <xstyle:XLabel Content="支付日期" HorizontalAlignment="Left" Margin="25,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.062,0.471"/>
-                                    <xstyle:XDatePicker Name="t_dtp_OtherDate" ValueChanged="Other_Control_TextChanged" HorizontalAlignment="Left" Margin="78,46,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.54,0.13"/>
-                                    <xstyle:XCheckBox Name="t_chk_IsOtherInv" Checked="Other_Control_TextChanged" Unchecked="Other_Control_TextChanged" Content="开票" Margin="246,51,0,0" RenderTransformOrigin="-0.065,0.562" VerticalAlignment="Top" HorizontalAlignment="Left" Width="46" />
-                                    <xstyle:XTextBox Name="t_txt_OtherInvPrice" TextChanged="Other_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Height="24" Margin="293,46,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int"/>
+                                    <xstyle:XDatePicker Name="t_dtp_OtherDate" ValueChanged="Other_Control_TextChanged" HorizontalAlignment="Left" Margin="78,46,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.54,0.13" TabIndex="50"/>
+                                    <xstyle:XCheckBox Name="t_chk_IsOtherInv" Checked="Other_Control_TextChanged" Unchecked="Other_Control_TextChanged" Content="开票" Margin="246,51,0,0" RenderTransformOrigin="-0.065,0.562" VerticalAlignment="Top" HorizontalAlignment="Left" Width="46" TabIndex="51" />
+                                    <xstyle:XTextBox Name="t_txt_OtherInvPrice" TextChanged="Other_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Height="24" Margin="293,46,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" InputValueType="Int" TabIndex="52"/>
                                     <xstyle:XLabel  Content="发票号" HorizontalAlignment="Left" Margin="428,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059" Height="16"/>
-                                    <xstyle:XTextBox Name="t_txt_OtherInvNo" TextChanged="Other_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="469,47,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.56,0.409"/>
+                                    <xstyle:XTextBox Name="t_txt_OtherInvNo" TextChanged="Other_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Height="22" Margin="469,47,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.56,0.409" TabIndex="53"/>
                                     <xstyle:XLabel  Content="发票日期" HorizontalAlignment="Left" Margin="585,51,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059" Height="16"/>
-                                    <xstyle:XDatePicker Name="t_dtp_OtherInvDate" ValueChanged="Other_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Margin="638,47,0,0" VerticalAlignment="Top" Width="100" Height="22" RenderTransformOrigin="-0.685,0.227"/>
+                                    <xstyle:XDatePicker Name="t_dtp_OtherInvDate" ValueChanged="Other_Control_TextChanged" IsReadOnly="True" HorizontalAlignment="Left" Margin="638,47,0,0" VerticalAlignment="Top" Width="100" Height="22" RenderTransformOrigin="-0.685,0.227" TabIndex="54"/>
                                     <xstyle:XButton Name="t_btn_OtherAdd" Click="t_btn_OtherAdd_Click" Content="添加" Width="70" Height="24" Margin="78,80,0,0"  VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.171,0.458"/>
                                     <xstyle:XButton Name="t_btn_OtherDelete" Click="t_btn_OtherDelete_Click" Content="删除" Width="70" Height="24"  Margin="153,80,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" RenderTransformOrigin="0.643,0.5" />
                                     <xstyle:XLabel  Content="元" HorizontalAlignment="Left" Margin="395,52,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
                                     <xstyle:XLabel  Content="备注" HorizontalAlignment="Left" Margin="440,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                                    <xstyle:XTextBox Name="t_txt_OtherRemark" TextChanged="Other_Control_TextChanged" HorizontalAlignment="Left" Height="24" Margin="469,18,0,0" VerticalAlignment="Top" Width="269"  RenderTransformOrigin="0.492,0.826"/>
+                                    <xstyle:XTextBox Name="t_txt_OtherRemark" TextChanged="Other_Control_TextChanged" HorizontalAlignment="Left" Height="24" Margin="469,18,0,0" VerticalAlignment="Top" Width="269"  RenderTransformOrigin="0.492,0.826" TabIndex="49"/>
                                     <xstyle:XLabel  Content="付款人" HorizontalAlignment="Left" Margin="252,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.521,1.059"/>
-                                    <xstyle:XTextBox Name="t_txt_Other" TextChanged="Other_Control_TextChanged" HorizontalAlignment="Left" Height="24" Margin="293,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826"/>
+                                    <xstyle:XTextBox Name="t_txt_Other" TextChanged="Other_Control_TextChanged" HorizontalAlignment="Left" Height="24" Margin="293,18,0,0" VerticalAlignment="Top" Width="100"  RenderTransformOrigin="0.492,0.826" TabIndex="48"/>
                                 </Grid>
                             </xstyle:XGroupBox>
                         </Grid>
                     </TabItem>
-                </TabControl>
+                </xstyle:XTabControl>
             </Grid>
         </xstyle:XGroupBox>
     </Grid>

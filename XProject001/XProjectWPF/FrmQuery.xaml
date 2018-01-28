@@ -16,26 +16,26 @@
                 <xstyle:XDatePicker Name="t_dtp_StartDate" HorizontalAlignment="Left" Margin="289,13,0,0" VerticalAlignment="Top" Width="90" IsReadOnly="True"/>
                 <xstyle:XDatePicker Name="t_dtp_EndDate" HorizontalAlignment="Left" Margin="399,13,0,0" VerticalAlignment="Top" Width="90" IsReadOnly="True"/>
                 <xstyle:XLabel Content="至" HorizontalAlignment="Left" Margin="384,17,0,0" VerticalAlignment="Top" Width="15" RenderTransformOrigin="0.107,0.176"/>
-                <xstyle:XComboBox x:Name="t_cmb_Date" HorizontalAlignment="Left" Margin="100,13,0,0" VerticalAlignment="Top" Width="170" SelectionChanged="t_cmb_Date_SelectionChanged"/>
-                <xstyle:XComboBox x:Name="t_cmb_Type" HorizontalAlignment="Left" Margin="100,41,0,0" VerticalAlignment="Top" Width="170" SelectionChanged ="t_cmb_Type_SelectionChanged"/>
+                <xstyle:XComboBox x:Name="t_cmb_Date" HorizontalAlignment="Left" Margin="100,13,0,0" VerticalAlignment="Top" Width="170" SelectionChanged="t_cmb_Date_SelectionChanged" TabIndex="1"/>
+                <xstyle:XComboBox x:Name="t_cmb_Type" HorizontalAlignment="Left" Margin="100,41,0,0" VerticalAlignment="Top" Width="170" SelectionChanged ="t_cmb_Type_SelectionChanged" TabIndex="2"/>
 
 
             </Grid>
         </xstyle:XGroupBox>
         <xstyle:XGroupBox Name="t_grp_Query" Header="报价查询条件" HorizontalAlignment="Left" Height="175" Margin="10,96,0,0" VerticalAlignment="Top" Width="522" GroupBoxDrawType="TopLine">
             <Grid Margin="0,0,0,10">
-                <xstyle:XTextBox Name="t_txt_BillNo" HorizontalAlignment="Left" Margin="99,16,0,126" Text="" VerticalAlignment="Stretch" Width="344" Height="Auto"/>
+                <xstyle:XTextBox Name="t_txt_BillNo" HorizontalAlignment="Left" Margin="99,16,0,126" Text="" VerticalAlignment="Stretch" Width="344" Height="Auto" TabIndex="3"/>
                 <xstyle:XLabel Name="t_lbl_BillNo" Content="报价单号" HorizontalAlignment="Left" Margin="44,21,0,0" VerticalAlignment="Top" Width="50"/>
-                <xstyle:XTextBox Name="t_txt_FllowMan" HorizontalAlignment="Left" Margin="99,44,0,0" Text="" VerticalAlignment="Top" Width="344"/>
+                <xstyle:XTextBox Name="t_txt_FllowMan" HorizontalAlignment="Left" Margin="99,44,0,0" Text="" VerticalAlignment="Top" Width="344" TabIndex="4"/>
                 <xstyle:XLabel Content="业务跟进人" HorizontalAlignment="Left" Margin="33,49,0,0" VerticalAlignment="Top" Width="61"/>
-                <xstyle:XTextBox Name="t_txt_ProjectName"  HorizontalAlignment="Left" Margin="99,72,0,0" Text="" VerticalAlignment="Top" Width="344"/>
+                <xstyle:XTextBox Name="t_txt_ProjectName"  HorizontalAlignment="Left" Margin="99,72,0,0" Text="" VerticalAlignment="Top" Width="344" TabIndex="5"/>
                 <xstyle:XLabel Content="申请项目" HorizontalAlignment="Left" Margin="45,77,0,0" VerticalAlignment="Top" Width="49"/>
-                <xstyle:XTextBox Name="t_txt_CompanyName" HorizontalAlignment="Left" Margin="99,100,0,0" Text="" VerticalAlignment="Top" Width="344"/>
+                <xstyle:XTextBox Name="t_txt_CompanyName" HorizontalAlignment="Left" Margin="99,100,0,0" Text="" VerticalAlignment="Top" Width="344" TabIndex="6"/>
                 <xstyle:XLabel Content="公司名称" HorizontalAlignment="Left" Margin="45,105,0,0" VerticalAlignment="Top" Width="49"/>
                 <xstyle:XLabel Name="t_lbl_Type" Content="报价类型" HorizontalAlignment="Left" Margin="44,134,0,0" VerticalAlignment="Top" Width="49"/>
-                <xstyle:XCheckBox x:Name="t_chk_Save" Click="t_chk_Save_Click" IsChecked="True" Content="安全" HorizontalAlignment="Left" Margin="99,134,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312"/>
-                <xstyle:XCheckBox x:Name="t_chk_EMC" Click="t_chk_Save_Click"  Content="EMC" HorizontalAlignment="Left" Margin="145,134,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312"/>
-                <xstyle:XCheckBox x:Name="t_chk_Chemis" Click="t_chk_Save_Click"  Content="化学" HorizontalAlignment="Left" Margin="193,134,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312"/>
+                <xstyle:XCheckBox x:Name="t_chk_Save" Content="安全" HorizontalAlignment="Left" Margin="99,134,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312" TabIndex="7"/>
+                <xstyle:XCheckBox x:Name="t_chk_EMC"  Content="EMC" HorizontalAlignment="Left" Margin="145,134,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312" TabIndex="8"/>
+                <xstyle:XCheckBox x:Name="t_chk_Chemis"   Content="化学" HorizontalAlignment="Left" Margin="193,134,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.463,1.312" TabIndex="9"/>
 
 
             </Grid>
